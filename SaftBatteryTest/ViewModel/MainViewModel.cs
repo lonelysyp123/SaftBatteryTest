@@ -31,7 +31,7 @@ namespace SaftBatteryTest.ViewModel
         private void Test()
         {
             Body = new ChannelModel();
-            Body.Title = "123123";
+            Body.Title = "1231234";
         }
     }
 }
