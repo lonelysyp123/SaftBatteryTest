@@ -5,22 +5,97 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SaftBatteryTest.View.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="250" d:DesignWidth="300">
+             d:DesignHeight="180" d:DesignWidth="200">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="5*"/>
             <RowDefinition Height="0.6*"/>
         </Grid.RowDefinitions>
-
-        <Border CornerRadius="15 15 0 0">
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="123"></MenuItem>
+            </ContextMenu>
+        </Grid.ContextMenu>
+        <Border CornerRadius="15 15 0 0" Grid.Row="0">
             <Border.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF267200" Offset="1"/>
                     <GradientStop Color="#FF56FF00" Offset="0"/>
                 </LinearGradientBrush>
             </Border.Background>
-            <TextBlock Name="Title"></TextBlock>
+            <TextBlock Text="{Binding Title}" Margin="10 0 0 0" VerticalAlignment="Center"></TextBlock>
         </Border>
+
+        <Grid Grid.Row="1" Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1.2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="0.0000V" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15"></TextBlock>
+            <Separator Grid.Row="1" Grid.Column="0" Margin="10 0 0 0">
+                <Separator.Background>
+                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                        <GradientStop Color="#FFB5B5B5" Offset="1"/>
+                        <GradientStop Color="White" Offset="0"/>
+                    </LinearGradientBrush>
+                </Separator.Background>
+            </Separator>
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="0.000A" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15"></TextBlock>
+            <Separator Grid.Row="3" Grid.Column="0" Margin="10 0 0 0">
+                <Separator.Background>
+                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                        <GradientStop Color="#FFB5B5B5" Offset="1"/>
+                        <GradientStop Color="White" Offset="0"/>
+                    </LinearGradientBrush>
+                </Separator.Background>
+            </Separator>
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="0.000Ah" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15"></TextBlock>
+            <Separator Grid.Row="5" Grid.Column="0" BorderThickness="0" Margin="10 0 0 0">
+                <Separator.Background>
+                    <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
+                        <GradientStop Color="#FFB5B5B5" Offset="1"/>
+                        <GradientStop Color="White" Offset="0"/>
+                    </LinearGradientBrush>
+                </Separator.Background>
+            </Separator>
+            <TextBlock Grid.Row="6" Grid.ColumnSpan="2"  Text="1cyc1,1,1,1,1," VerticalAlignment="Center" HorizontalAlignment="Center"  FontSize="15"></TextBlock>
+            <Grid Grid.Row="7" Grid.ColumnSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <RadioButton Grid.Column="0" Content="RST" VerticalAlignment="Center" HorizontalAlignment="Center"></RadioButton>
+                <RadioButton Grid.Column="1" Content="CC" VerticalAlignment="Center" HorizontalAlignment="Center"></RadioButton>
+                <RadioButton Grid.Column="2" Content="CV" VerticalAlignment="Center" HorizontalAlignment="Center"></RadioButton>
+                <RadioButton Grid.Column="3" Content="DC" VerticalAlignment="Center" HorizontalAlignment="Center"></RadioButton>
+                <RadioButton Grid.Column="4" Content="CP" VerticalAlignment="Center" HorizontalAlignment="Center"></RadioButton>
+            </Grid>
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="0.0W" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="0.0Wh" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
+        </Grid>
+        <Grid Grid.Row="2" Background="White">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="T:0.0C°" FontSize="10" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="1" Text="0.000V" FontSize="10" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Column="2" Text="Run Time:0.00Sec" FontSize="10" VerticalAlignment="Center"></TextBlock>
+        </Grid>
     </Grid>
 </UserControl>

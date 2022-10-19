@@ -20,7 +20,7 @@ namespace SaftBatteryTest.Model
         }
         public ChannelModel()
         {
-
+            Title = "code:";
         }
     }
 }

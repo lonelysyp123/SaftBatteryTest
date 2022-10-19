@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SaftBatteryTest.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -22,42 +23,45 @@ namespace SaftBatteryTest.View.Controls
     /// </summary>
     public partial class Channel : UserControl
     {
-        public Channel()
+        public Channel(ChannelModel model)
         {
             InitializeComponent();
+
+            model = new ChannelModel();
+            this.DataContext = model;
         }
 
-        public static readonly DependencyProperty MyTextProperty = 
-            DependencyProperty.Register("MyText", typeof(string), typeof(Channel), new PropertyMetadata((string)null, new PropertyChangedCallback(MyTextChange)));
+        //public static readonly DependencyProperty MyTextProperty = 
+        //    DependencyProperty.Register("MyText", typeof(string), typeof(Channel), new PropertyMetadata((string)null, new PropertyChangedCallback(MyTextChange)));
 
-        private static void MyTextChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            Channel control = d as Channel;
-            if (control != null)
-            {
-                string oldT = (string)e.OldValue;
-                string newT = (string)e.NewValue;
-                control.UpdateProperty(newT);
-            }
-        }
+        //private static void MyTextChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        //{
+        //    Channel control = d as Channel;
+        //    if (control != null)
+        //    {
+        //        string oldT = (string)e.OldValue;
+        //        string newT = (string)e.NewValue;
+        //        control.UpdateProperty(newT);
+        //    }
+        //}
 
-        private void UpdateProperty(string newT)
-        {
-            this.Title.Text = newT;
-        }
+        //private void UpdateProperty(string newT)
+        //{
+        //    this.Title.Text = newT;
+        //}
 
-        [Bindable(true)]
-        [Category("Appearence")]
-        public string MyText
-        {
-            get
-            {
-                return (string)GetValue(MyTextProperty);
-            }
-            set
-            {
-                SetValue(MyTextProperty, value);
-            }
-        }
+        //[Bindable(true)]
+        //[Category("Appearence")]
+        //public string MyText
+        //{
+        //    get
+        //    {
+        //        return (string)GetValue(MyTextProperty);
+        //    }
+        //    set
+        //    {
+        //        SetValue(MyTextProperty, value);
+        //    }
+        //}
     }
 }

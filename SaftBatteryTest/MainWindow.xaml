@@ -9,10 +9,76 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <ctr:Channel Grid.Row="0" MyText="{Binding Body.Title}"></ctr:Channel>
-        <Button Grid.Row="1" Command="{Binding TestCommand}"></Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Menu Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="#FF4D4D4D">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFB4B4B4" Offset="1"/>
+                    <GradientStop Color="White" Offset="0"/>
+                </LinearGradientBrush>
+            </Menu.Background>
+            <MenuItem Header="文件" Padding="10 3 10 3" FontSize="12" Margin="10 1 0 1">
+                <MenuItem Header="打开"></MenuItem>
+                <MenuItem Header="设置文件保存路径"></MenuItem>
+                <MenuItem Header="退出"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="管理" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+                <MenuItem Header="管理登录"></MenuItem>
+                <MenuItem Header="管理退出"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="通道" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+                <MenuItem Header="启动"></MenuItem>
+                <MenuItem Header="停止"></MenuItem>
+                <MenuItem Header="过程修改"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="MES信息"></MenuItem>
+                <MenuItem Header="自动联机"></MenuItem>
+                <MenuItem Header="联机状况"></MenuItem>
+                <MenuItem Header="详细信息"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="视图" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+                <MenuItem Header="显示CDS" IsCheckable="True"></MenuItem>
+                <MenuItem Header="显示MTV"></MenuItem>
+                <MenuItem Header="快捷栏"></MenuItem>
+                <MenuItem Header="状态栏"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="选项" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+                <MenuItem Header="优化自动联机"></MenuItem>
+                <MenuItem Header="CDS-MTV设置"></MenuItem>
+                <MenuItem Header="系统设置"></MenuItem>
+                <MenuItem Header="报警设置"></MenuItem>
+                <MenuItem Header="工位校验"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="文件查询"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="软件设置"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="运行记录"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="统计" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+                <MenuItem Header="分容统计"></MenuItem>
+                <MenuItem Header="电池分选"></MenuItem>
+                <MenuItem Header="通道使用统计"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="语言" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1" IsEnabled="False"></MenuItem>
+            <MenuItem Header="帮助" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+                <MenuItem Header="错误代码查询"></MenuItem>
+                <MenuItem Header="关于"></MenuItem>
+            </MenuItem>
+        </Menu>
+
+        <Grid Grid.Row="1" Grid.Column="1" Name="Body" Background="#B27A9373">
+            
+        </Grid>
+        
+        <Button Grid.Row="2" Grid.Column="1" Content="测试" Click="Button_Click" Background="#FFFFB800"></Button>
     </Grid>
 </Window>
