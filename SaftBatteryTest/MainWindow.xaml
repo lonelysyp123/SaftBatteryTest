@@ -9,8 +9,8 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
             <RowDefinition/>
+            <RowDefinition Height="10*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -25,16 +25,16 @@
                     <GradientStop Color="White" Offset="0"/>
                 </LinearGradientBrush>
             </Menu.Background>
-            <MenuItem Header="文件" Padding="10 3 10 3" FontSize="12" Margin="10 1 0 1">
+            <MenuItem Header="文件"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="打开"></MenuItem>
                 <MenuItem Header="设置文件保存路径"></MenuItem>
                 <MenuItem Header="退出"></MenuItem>
             </MenuItem>
-            <MenuItem Header="管理" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+            <MenuItem Header="管理"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="管理登录"></MenuItem>
                 <MenuItem Header="管理退出"></MenuItem>
             </MenuItem>
-            <MenuItem Header="通道" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+            <MenuItem Header="通道"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="启动"></MenuItem>
                 <MenuItem Header="停止"></MenuItem>
                 <MenuItem Header="过程修改"></MenuItem>
@@ -44,13 +44,13 @@
                 <MenuItem Header="联机状况"></MenuItem>
                 <MenuItem Header="详细信息"></MenuItem>
             </MenuItem>
-            <MenuItem Header="视图" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+            <MenuItem Header="视图" FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="显示CDS" IsCheckable="True"></MenuItem>
                 <MenuItem Header="显示MTV"></MenuItem>
                 <MenuItem Header="快捷栏"></MenuItem>
                 <MenuItem Header="状态栏"></MenuItem>
             </MenuItem>
-            <MenuItem Header="选项" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+            <MenuItem Header="选项"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="优化自动联机"></MenuItem>
                 <MenuItem Header="CDS-MTV设置"></MenuItem>
                 <MenuItem Header="系统设置"></MenuItem>
@@ -63,19 +63,19 @@
                 <Separator></Separator>
                 <MenuItem Header="运行记录"></MenuItem>
             </MenuItem>
-            <MenuItem Header="统计" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+            <MenuItem Header="统计"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="分容统计"></MenuItem>
                 <MenuItem Header="电池分选"></MenuItem>
                 <MenuItem Header="通道使用统计"></MenuItem>
             </MenuItem>
-            <MenuItem Header="语言" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1" IsEnabled="False"></MenuItem>
-            <MenuItem Header="帮助" Padding="10 3 10 3" FontSize="12" Margin="5 1 3 1">
+            <MenuItem Header="语言"  FontSize="12" VerticalAlignment="Center" IsEnabled="False"></MenuItem>
+            <MenuItem Header="帮助"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="错误代码查询"></MenuItem>
                 <MenuItem Header="关于"></MenuItem>
             </MenuItem>
         </Menu>
 
-        <Grid Grid.Row="1" Grid.Column="1" Name="Body" Background="#B27A9373">
+        <Grid Grid.Row="1" Grid.Column="1" Name="Body" Background="#FF313131">
             
         </Grid>
         

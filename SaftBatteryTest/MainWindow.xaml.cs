@@ -1,4 +1,5 @@
 ﻿using SaftBatteryTest.Model;
+using SaftBatteryTest.View;
 using SaftBatteryTest.View.Controls;
 using SaftBatteryTest.ViewModel;
 using System;
@@ -42,7 +43,7 @@ namespace SaftBatteryTest
             Border border1 = new Border();
             //border1.BorderThickness = new Thickness(3);
             //border1.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 184, 0));
-            border1.CornerRadius = new CornerRadius(15);
+            border1.CornerRadius = new CornerRadius(10);
             border1.Height = 180;
             border1.Width = 200;
             border1.Margin = new Thickness(7, 5, 7, 5);
@@ -54,11 +55,11 @@ namespace SaftBatteryTest
 
             Border border = new Border();
             border.BorderThickness = new Thickness(3);
-            border.BorderBrush = new SolidColorBrush(Color.FromArgb(255,218,250,240));
-            border.CornerRadius = new CornerRadius(15);
+            border.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 218, 250, 240));
+            border.CornerRadius = new CornerRadius(10);
             border.Height = 200;
             border.VerticalAlignment = VerticalAlignment.Top;
-            border.Margin = new Thickness(7,5,7,5);
+            border.Margin = new Thickness(7, 5, 7, 5);
             border.Child = panel;
 
 
@@ -67,6 +68,9 @@ namespace SaftBatteryTest
             //Grid.SetColumn(channel, 1);
 
             Body.Children.Add(border);
+
+            PathSettingView view = new PathSettingView();
+            view.Show();
         }
     }
 }
