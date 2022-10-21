@@ -15,7 +15,7 @@ namespace SaftBatteryTest.Model
             get => _title;
             set
             {
-                SetProperty<string>(ref _title, value);
+                SetProperty(ref _title, value);
             }
         }
         public ChannelModel()

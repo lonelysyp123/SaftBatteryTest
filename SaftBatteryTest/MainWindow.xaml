@@ -7,10 +7,35 @@
         xmlns:ctr="clr-namespace:SaftBatteryTest.View.Controls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <!--这里定义了复选框的样式 我用两张图片代替选中与不选中-->
+        <Style TargetType="ListBoxItem">
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Orange"></SolidColorBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+                <!--<Trigger Property="IsChecked" Value="False">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="CheckBox">
+                                <Image HorizontalAlignment="Left" Name="image1"
+                                        Stretch="Fill" VerticalAlignment="Top" Width="16" Height="16"
+                             Source="/ListSample;component/images/uncheck.png" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>-->
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="11*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -18,7 +43,7 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Menu Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="#FF4D4D4D">
+        <Menu Grid.Row="0" Grid.ColumnSpan="3" BorderThickness="1" BorderBrush="#FF4D4D4D" Height="25">
             <Menu.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFB4B4B4" Offset="1"/>
@@ -78,7 +103,51 @@
         <Grid Grid.Row="1" Grid.Column="1" Name="Body" Background="#FF313131">
             
         </Grid>
-        
-        <Button Grid.Row="2" Grid.Column="1" Content="测试" Click="Button_Click" Background="#FFFFB800"></Button>
+        <Grid Grid.Row="1" Grid.Column="2" Width="90">
+            <ListBox Background="#FFB8B8B8" ItemsSource="{Binding DevList}" BorderThickness="0" SelectedIndex="{Binding DevIndex}" ListBoxItem.Selected="ListBox_Selected">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                <Image Source="{Binding Image}" Width="20"></Image>
+                                <Label Content="{Binding Address}" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
+                            </StackPanel>
+                            <TextBlock Grid.Row="1" Text="{Binding CommunicationState}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Height="18">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                    <Grid>
+                    <Button Style="{x:Null}" Content="测试" Click="Button_Click" Width="100" HorizontalAlignment="Left" Background="#FFFF9800"></Button>
+                    <Button Style="{x:Null}" Content="测试" Command="{Binding TestCommand}" Width="100" HorizontalAlignment="Right" Background="#994CFF00"></Button>
+                    </Grid>
+                </Border>
+                <Border Grid.Column="1" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                    <TextBlock Text="侦测电压" Margin="2 0 0 0" VerticalAlignment="Center" FontSize="10"></TextBlock>
+                </Border>
+                <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                    <TextBlock Text="MTV联机结果:" VerticalAlignment="Center" FontSize="10"></TextBlock>
+                </Border>
+                <Border Grid.Column="3" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                    <TextBlock Text="[Admin]" VerticalAlignment="Center" FontSize="10"></TextBlock>
+                </Border>
+                <TextBlock Grid.Column="4" Text="00:00:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"></TextBlock>
+            </Grid>
+        </Border>
     </Grid>
 </Window>
