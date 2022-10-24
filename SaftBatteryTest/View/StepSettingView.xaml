@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SaftBatteryTest.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="工作过程设置" Height="700" Width="1200" ResizeMode="CanMinimize">
+        Title="工作过程设置" Height="700" Width="1100" ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
@@ -124,7 +124,7 @@
                     <RowDefinition/>
                     <RowDefinition Height="4*"/>
                     <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="1.5*"/>
+                    <RowDefinition Height="1.7*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Grid.ColumnDefinitions>
@@ -166,7 +166,7 @@
                             <TextBox Grid.Column="1" BorderThickness="1" VerticalAlignment="Center" Margin="10 0 10 0"></TextBox>
                             <Button Grid.Column="2" VerticalAlignment="Center" Margin="1 2" Content=">>>"></Button>
                         </Grid>
-                        <GroupBox Grid.Row="2" Style="{x:Null}" Header="BarCode规则" HorizontalAlignment="Left" Margin="10 0 0 0" Width="600">
+                        <GroupBox Grid.Row="2" Style="{x:Null}" Header="BarCode规则" HorizontalAlignment="Left" Margin="10 1 0 5" Width="600">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -223,36 +223,36 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="工单"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="90" Margin="10 0 0 0"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="型号"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="90" Margin="10 0 0 0"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="PQC"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="90" Margin="10 0 0 0"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="拉线"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="90" Margin="10 0 0 0"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="拉长"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="90" Margin="10 0 0 0"></TextBox>
                     </StackPanel>
 
                     <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="PE"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="90" Margin="10 0 0 0"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="研发"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="90" Margin="10 0 0 0"></TextBox>
                     </StackPanel>
                     <StackPanel Grid.Row="1" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="IPQC"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="90" Margin="10 0 0 0"></TextBox>
                     </StackPanel>
                 </Grid>
             </Grid>

@@ -30,19 +30,44 @@ namespace SaftBatteryTest.ViewModel
         public RelayCommand TestCommand { get; set; }
         public RelayCommand SetAutoOnlineCommand { get; set; }
         public RelayCommand OpenFileCommand { get; set; }
+        public RelayCommand SetSavePathCommand { get; set; }
+        public RelayCommand StepModifyCommand { get; set; }
 
         public MainViewModel()
         {
             TestCommand = new RelayCommand(() => Test());
             SetAutoOnlineCommand = new RelayCommand(SetAutoOnline);
             OpenFileCommand = new RelayCommand(OpenFile);
+            SetSavePathCommand = new RelayCommand(SetSavePath);
+            StepModifyCommand = new RelayCommand(StepModify);
 
             DevList = new ObservableCollection<BatteryTestDev>();
         }
 
+        private void StepModify()
+        {
+            StepSettingView view = new StepSettingView();
+            view.ShowDialog();
+        }
+
+        private void SetSavePath()
+        {
+            PathSettingView view = new PathSettingView();
+            if (view.ShowDialog() == true)
+            {
+                //! TODO 保存这个地址到本地的配置文件
+            }
+        }
+
         private void OpenFile()
         {
-            
+            OpenFileDialog file = new OpenFileDialog();
+            file.Filter = "数据文件|*.cds";
+            file.ShowDialog();
+            if (file.FileName != null && file.FileName != "")
+            {
+                //! 加载文档，根据规则生成数据
+            }
         }
 
         private void SetAutoOnline()

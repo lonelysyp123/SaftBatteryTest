@@ -7,7 +7,7 @@
         xmlns:ctr="clr-namespace:SaftBatteryTest.View.Controls"
         xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -28,28 +28,28 @@
             </Menu.Background>
             <MenuItem Header="文件"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="打开" Command="{Binding OpenFileCommand}"></MenuItem>
-                <MenuItem Header="设置文件保存路径"></MenuItem>
-                <MenuItem Header="退出"></MenuItem>
+                <MenuItem Header="设置文件保存路径" Command="{Binding SetSavePathCommand}"></MenuItem>
+                <MenuItem Header="退出" Click="Close_Click"></MenuItem>
             </MenuItem>
-            <MenuItem Header="管理"  FontSize="12" VerticalAlignment="Center">
+            <MenuItem Header="管理"  FontSize="12" VerticalAlignment="Center" IsEnabled="False">
                 <MenuItem Header="管理登录"></MenuItem>
                 <MenuItem Header="管理退出"></MenuItem>
             </MenuItem>
             <MenuItem Header="通道"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="启动"></MenuItem>
                 <MenuItem Header="停止"></MenuItem>
-                <MenuItem Header="过程修改"></MenuItem>
+                <MenuItem Header="过程修改" Command="{Binding StepModifyCommand}"></MenuItem>
                 <Separator></Separator>
-                <MenuItem Header="MES信息"></MenuItem>
+                <MenuItem Header="MES信息" IsEnabled="False"></MenuItem>
                 <MenuItem Header="自动联机"></MenuItem>
                 <MenuItem Header="联机状况"></MenuItem>
                 <MenuItem Header="详细信息"></MenuItem>
             </MenuItem>
             <MenuItem Header="视图" FontSize="12" VerticalAlignment="Center">
-                <MenuItem Header="显示CDS" IsCheckable="True"></MenuItem>
-                <MenuItem Header="显示MTV"></MenuItem>
-                <MenuItem Header="快捷栏"></MenuItem>
-                <MenuItem Header="状态栏"></MenuItem>
+                <MenuItem Name="CDSMenu" Header="显示CDS" IsCheckable="True" Checked="CDS_Checked"></MenuItem>
+                <MenuItem Name="MTVMenu" Header="显示MTV" IsCheckable="True" Checked="MTV_Checked"></MenuItem>
+                <MenuItem Header="快捷栏" IsCheckable="True"></MenuItem>
+                <MenuItem Header="状态栏" IsCheckable="True"></MenuItem>
             </MenuItem>
             <MenuItem Header="选项"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="优化自动联机" Command="{Binding SetAutoOnlineCommand}"></MenuItem>

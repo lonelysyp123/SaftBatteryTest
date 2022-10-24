@@ -79,5 +79,26 @@ namespace SaftBatteryTest
             lbi.FontSize = 14;
             lbi.Background = new SolidColorBrush(Color.FromArgb(150, 76, 255, 0));
         }
+
+        private void Close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void CDS_Checked(object sender, RoutedEventArgs e)
+        {
+            if (CDSMenu.IsChecked)
+            {
+                MTVMenu.IsChecked = false;
+            }
+        }
+
+        private void MTV_Checked(object sender, RoutedEventArgs e)
+        {
+            if (MTVMenu.IsChecked)
+            {
+                CDSMenu.IsChecked = false;
+            }
+        }
     }
 }
