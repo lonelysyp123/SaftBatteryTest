@@ -5,33 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaftBatteryTest"
         xmlns:ctr="clr-namespace:SaftBatteryTest.View.Controls"
+        xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Window.Resources>
-        <!--这里定义了复选框的样式 我用两张图片代替选中与不选中-->
-        <Style TargetType="ListBoxItem">
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background">
-                        <Setter.Value>
-                            <SolidColorBrush Color="Orange"></SolidColorBrush>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>
-                <!--<Trigger Property="IsChecked" Value="False">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="CheckBox">
-                                <Image HorizontalAlignment="Left" Name="image1"
-                                        Stretch="Fill" VerticalAlignment="Top" Width="16" Height="16"
-                             Source="/ListSample;component/images/uncheck.png" />
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Trigger>-->
-            </Style.Triggers>
-        </Style>
-    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -51,7 +27,7 @@
                 </LinearGradientBrush>
             </Menu.Background>
             <MenuItem Header="文件"  FontSize="12" VerticalAlignment="Center">
-                <MenuItem Header="打开"></MenuItem>
+                <MenuItem Header="打开" Command="{Binding OpenFileCommand}"></MenuItem>
                 <MenuItem Header="设置文件保存路径"></MenuItem>
                 <MenuItem Header="退出"></MenuItem>
             </MenuItem>
@@ -76,7 +52,7 @@
                 <MenuItem Header="状态栏"></MenuItem>
             </MenuItem>
             <MenuItem Header="选项"  FontSize="12" VerticalAlignment="Center">
-                <MenuItem Header="优化自动联机"></MenuItem>
+                <MenuItem Header="优化自动联机" Command="{Binding SetAutoOnlineCommand}"></MenuItem>
                 <MenuItem Header="CDS-MTV设置"></MenuItem>
                 <MenuItem Header="系统设置"></MenuItem>
                 <MenuItem Header="报警设置"></MenuItem>
@@ -101,23 +77,65 @@
         </Menu>
 
         <Grid Grid.Row="1" Grid.Column="1" Name="Body" Background="#FF313131">
-            
+
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="2" Width="90">
-            <ListBox Background="#FFB8B8B8" ItemsSource="{Binding DevList}" BorderThickness="0" SelectedIndex="{Binding DevIndex}" ListBoxItem.Selected="ListBox_Selected">
+        <Grid Grid.Row="1" Grid.Column="2" Width="100">
+            <ListBox Background="#FFB8B8B8" ItemsSource="{Binding DevList}" BorderThickness="0" SelectedIndex="{Binding DevIndex}" mat:ListBoxItemAssist.ShowSelection="False">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template" >
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border x:Name="b1" BorderThickness="1">
+                                        <ContentPresenter></ContentPresenter>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" TargetName="b1">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                        <GradientStop Color="#FFCAFFCA"/>
+                                                        <GradientStop Color="#7F008000" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderThickness" Value="1" TargetName="b1"></Setter>
+                                            <Setter Property="BorderBrush" Value="Black"  TargetName="b1"></Setter>
+                                        </Trigger>
+
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" TargetName="b1">
+                                                <Setter.Value>
+                                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                                        <GradientStop Color="#7FC4FAFA" Offset="0.896"/>
+                                                        <GradientStop Color="#7F89EAFF" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Setter.Value>
+                                            </Setter>
+                                            <Setter Property="BorderThickness" Value="1" TargetName="b1"></Setter>
+                                            <Setter Property="BorderBrush" Value="Black"  TargetName="b1"></Setter>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <StackPanel Orientation="Horizontal" Grid.Row="0">
-                                <Image Source="{Binding Image}" Width="20"></Image>
-                                <Label Content="{Binding Address}" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"></Label>
-                            </StackPanel>
-                            <TextBlock Grid.Row="1" Text="{Binding CommunicationState}" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
-                        </Grid>
+                        <Border Width="90">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                    <Image Source="{Binding Image}" Width="20"/>
+                                    <TextBlock Text="{Binding Address}" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </StackPanel>
+                                <TextBlock FontSize="10" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding CommunicationState}" VerticalAlignment="Center"/>
+                            </Grid>
+                        </Border>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
@@ -133,8 +151,8 @@
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
                     <Grid>
-                    <Button Style="{x:Null}" Content="测试" Click="Button_Click" Width="100" HorizontalAlignment="Left" Background="#FFFF9800"></Button>
-                    <Button Style="{x:Null}" Content="测试" Command="{Binding TestCommand}" Width="100" HorizontalAlignment="Right" Background="#994CFF00"></Button>
+                        <Button Style="{x:Null}" Content="测试" Click="Button_Click" Width="100" HorizontalAlignment="Left" Background="#FFFF9800"></Button>
+                        <Button Style="{x:Null}" Content="测试" Command="{Binding TestCommand}" Width="100" HorizontalAlignment="Right" Background="#994CFF00"></Button>
                     </Grid>
                 </Border>
                 <Border Grid.Column="1" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">

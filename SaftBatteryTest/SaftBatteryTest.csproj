@@ -92,8 +92,14 @@
     <Compile Include="Model\BatteryTestDev.cs" />
     <Compile Include="Model\ChannelModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\AutoOnLineView.xaml.cs">
+      <DependentUpon>AutoOnLineView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Channel.xaml.cs">
       <DependentUpon>Channel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Controls\IPInput.xaml.cs">
+      <DependentUpon>IPInput.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Controls\MyGrid.xaml.cs">
       <DependentUpon>MyGrid.xaml</DependentUpon>
@@ -116,7 +122,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AutoOnLineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Controls\Channel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Controls\IPInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

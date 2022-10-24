@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
 using SaftBatteryTest.Model;
+using SaftBatteryTest.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,12 +28,27 @@ namespace SaftBatteryTest.ViewModel
         }
 
         public RelayCommand TestCommand { get; set; }
+        public RelayCommand SetAutoOnlineCommand { get; set; }
+        public RelayCommand OpenFileCommand { get; set; }
 
         public MainViewModel()
         {
             TestCommand = new RelayCommand(() => Test());
+            SetAutoOnlineCommand = new RelayCommand(SetAutoOnline);
+            OpenFileCommand = new RelayCommand(OpenFile);
 
             DevList = new ObservableCollection<BatteryTestDev>();
+        }
+
+        private void OpenFile()
+        {
+            
+        }
+
+        private void SetAutoOnline()
+        {
+            AutoOnLineView view = new AutoOnLineView();
+            view.ShowDialog();
         }
 
         private void Test()
@@ -48,7 +64,7 @@ namespace SaftBatteryTest.ViewModel
                 BatteryTestDev dev = new BatteryTestDev()
                 {
                     Image = bi,
-                    Address = "127.0.0.1",
+                    Address = "127.0.0.11111",
                     CommunicationState = "Connected"
                 };
 
