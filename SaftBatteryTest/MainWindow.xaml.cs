@@ -34,6 +34,8 @@ namespace SaftBatteryTest
 
             viewmodel = new MainViewModel();
             this.DataContext = viewmodel;
+
+            StateContent.DataContext = viewmodel.AppState;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -163,13 +163,14 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <Border Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Height="18">
+        <Border Name="StateContent" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Height="18" BorderThickness="1" BorderBrush="#FF767676">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="7*"/>
-                    <ColumnDefinition Width="1.5*"/>
+                    <ColumnDefinition Width="1.3*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="1.3*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
@@ -179,16 +180,23 @@
                     </Grid>
                 </Border>
                 <Border Grid.Column="1" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
-                    <TextBlock Text="侦测电压" Margin="2 0 0 0" VerticalAlignment="Center" FontSize="10"></TextBlock>
+                    <TextBlock Text="{Binding Voltage}" Margin="2 0 0 0" VerticalAlignment="Center" FontSize="10"></TextBlock>
                 </Border>
                 <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
-                    <TextBlock Text="MTV联机结果:" VerticalAlignment="Center" FontSize="10"></TextBlock>
+                    <TextBlock Text="{Binding MTVOnline}" VerticalAlignment="Center" FontSize="10"></TextBlock>
                 </Border>
                 <Border Grid.Column="3" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
-                    <TextBlock Text="[Admin]" VerticalAlignment="Center" FontSize="10"></TextBlock>
+                    <TextBlock Text="{Binding AutoOnline}" VerticalAlignment="Center" FontSize="10"></TextBlock>
                 </Border>
-                <TextBlock Grid.Column="4" Text="00:00:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"></TextBlock>
+                <Border Grid.Column="4" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                    <TextBlock Text="{Binding UserName}" VerticalAlignment="Center" FontSize="10"></TextBlock>
+                </Border>
+                <TextBlock Grid.Column="5" Text="{Binding CurrentTime}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"></TextBlock>
             </Grid>
+        </Border>
+
+        <Border Grid.Row="1" Grid.Column="0" Width="80" Background="#FFC0DAE2" BorderThickness="1" BorderBrush="#FF5B6C72">
+
         </Border>
     </Grid>
 </Window>

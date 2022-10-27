@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Win32;
+using SaftBatteryTest.Helper;
 using SaftBatteryTest.Model;
 using SaftBatteryTest.View;
 using System;
@@ -33,15 +34,21 @@ namespace SaftBatteryTest.ViewModel
         public RelayCommand SetSavePathCommand { get; set; }
         public RelayCommand StepModifyCommand { get; set; }
 
+        public AppStateModel AppState { get; set; }
+
         public MainViewModel()
         {
-            TestCommand = new RelayCommand(() => Test());
+            TestCommand = new RelayCommand(Test);
             SetAutoOnlineCommand = new RelayCommand(SetAutoOnline);
             OpenFileCommand = new RelayCommand(OpenFile);
             SetSavePathCommand = new RelayCommand(SetSavePath);
             StepModifyCommand = new RelayCommand(StepModify);
 
             DevList = new ObservableCollection<BatteryTestDev>();
+            AppState = new AppStateModel();
+
+            Log4Net.Log().Info("123");
+            Log4Net.Log().Error("321");
         }
 
         private void StepModify()
@@ -78,22 +85,23 @@ namespace SaftBatteryTest.ViewModel
 
         private void Test()
         {
-            DirectoryInfo directory = new DirectoryInfo("./Resource/Image");
-            FileInfo[] files = directory.GetFiles("PC.png");
+            Console.WriteLine("1234");
+            //DirectoryInfo directory = new DirectoryInfo("./Resource/Image");
+            //FileInfo[] files = directory.GetFiles("PC.png");
 
-            BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.UriSource = new Uri(files[0].FullName, UriKind.Absolute);
-                bi.EndInit();
+            //BitmapImage bi = new BitmapImage();
+            //    bi.BeginInit();
+            //    bi.UriSource = new Uri(files[0].FullName, UriKind.Absolute);
+            //    bi.EndInit();
 
-                BatteryTestDev dev = new BatteryTestDev()
-                {
-                    Image = bi,
-                    Address = "127.0.0.11111",
-                    CommunicationState = "Connected"
-                };
+            //    BatteryTestDev dev = new BatteryTestDev()
+            //    {
+            //        Image = bi,
+            //        Address = "127.0.0.11111",
+            //        CommunicationState = "Connected"
+            //    };
 
-                DevList.Add(dev);
+            //    DevList.Add(dev);
         }
     }
 }

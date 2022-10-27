@@ -18,6 +18,7 @@ namespace SaftBatteryTest.Model
                 SetProperty(ref _title, value);
             }
         }
+
         public ChannelModel()
         {
             Title = "code:";
