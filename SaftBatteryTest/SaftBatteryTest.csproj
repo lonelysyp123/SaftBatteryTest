@@ -95,6 +95,9 @@
     <Compile Include="View\AutoOnLineView.xaml.cs">
       <DependentUpon>AutoOnLineView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\CDSMTVView.xaml.cs">
+      <DependentUpon>CDSMTVView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Controls\Channel.xaml.cs">
       <DependentUpon>Channel.xaml</DependentUpon>
     </Compile>
@@ -110,6 +113,9 @@
     <Compile Include="View\StepSettingView.xaml.cs">
       <DependentUpon>StepSettingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\SystemSetView.xaml.cs">
+      <DependentUpon>SystemSetView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -123,6 +129,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\AutoOnLineView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\CDSMTVView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -143,6 +153,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\StepSettingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SystemSetView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
