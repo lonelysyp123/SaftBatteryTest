@@ -4,14 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaftBatteryTest.View"
-        xmlns:trl="clr-namespace:SaftBatteryTest.View.Controls"
+        xmlns:trl="clr-namespace:SaftBatteryTest.Controls"
         mc:Ignorable="d"
         Title="设置自动联机" Height="400" Width="500" ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="7.5*"/>
-            <RowDefinition/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Text="自动联机时，搜索范围:" VerticalAlignment="Center"></TextBlock>
         <Grid Grid.Row="1">
@@ -128,5 +128,10 @@
                 </Grid>
             </GroupBox>
         </Grid>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="确认" Margin="0 0 50 0"></Button>
+            <Button Content="取消" Margin="50 0 0 0"></Button>
+        </StackPanel>
     </Grid>
 </Window>

@@ -14,16 +14,72 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SaftBatteryTest.View.Controls
+namespace SaftBatteryTest.Controls
 {
     /// <summary>
     /// IPInput.xaml 的交互逻辑
     /// </summary>
     public partial class IPInput : UserControl
     {
+        public string AddressText 
+        { 
+            get
+            {
+                string ip = "";
+                if (P1.Text == "")
+                {
+                    ip += "0";
+                }
+                else
+                {
+                    ip += P1.Text;
+                }
+                ip += ".";
+                if (P2.Text == "")
+                {
+                    ip += "0";
+                }
+                else
+                {
+                    ip += P2.Text;
+                }
+                ip += ".";
+                if (P3.Text == "")
+                {
+                    ip += "0";
+                }
+                else
+                {
+                    ip += P3.Text;
+                }
+                ip += ".";
+                if (P4.Text == "")
+                {
+                    ip += "0";
+                }
+                else
+                {
+                    ip += P4.Text;
+                }
+                return ip;
+            }
+        }
+
         public IPInput()
         {
             InitializeComponent();
+        }
+
+        public void SetAddressText(string ip)
+        {
+            string[] parts = ip.Split('.');
+            if (parts.Length == 4)
+            {
+                P1.Text = parts[0];
+                P2.Text = parts[1];
+                P3.Text = parts[2];
+                P4.Text = parts[3];
+            }
         }
 
         private void P1_TextChanged(object sender, TextChangedEventArgs e)

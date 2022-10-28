@@ -1,0 +1,27 @@
+﻿<Window x:Class="SaftBatteryTest.View.AddIPsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SaftBatteryTest.View"
+        xmlns:trl="clr-namespace:SaftBatteryTest.Controls"
+        mc:Ignorable="d"
+        Title="AddIPsView" Height="120" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="IP" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+            <trl:IPInput x:Name="IP1" Width="150" VerticalAlignment="Center" Margin="40 0 0 0"></trl:IPInput>
+            <TextBlock Text="->" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+            <trl:IPInput x:Name="IP2" Width="150" VerticalAlignment="Center" Margin="10 0 0 0"></trl:IPInput>
+        </StackPanel>
+
+        <StackPanel Grid.Row="5" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="确认" Margin="0 0 10 0" Click="OK_Click"></Button>
+            <Button Content="取消" Margin="10 0 0 0" Click="Cancel_Click"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

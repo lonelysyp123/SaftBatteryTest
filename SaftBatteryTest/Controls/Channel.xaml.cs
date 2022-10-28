@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SaftBatteryTest.View.Controls
+namespace SaftBatteryTest.Controls
 {
     /// <summary>
     /// Channel.xaml 的交互逻辑

@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaftBatteryTest"
-        xmlns:ctr="clr-namespace:SaftBatteryTest.View.Controls"
+        xmlns:ctr="clr-namespace:SaftBatteryTest.Controls"
         xmlns:mat="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200" WindowStartupLocation="CenterScreen">
@@ -102,7 +102,14 @@
             </Grid>
         </Grid>
 
-        <Grid Grid.Row="1" Grid.Column="2" Width="100">
+        <Grid Grid.Row="1" Grid.Column="2" Width="120">
+            <Grid.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="添加IP地址" Command="{Binding AddIPCommand}"></MenuItem>
+                    <MenuItem Header="添加IP地址范围" Command="{Binding AddIPsCommand}"></MenuItem>
+                    <MenuItem Header="删除所有IP地址"></MenuItem>
+                </ContextMenu>
+            </Grid.ContextMenu>
             <ListBox Background="#FFB8B8B8" ItemsSource="{Binding DevList}" BorderThickness="0" SelectedIndex="{Binding DevIndex}" mat:ListBoxItemAssist.ShowSelection="False">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
@@ -123,7 +130,7 @@
                                                 </Setter.Value>
                                             </Setter>
                                             <Setter Property="BorderThickness" Value="1" TargetName="b1"></Setter>
-                                            <Setter Property="BorderBrush" Value="Black"  TargetName="b1"></Setter>
+                                            <Setter Property="BorderBrush" Value="Black" TargetName="b1"></Setter>
                                         </Trigger>
 
                                         <Trigger Property="IsMouseOver" Value="True">
@@ -146,15 +153,24 @@
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="90">
+                        <Border Width="110" Height="40" Background="#02FFFFFF">
                             <Grid>
+                                <Grid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="重新连接"></MenuItem>
+                                        <MenuItem Header="添加IP地址" Command="{Binding AddIPCommand}"></MenuItem>
+                                        <MenuItem Header="添加IP地址范围" Command="{Binding AddIPsCommand}"></MenuItem>
+                                        <MenuItem Header="删除IP地址"></MenuItem>
+                                        <MenuItem Header="删除所有IP地址"></MenuItem>
+                                    </ContextMenu>
+                                </Grid.ContextMenu>
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
                                 <StackPanel Orientation="Horizontal" Grid.Row="0">
                                     <Image Source="{Binding Image}" Width="20"/>
-                                    <TextBlock Text="{Binding Address}" FontSize="12" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <TextBlock Text="{Binding Address}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </StackPanel>
                                 <TextBlock FontSize="10" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding CommunicationState}" VerticalAlignment="Center"/>
                             </Grid>
@@ -163,39 +179,45 @@
                 </ListBox.ItemTemplate>
             </ListBox>
         </Grid>
-        <Border Name="StateContent" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="3" Height="18" BorderThickness="1" BorderBrush="#FF767676">
+        <Border Name="StateContent" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Height="18" BorderThickness="1" BorderBrush="#FF767676">
+            <Border.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFFAFAFA"/>
+                    <GradientStop Color="#FFC9C9C9" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="10*"/>
                     <ColumnDefinition Width="1.3*"/>
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="4*"/>
                     <ColumnDefinition Width="1.3*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
-                    <Grid>
+                <Border Grid.Column="0" BorderThickness="0 0 1 0" BorderBrush="#FFA3ABB1">
+                    <!--<Grid>
                         <Button Style="{x:Null}" Content="测试" Click="Button_Click" Width="100" HorizontalAlignment="Left" Background="#FFFF9800"></Button>
                         <Button Style="{x:Null}" Content="测试" Command="{Binding TestCommand}" Width="100" HorizontalAlignment="Right" Background="#994CFF00"></Button>
-                    </Grid>
+                    </Grid>-->
                 </Border>
-                <Border Grid.Column="1" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                <Border Grid.Column="1" BorderThickness="0 0 1 0" BorderBrush="#FFA3ABB1">
                     <TextBlock Text="{Binding Voltage}" Margin="2 0 0 0" VerticalAlignment="Center" FontSize="10"></TextBlock>
                 </Border>
-                <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                <Border Grid.Column="2" BorderThickness="0 0 1 0" BorderBrush="#FFA3ABB1">
                     <TextBlock Text="{Binding MTVOnline}" VerticalAlignment="Center" FontSize="10"></TextBlock>
                 </Border>
-                <Border Grid.Column="3" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                <Border Grid.Column="3" BorderThickness="0 0 1 0" BorderBrush="#FFA3ABB1">
                     <TextBlock Text="{Binding AutoOnline}" VerticalAlignment="Center" FontSize="10"></TextBlock>
                 </Border>
-                <Border Grid.Column="4" BorderThickness="0 0 1 0" BorderBrush="#FFD5DFE5">
+                <Border Grid.Column="4" BorderThickness="0 0 1 0" BorderBrush="#FFA3ABB1">
                     <TextBlock Text="{Binding UserName}" VerticalAlignment="Center" FontSize="10"></TextBlock>
                 </Border>
                 <TextBlock Grid.Column="5" Text="{Binding CurrentTime}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"></TextBlock>
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" Grid.Column="0" Width="80" Background="#FFC0DAE2" BorderThickness="1" BorderBrush="#FF5B6C72">
+        <Border Grid.Row="1" Grid.Column="0" Width="90" Background="#FFC0DAE2" BorderThickness="1" BorderBrush="#FF5B6C72">
 
         </Border>
     </Grid>

@@ -1,0 +1,151 @@
+﻿<Window x:Class="SaftBatteryTest.View.AppSetView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SaftBatteryTest.View"
+        mc:Ignorable="d"
+        Title="AppSetView" Height="700" Width="500">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="1.   CDS串口波特率" VerticalAlignment="Center"></TextBlock>
+            <RadioButton Content="19200" Margin="50 0 0 0"></RadioButton>
+            <RadioButton Content="57600" Margin="50 0 0 0"></RadioButton>
+            <TextBlock Text="(软件重启有效)" Margin="40 0 0 0" VerticalAlignment="Center"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="2.   MTV串口波特率" VerticalAlignment="Center"></TextBlock>
+            <RadioButton Content="19200" Margin="47 0 0 0"></RadioButton>
+            <RadioButton Content="57600" Margin="50 0 0 0"></RadioButton>
+            <TextBlock Text="(软件重启有效)" Margin="40 0 0 0" VerticalAlignment="Center"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="3.   电流电压振幅" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="100 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="%" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="4.   最小电流显示位数" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="76 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="%" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="5.   CDS采样时间间隔" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="76 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="ms" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="6.   MTV采样时间间隔" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="73 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="ms" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="7.   充电延时记录时间" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="76 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="ms" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="7" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="8.   放电延时记录时间" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="76 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="ms" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="8" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="9.   静置延时记录时间" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="76 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="ms" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="9" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="10.   CD延时记录时间" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="76 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="ms" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="10" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="11.   延迟零电流电压停止时间" VerticalAlignment="Center"></TextBlock>
+            <TextBox Width="100" BorderThickness="1" Margin="33 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="minutes" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="11" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="12." VerticalAlignment="Center"></TextBlock>
+            <CheckBox Content="温度校正值" Margin="10 0 0 0"></CheckBox>
+            <TextBox Width="100" BorderThickness="1" Margin="84 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="°C" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="12" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="13." VerticalAlignment="Center"></TextBlock>
+            <CheckBox Content="容量校正幅度" Margin="10 0 0 0"></CheckBox>
+            <TextBox Width="100" BorderThickness="1" Margin="72 0 0 0" VerticalAlignment="Center"></TextBox>
+            <TextBlock Text="%" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="13" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="14." VerticalAlignment="Center"></TextBlock>
+            <CheckBox Content="日志调试模式" Margin="10 0 0 0"></CheckBox>
+        </StackPanel>
+        <StackPanel Grid.Row="14" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="15." VerticalAlignment="Center"></TextBlock>
+            <CheckBox Content="动态曲线" Margin="10 0 0 0"></CheckBox>
+
+            <TextBlock Text="16." VerticalAlignment="Center" Margin="100 0 0 0"></TextBlock>
+            <CheckBox Content="高速工况" Margin="10 0 0 0"></CheckBox>
+        </StackPanel>
+        <StackPanel Grid.Row="15" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="17." VerticalAlignment="Center"></TextBlock>
+            <CheckBox Content="充电异常" Margin="10 0 0 0"></CheckBox>
+            <TextBlock Text="每上升" VerticalAlignment="Center" Margin="40 0 5 0"></TextBlock>
+            <TextBox Width="50" VerticalAlignment="Center" BorderThickness="1"></TextBox>
+            <TextBlock Text="AH" VerticalAlignment="Center" Margin="5 0 5 0"></TextBlock>
+            <TextBox Width="50" VerticalAlignment="Center" BorderThickness="1"></TextBox>
+            <TextBlock Text="MV" VerticalAlignment="Center" Margin="5 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="16" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="18." VerticalAlignment="Center"></TextBlock>
+            <CheckBox Content="放电异常" Margin="10 0 0 0"></CheckBox>
+            <TextBlock Text="每上升" VerticalAlignment="Center" Margin="40 0 5 0"></TextBlock>
+            <TextBox Width="50" VerticalAlignment="Center" BorderThickness="1"></TextBox>
+            <TextBlock Text="AH" VerticalAlignment="Center" Margin="5 0 5 0"></TextBlock>
+            <TextBox Width="50" VerticalAlignment="Center" BorderThickness="1"></TextBox>
+            <TextBlock Text="MV" VerticalAlignment="Center" Margin="5 0 0 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="17" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="19." VerticalAlignment="Center"></TextBlock>
+            <CheckBox Content="显示温度" Margin="10 0 0 0"></CheckBox>
+
+            <TextBlock Text="20." VerticalAlignment="Center" Margin="100 0 0 0"></TextBlock>
+            <CheckBox Content="安全保护" Margin="10 0 0 0"></CheckBox>
+        </StackPanel>
+        <StackPanel Grid.Row="18" Orientation="Horizontal" Margin="40 0 0 0">
+            <TextBlock Text="21." VerticalAlignment="Center"></TextBlock>
+            <CheckBox Content="静置温度范围内跳转工步" Margin="10 0 0 0"></CheckBox>
+
+            <TextBlock Text="22." VerticalAlignment="Center" Margin="16 0 0 0"></TextBlock>
+            <CheckBox Content="DPU  MTV透传" Margin="10 0 0 0"></CheckBox>
+        </StackPanel>
+        <StackPanel Grid.Row="19" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="确认" Margin="0 0 50 0" Width="80"></Button>
+            <Button Content="取消" Margin="50 0 0 0" Width="80"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

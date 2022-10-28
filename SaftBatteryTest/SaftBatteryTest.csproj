@@ -96,23 +96,32 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\Log4Net.cs" />
-    <Compile Include="Model\AppStateModel.cs" />
+    <Compile Include="ViewModel\AppStateViewModel.cs" />
     <Compile Include="Model\BatteryTestDev.cs" />
     <Compile Include="Model\ChannelModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\AddIPsView.xaml.cs">
+      <DependentUpon>AddIPsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddIPView.xaml.cs">
+      <DependentUpon>AddIPView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AppSetView.xaml.cs">
+      <DependentUpon>AppSetView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AutoOnLineView.xaml.cs">
       <DependentUpon>AutoOnLineView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\CDSMTVView.xaml.cs">
       <DependentUpon>CDSMTVView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\Channel.xaml.cs">
+    <Compile Include="Controls\Channel.xaml.cs">
       <DependentUpon>Channel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\IPInput.xaml.cs">
+    <Compile Include="Controls\IPInput.xaml.cs">
       <DependentUpon>IPInput.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Controls\MyGrid.xaml.cs">
+    <Compile Include="Controls\MyGrid.xaml.cs">
       <DependentUpon>MyGrid.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\PathSettingView.xaml.cs">
@@ -136,6 +145,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AddIPsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddIPView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AppSetView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AutoOnLineView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -144,15 +165,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\Channel.xaml">
+    <Page Include="Controls\Channel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\IPInput.xaml">
+    <Page Include="Controls\IPInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Controls\MyGrid.xaml">
+    <Page Include="Controls\MyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,13 +218,12 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resource\Config\IPConfig.xml" />
     <Content Include="Resource\Image\PC.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Log\OperationLog\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.0.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

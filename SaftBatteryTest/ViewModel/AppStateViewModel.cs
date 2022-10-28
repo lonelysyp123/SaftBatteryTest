@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using SaftBatteryTest.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace SaftBatteryTest.Model
 {
-    public class AppStateModel : ObservableObject
+    public class AppStateViewModel : ObservableObject
     {
         private string _voltage = "侦测电压";
         public string Voltage
@@ -40,7 +42,7 @@ namespace SaftBatteryTest.Model
             }
         }
 
-        private string _userName = "[Admin]";
+        private string _userName = "[未登录]";
         public string UserName
         {
             get => _userName;
@@ -60,7 +62,7 @@ namespace SaftBatteryTest.Model
             }
         }
 
-        public AppStateModel()
+        public AppStateViewModel()
         {
             Thread thread = new Thread(ShowTime);
             thread.IsBackground = true;

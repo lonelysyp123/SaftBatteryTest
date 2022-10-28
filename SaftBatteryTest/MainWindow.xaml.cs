@@ -1,6 +1,6 @@
 ﻿using SaftBatteryTest.Model;
 using SaftBatteryTest.View;
-using SaftBatteryTest.View.Controls;
+using SaftBatteryTest.Controls;
 using SaftBatteryTest.ViewModel;
 using System;
 using System.Collections;
