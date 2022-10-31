@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 using System.Windows.Media.Imaging;
 
 namespace SaftBatteryTest.ViewModel
@@ -37,6 +38,8 @@ namespace SaftBatteryTest.ViewModel
 
         public AppStateViewModel AppState { get; set; }
 
+        private const string IPConfigFilePath = "./Resource/Config/IPConfig.xml";
+
         public MainViewModel()
         {
             SetAutoOnlineCommand = new RelayCommand(SetAutoOnline);
@@ -49,19 +52,23 @@ namespace SaftBatteryTest.ViewModel
             DevList = new ObservableCollection<BatteryTestDev>();
             AppState = new AppStateViewModel();
 
+            //! 初始化界面
+            InitView();
             //Log4Net.Log().Info("123");
             //Log4Net.Log().Error("321");
         }
 
+        #region Command
+        AddIPsView IPsview;
         private void AddIPs()
         {
-            AddIPsView view = new AddIPsView();
+            IPsview = new AddIPsView();
             //! 根据配置文件来设置网段
-            view.IP1.SetAddressText("192.168.0.1");
-            view.IP2.SetAddressText("192.168.0.3");
-            if (view.ShowDialog() == true)
+            IPsview.IP1.SetAddressText("192.168.0.1");
+            IPsview.IP2.SetAddressText("192.168.0.3");
+            if (IPsview.ShowDialog() == true)
             {
-                string ip = view.IP1.AddressText;
+                string ip = IPsview.IP1.AddressText;
                 //! 判断该IP是否存在
                 var objs = DevList.Where(dev => dev.Address == ip).ToList();
                 if (objs.Count == 0)
@@ -73,12 +80,13 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
+        AddIPView IPview;
         private void AddIP()
         {
-            AddIPView view = new AddIPView();
-            if (view.ShowDialog() == true)
+            IPview = new AddIPView();
+            if (IPview.ShowDialog() == true)
             {
-                string ip = view.IPText.AddressText;
+                string ip = IPview.IPText.AddressText;
                 //! 判断该IP是否存在
                 var objs = DevList.Where(dev => dev.Address == ip).ToList();
                 if (objs.Count == 0)
@@ -86,6 +94,7 @@ namespace SaftBatteryTest.ViewModel
                     //! 界面上新增IP
                     AddIPInView(ip);
                     //! TODO 配置文件中新增IP
+                    XmlHelper.InsertIP(IPConfigFilePath, ip);
                 }
             }
         }
@@ -116,12 +125,18 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
+
         private void SetAutoOnline()
         {
             AutoOnLineView view = new AutoOnLineView();
             view.ShowDialog();
         }
+        #endregion
 
+        /// <summary>
+        /// 新增IP到界面
+        /// </summary>
+        /// <param name="ip"></param>
         private void AddIPInView(string ip)
         {
             DirectoryInfo directory = new DirectoryInfo("./Resource/Image");
@@ -140,6 +155,28 @@ namespace SaftBatteryTest.ViewModel
             };
 
             DevList.Add(dev);
+        }
+
+        /// <summary>
+        /// 初始化界面
+        /// </summary>
+        private void InitView()
+        {
+            //! 根据"./Resource/Config/IPConfig.xml"文件中的IPList来初始化IP部分
+            InitIP(IPConfigFilePath);
+        }
+
+        /// <summary>
+        /// 初始化IP界面的内容
+        /// </summary>
+        /// <param name="path">IP相关文件地址</param>
+        private void InitIP(string path)
+        {
+            string[] IPList = XmlHelper.ReadIPList(path);
+            for (int i = 0; i < IPList.Length; i++)
+            {
+                AddIPInView(IPList[i]);
+            }
         }
     }
 }

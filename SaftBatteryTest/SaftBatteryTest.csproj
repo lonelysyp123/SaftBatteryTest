@@ -96,6 +96,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\Log4Net.cs" />
+    <Compile Include="Helper\XmlHelper.cs" />
     <Compile Include="ViewModel\AppStateViewModel.cs" />
     <Compile Include="Model\BatteryTestDev.cs" />
     <Compile Include="Model\ChannelModel.cs" />
@@ -218,7 +219,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resource\Config\IPConfig.xml" />
+    <Content Include="Resource\Config\IPConfig.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resource\Image\PC.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

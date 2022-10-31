@@ -40,7 +40,7 @@ namespace SaftBatteryTest.View
             }
             else
             {
-                MessageBox.Show("IP地址输入有误!");
+                MessageBox.Show("IP地址网段不同!");
                 return;
             }
             this.DialogResult = true;
