@@ -107,7 +107,7 @@
                 <ContextMenu>
                     <MenuItem Header="添加IP地址" Command="{Binding AddIPCommand}"></MenuItem>
                     <MenuItem Header="添加IP地址范围" Command="{Binding AddIPsCommand}"></MenuItem>
-                    <MenuItem Header="删除所有IP地址"></MenuItem>
+                    <MenuItem Header="删除所有IP地址" Command="{Binding DeleteAllIPCommand}"></MenuItem>
                 </ContextMenu>
             </Grid.ContextMenu>
             <ListBox Background="#FFB8B8B8" ItemsSource="{Binding DevList}" BorderThickness="0" SelectedIndex="{Binding DevIndex}" mat:ListBoxItemAssist.ShowSelection="False">
@@ -153,28 +153,26 @@
                 </ListBox.ItemContainerStyle>
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Border Width="110" Height="40" Background="#02FFFFFF">
-                            <Grid>
-                                <Grid.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="重新连接"></MenuItem>
-                                        <MenuItem Header="添加IP地址" Command="{Binding AddIPCommand}"></MenuItem>
-                                        <MenuItem Header="添加IP地址范围" Command="{Binding AddIPsCommand}"></MenuItem>
-                                        <MenuItem Header="删除IP地址"></MenuItem>
-                                        <MenuItem Header="删除所有IP地址"></MenuItem>
-                                    </ContextMenu>
-                                </Grid.ContextMenu>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <StackPanel Orientation="Horizontal" Grid.Row="0">
-                                    <Image Source="{Binding Image}" Width="20"/>
-                                    <TextBlock Text="{Binding Address}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </StackPanel>
-                                <TextBlock FontSize="10" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding CommunicationState}" VerticalAlignment="Center"/>
-                            </Grid>
-                        </Border>
+                        <Grid Width="110" Height="40" Background="#02FFFFFF" MouseRightButtonDown="Grid_MouseRightButtonDown">
+                            <Grid.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="重新连接"></MenuItem>
+                                    <MenuItem Header="添加IP地址" Click="AddIP_Click"></MenuItem>
+                                    <MenuItem Header="添加IP地址范围" Click="AddIPs_Click"></MenuItem>
+                                    <MenuItem Header="删除IP地址" Click="DeleteIP_Click"></MenuItem>
+                                    <MenuItem Header="删除所有IP地址" Click="DeleteAllIP_Click"></MenuItem>
+                                </ContextMenu>
+                            </Grid.ContextMenu>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                <Image Source="{Binding Image}" Width="20"/>
+                                <TextBlock Name="IP" Text="{Binding Address}" FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <TextBlock FontSize="10" HorizontalAlignment="Center" Grid.Row="1" Text="{Binding CommunicationState}" VerticalAlignment="Center"/>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>

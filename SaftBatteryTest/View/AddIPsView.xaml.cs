@@ -19,6 +19,10 @@ namespace SaftBatteryTest.View
     /// </summary>
     public partial class AddIPsView : Window
     {
+        public string segment;
+        public int beforeN;
+        public int afterN;
+
         public AddIPsView()
         {
             InitializeComponent();
@@ -26,11 +30,12 @@ namespace SaftBatteryTest.View
 
         private void OK_Click(object sender, RoutedEventArgs e)
         {
-            if (IP1.P1 == IP2.P1 && IP1.P2 == IP2.P2 && IP1.P3 == IP2.P3)
+            segment = IP1.P1.Text + "." + IP1.P2.Text + "." + IP1.P3.Text + ".";
+            if (IP1.P1.Text == IP2.P1.Text && IP1.P2.Text == IP2.P2.Text && IP1.P3.Text == IP2.P3.Text)
             {
-                int beforeN = 0;
+                beforeN = 0;
                 int.TryParse(IP1.P4.Text, out beforeN);
-                int afterN = 0;
+                afterN = 0;
                 int.TryParse(IP2.P4.Text, out afterN);
                 if (afterN < beforeN)
                 {

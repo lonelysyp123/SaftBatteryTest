@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
 
 namespace SaftBatteryTest
 {
@@ -100,6 +101,47 @@ namespace SaftBatteryTest
             if (MTVMenu.IsChecked)
             {
                 CDSMenu.IsChecked = false;
+            }
+        }
+
+        private void AddIP_Click(object sender, RoutedEventArgs e)
+        {
+            viewmodel.AddIP();
+        }
+
+        private void AddIPs_Click(object sender, RoutedEventArgs e)
+        {
+            viewmodel.AddIPs();
+        }
+
+        private void DeleteIP_Click(object sender, RoutedEventArgs e)
+        {
+            viewmodel.DeleteIP(ip);
+        }
+
+        private void DeleteAllIP_Click(object sender, RoutedEventArgs e)
+        {
+            viewmodel.DeleteAllIP();
+        }
+
+        string ip = "";
+        private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var obj = sender as Grid;
+            for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
+            {
+                var child = VisualTreeHelper.GetChild(obj, i);
+                if (child is StackPanel)
+                {
+                    for (int l = 0; l <= VisualTreeHelper.GetChildrenCount(child) - 1; l++)
+                    {
+                        var cld = VisualTreeHelper.GetChild(child, l);
+                        if (cld is TextBlock)
+                        {
+                            ip = (cld as TextBlock).Text;
+                        }
+                    }
+                }
             }
         }
     }

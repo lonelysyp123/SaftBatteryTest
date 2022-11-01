@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
@@ -29,12 +30,23 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
+        private int _devIndex;
+        public int DevIndex
+        {
+            get => _devIndex;
+            set
+            {
+                SetProperty(ref _devIndex, value);
+            }
+        }
+
         public RelayCommand SetAutoOnlineCommand { get; set; }
         public RelayCommand OpenFileCommand { get; set; }
         public RelayCommand SetSavePathCommand { get; set; }
         public RelayCommand StepModifyCommand { get; set; }
         public RelayCommand AddIPCommand { get; set; }
         public RelayCommand AddIPsCommand { get; set; }
+        public RelayCommand DeleteAllIPCommand { get; set; }
 
         public AppStateViewModel AppState { get; set; }
 
@@ -48,6 +60,7 @@ namespace SaftBatteryTest.ViewModel
             StepModifyCommand = new RelayCommand(StepModify);
             AddIPCommand = new RelayCommand(AddIP);
             AddIPsCommand = new RelayCommand(AddIPs);
+            DeleteAllIPCommand = new RelayCommand(DeleteAllIP);
 
             DevList = new ObservableCollection<BatteryTestDev>();
             AppState = new AppStateViewModel();
@@ -59,8 +72,24 @@ namespace SaftBatteryTest.ViewModel
         }
 
         #region Command
+        public void DeleteIP(string ip)
+        {
+            var objs = DevList.Where(dev => dev.Address == ip).ToList();
+            for (int i = 0; i < objs.Count; i++)
+            {
+                DeleteIPByView(objs[i]);
+                XmlHelper.DeleteIP(IPConfigFilePath, ip);
+            }
+        }
+
+        public void DeleteAllIP()
+        {
+            DeleteAllIPByView();
+            XmlHelper.DeleteAllIP(IPConfigFilePath);
+        }
+
         AddIPsView IPsview;
-        private void AddIPs()
+        public void AddIPs()
         {
             IPsview = new AddIPsView();
             //! 根据配置文件来设置网段
@@ -68,20 +97,24 @@ namespace SaftBatteryTest.ViewModel
             IPsview.IP2.SetAddressText("192.168.0.3");
             if (IPsview.ShowDialog() == true)
             {
-                string ip = IPsview.IP1.AddressText;
-                //! 判断该IP是否存在
-                var objs = DevList.Where(dev => dev.Address == ip).ToList();
-                if (objs.Count == 0)
+                for (int i = IPsview.beforeN; i <= IPsview.afterN; i++)
                 {
-                    //! 界面上新增IP
-                    AddIPInView(ip);
-                    //! TODO 配置文件中新增IP
+                    string ip = IPsview.segment + i.ToString();
+                    //! 判断该IP是否存在
+                    var objs = DevList.Where(dev => dev.Address == ip).ToList();
+                    if (objs.Count == 0)
+                    {
+                        //! 界面上新增IP
+                        AddIPInView(ip);
+                        //! TODO 配置文件中新增IP
+                        XmlHelper.InsertIP(IPConfigFilePath, ip);
+                    }
                 }
             }
         }
 
         AddIPView IPview;
-        private void AddIP()
+        public void AddIP()
         {
             IPview = new AddIPView();
             if (IPview.ShowDialog() == true)
@@ -155,6 +188,23 @@ namespace SaftBatteryTest.ViewModel
             };
 
             DevList.Add(dev);
+        }
+
+        /// <summary>
+        /// 从界面上删除IP
+        /// </summary>
+        /// <param name="dev">ip对应的设备对象</param>
+        private void DeleteIPByView(BatteryTestDev dev)
+        {
+            DevList.Remove(dev);
+        }
+
+        /// <summary>
+        /// 从界面上删除全部IP
+        /// </summary>
+        private void DeleteAllIPByView()
+        {
+            DevList.Clear();
         }
 
         /// <summary>
