@@ -97,10 +97,14 @@
     </ApplicationDefinition>
     <Compile Include="Helper\Log4Net.cs" />
     <Compile Include="Helper\XmlHelper.cs" />
+    <Compile Include="Model\RecordConditionModel.cs" />
+    <Compile Include="Model\SafeModel.cs" />
+    <Compile Include="Model\StepModel.cs" />
     <Compile Include="ViewModel\AppStateViewModel.cs" />
     <Compile Include="Model\BatteryTestDev.cs" />
     <Compile Include="Model\ChannelModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SetpSettingViewModel.cs" />
     <Compile Include="View\AddIPsView.xaml.cs">
       <DependentUpon>AddIPsView.xaml</DependentUpon>
     </Compile>
@@ -222,6 +226,7 @@
     <Content Include="Resource\Config\IPConfig.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resource\Config\StepConfig.xml" />
     <Content Include="Resource\Image\PC.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

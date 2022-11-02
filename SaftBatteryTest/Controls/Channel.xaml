@@ -15,10 +15,21 @@
         </Grid.RowDefinitions>
         <Grid.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="123"></MenuItem>
+                <MenuItem Header="启动" IsEnabled="{Binding StartIsEnabled}" Command="{Binding StartDevCommand}"></MenuItem>
+                <MenuItem Header="停止" IsEnabled="{Binding StopIsEnabled}" Command="{Binding StopDevCommand}"></MenuItem>
+                <MenuItem Header="过程修改" IsEnabled="{Binding StepSetIsEnabled}" Command="{Binding StepSetCommand}"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="打开数据"></MenuItem>
+                <MenuItem Header="循环导出数据"></MenuItem>
+                <Separator></Separator>
+                <MenuItem Header="通道状态查询/跳转"></MenuItem>
+                <MenuItem Header="选择所有通道"></MenuItem>
+                <MenuItem Header="并联通道"></MenuItem>
+                <Separator></Separator>
+                
             </ContextMenu>
         </Grid.ContextMenu>
-        <Border CornerRadius="10 10 0 0" Grid.Row="0">
+        <Border CornerRadius="5 5 0 0" Grid.Row="0">
             <Border.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF267200" Offset="1"/>
@@ -88,7 +99,7 @@
             <TextBlock Grid.Row="2" Grid.Column="1" Text="0.0W" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
             <TextBlock Grid.Row="4" Grid.Column="1" Text="0.0Wh" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
         </Grid>
-        <Border Grid.Row="2" Background="White" CornerRadius="0 0 10 10">
+        <Border Grid.Row="2" Background="White" CornerRadius="0 0 5 5">
         <Grid Margin="5 0 5 0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -100,5 +111,10 @@
             <TextBlock Grid.Column="2" Text="Run Time:0.00Sec" FontSize="10" VerticalAlignment="Center"></TextBlock>
         </Grid>
         </Border>
+        <Border Grid.Row="0" Grid.RowSpan="3" Width="65" Height="32" HorizontalAlignment="Right" VerticalAlignment="Top" CornerRadius="0 5 0 5" Background="#FFDDDDDD">
+            <TextBlock Text="{Binding ChannelBoxN}" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding NumColor}"></TextBlock>
+        </Border>
+
+        <Border Name="Screen" Background="#B29A9A9A" Grid.Row="0" Grid.RowSpan="3" CornerRadius="5"></Border>
     </Grid>
 </UserControl>

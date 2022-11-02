@@ -69,9 +69,10 @@ namespace SaftBatteryTest.Model
             thread.Start();
         }
 
+        private bool IsRun = true;
         private void ShowTime()
         {
-            while (true)
+            while (IsRun)
             {
                 Thread.Sleep(1000);
                 CurrentTime = DateTime.Now.ToString("HH:mm:ss");

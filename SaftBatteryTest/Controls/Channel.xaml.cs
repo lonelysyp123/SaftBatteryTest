@@ -27,7 +27,6 @@ namespace SaftBatteryTest.Controls
         {
             InitializeComponent();
 
-            model = new ChannelModel();
             this.DataContext = model;
         }
 

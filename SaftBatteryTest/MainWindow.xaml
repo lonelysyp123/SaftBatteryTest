@@ -110,7 +110,7 @@
                     <MenuItem Header="删除所有IP地址" Command="{Binding DeleteAllIPCommand}"></MenuItem>
                 </ContextMenu>
             </Grid.ContextMenu>
-            <ListBox Background="#FFB8B8B8" ItemsSource="{Binding DevList}" BorderThickness="0" SelectedIndex="{Binding DevIndex}" mat:ListBoxItemAssist.ShowSelection="False">
+            <ListBox Background="#FFB8B8B8" ItemsSource="{Binding DevList}" BorderThickness="0" SelectedIndex="{Binding DevIndex}" mat:ListBoxItemAssist.ShowSelection="False" SelectionChanged="DevList_SelectionChanged">
                 <ListBox.ItemContainerStyle>
                     <Style TargetType="{x:Type ListBoxItem}">
                         <Setter Property="Template" >
@@ -156,7 +156,8 @@
                         <Grid Width="110" Height="40" Background="#02FFFFFF" MouseRightButtonDown="Grid_MouseRightButtonDown">
                             <Grid.ContextMenu>
                                 <ContextMenu>
-                                    <MenuItem Header="重新连接"></MenuItem>
+                                    <MenuItem Header="重新连接" Click="Connect_Click"></MenuItem>
+                                    <MenuItem Header="断开连接" Click="DisConnect_Click"></MenuItem>
                                     <MenuItem Header="添加IP地址" Click="AddIP_Click"></MenuItem>
                                     <MenuItem Header="添加IP地址范围" Click="AddIPs_Click"></MenuItem>
                                     <MenuItem Header="删除IP地址" Click="DeleteIP_Click"></MenuItem>

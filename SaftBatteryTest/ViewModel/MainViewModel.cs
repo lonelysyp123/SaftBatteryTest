@@ -37,6 +37,8 @@ namespace SaftBatteryTest.ViewModel
             set
             {
                 SetProperty(ref _devIndex, value);
+                // 改变选择的IP时，会改变主界面
+                DevChange();
             }
         }
 
@@ -48,7 +50,8 @@ namespace SaftBatteryTest.ViewModel
         public RelayCommand AddIPsCommand { get; set; }
         public RelayCommand DeleteAllIPCommand { get; set; }
 
-        public AppStateViewModel AppState { get; set; }
+        public AppStateViewModel AppStateVM { get; set; }
+        public StepSettingViewModel StepSettingVM { get; set; }
 
         private const string IPConfigFilePath = "./Resource/Config/IPConfig.xml";
 
@@ -63,12 +66,11 @@ namespace SaftBatteryTest.ViewModel
             DeleteAllIPCommand = new RelayCommand(DeleteAllIP);
 
             DevList = new ObservableCollection<BatteryTestDev>();
-            AppState = new AppStateViewModel();
+            AppStateVM = new AppStateViewModel();
+            StepSettingVM = new StepSettingViewModel();
 
             //! 初始化界面
-            InitView();
-            //Log4Net.Log().Info("123");
-            //Log4Net.Log().Error("321");
+            InitContent();
         }
 
         #region Command
@@ -132,10 +134,19 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
+        
         private void StepModify()
         {
-            StepSettingView view = new StepSettingView();
-            view.ShowDialog();
+            StepSettingView stepsettingview = new StepSettingView(StepSettingVM);
+            if (stepsettingview.ShowDialog() == true)
+            {
+                Console.WriteLine("123");
+            }
+            else
+            {
+                Console.WriteLine("321");
+            }
+            
         }
 
         private void SetSavePath()
@@ -172,21 +183,7 @@ namespace SaftBatteryTest.ViewModel
         /// <param name="ip"></param>
         private void AddIPInView(string ip)
         {
-            DirectoryInfo directory = new DirectoryInfo("./Resource/Image");
-            FileInfo[] files = directory.GetFiles("PC.png");
-
-            BitmapImage bi = new BitmapImage();
-            bi.BeginInit();
-            bi.UriSource = new Uri(files[0].FullName, UriKind.Absolute);
-            bi.EndInit();
-
-            BatteryTestDev dev = new BatteryTestDev()
-            {
-                Image = bi,
-                Address = ip,
-                CommunicationState = "Disconnected"
-            };
-
+            BatteryTestDev dev = new BatteryTestDev(ip);
             DevList.Add(dev);
         }
 
@@ -210,7 +207,7 @@ namespace SaftBatteryTest.ViewModel
         /// <summary>
         /// 初始化界面
         /// </summary>
-        private void InitView()
+        private void InitContent()
         {
             //! 根据"./Resource/Config/IPConfig.xml"文件中的IPList来初始化IP部分
             InitIP(IPConfigFilePath);
@@ -227,6 +224,11 @@ namespace SaftBatteryTest.ViewModel
             {
                 AddIPInView(IPList[i]);
             }
+        }
+
+        private void DevChange()
+        {
+            
         }
     }
 }

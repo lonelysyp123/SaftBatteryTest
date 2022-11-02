@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SaftBatteryTest.Model;
+using SaftBatteryTest.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,9 +21,24 @@ namespace SaftBatteryTest.View
     /// </summary>
     public partial class StepSettingView : Window
     {
-        public StepSettingView()
+        public StepSettingView(StepSettingViewModel viewmodel)
         {
             InitializeComponent();
+
+            this.DataContext = viewmodel;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (DG.CommitEdit())
+            {
+                Console.WriteLine("true");
+            }
+            else
+            {
+                Console.WriteLine("false");
+                e.Cancel = true;
+            }
         }
     }
 }

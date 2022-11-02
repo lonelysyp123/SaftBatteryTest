@@ -3,10 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:SaftBatteryTest.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:model="clr-namespace:SaftBatteryTest.Model"
         mc:Ignorable="d"
-        Title="工作过程设置" Height="700" Width="1100" ResizeMode="CanMinimize">
+        Title="工作过程设置" Height="700" Width="1200" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="WorkModeEnumKey" MethodName="GetValues" ObjectType="{x:Type core:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="model:WorkMode"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>
@@ -16,7 +25,13 @@
         <TabControl Margin="10">
             <TabItem Header="正常判断条件" Height="40">
                 <Grid>
-                    <DataGrid materialDesign:DataGridAssist.CellPadding="4 2 2 2" materialDesign:DataGridAssist.ColumnHeaderPadding="4 2 2 2" CanUserAddRows="False" CanUserSortColumns="False" ItemsSource="{Binding StepList}" GridLinesVisibility="All" BorderThickness="1" BorderBrush="Black">
+                    <DataGrid Name="DG" materialDesign:DataGridAssist.CellPadding="4 2 2 2" materialDesign:DataGridAssist.ColumnHeaderPadding="4 2 2 2" CanUserSortColumns="False" ItemsSource="{Binding StepList}" GridLinesVisibility="All" BorderThickness="1" BorderBrush="Black" AutoGenerateColumns="False" CanUserAddRows="False">
+                        <DataGrid.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem Header="添加一行" Command="{Binding AddRowCommand}"></MenuItem>
+                                <MenuItem Header="删除一行" Command="{Binding DeleteRowCommand}"></MenuItem>
+                            </ContextMenu>
+                        </DataGrid.ContextMenu>
                         <DataGrid.ColumnHeaderStyle>
                             <Style TargetType="DataGridColumnHeader">
                                 <Setter Property="HorizontalContentAlignment" Value="Center">
@@ -24,24 +39,55 @@
                             </Style>
                         </DataGrid.ColumnHeaderStyle>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Width="1*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="工作模式" Width="3.5*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="GGS" Width="1.5*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="MTV" Width="1.5*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="RC" Width="1.5*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="主参数1" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="主参数2" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="终止时间(Min)" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="终止电压(V)" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="终止电流(A)" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="终止温度(°C)" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="终止容量(Ah)" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="终止能量(Wh)" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="RSOC(%)" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="-ΔV(mV)" Width="3*"></DataGridTextColumn>
-                            <DataGridTextColumn Header="NextStep" Width="2.5*"></DataGridTextColumn>
+                            <DataGridTextColumn Width="1*" Binding="{Binding ID}" IsReadOnly="True"></DataGridTextColumn>
+                            <DataGridComboBoxColumn Header="工作模式" ItemsSource="{Binding Source={StaticResource WorkModeEnumKey}}" SelectedItemBinding="{Binding Mode}" Width="3.5*"></DataGridComboBoxColumn>
+                            <DataGridTextColumn Header="GGS" Binding="{Binding GGS}" Width="1.5*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="MTV" Binding="{Binding MTV}" Width="1.5*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="RC" Binding="{Binding RC}" Width="1.5*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="主参数1" Binding="{Binding Param1}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="主参数2" Binding="{Binding Param2}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="终止时间(Min)" Binding="{Binding StopTime}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="终止电压(V)" Binding="{Binding StopVoltage}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="终止电流(A)" Binding="{Binding StopElectric}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="终止温度(°C)" Binding="{Binding StopT}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="终止容量(Ah)" Binding="{Binding StopCap}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="终止能量(Wh)" Binding="{Binding StopEnergy}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="RSOC(%)" Binding="{Binding RSOC}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="-ΔV(mV)" Binding="{Binding Offset}" Width="3*"></DataGridTextColumn>
+                            <DataGridTextColumn Header="NextStep" Binding="{Binding NextStep}" Width="2.5*"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+                    
+                    <!--<ListView>
+                        <ListView.View>
+                            <GridView>
+                                <GridView.Columns>
+                                    <GridViewColumn DisplayMemberBinding="{Binding ID}" ></GridViewColumn>
+                                    <GridViewColumn Header="工作模式">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <ComboBox ItemsSource="{Binding Source={StaticResource WorkModeEnumKey}}" SelectedItem="{Binding WorkMode}" Width="120" />
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="GGS" DisplayMemberBinding="{Binding GGS}"></GridViewColumn>
+                                    <GridViewColumn Header="MTV" DisplayMemberBinding="{Binding MTV}"></GridViewColumn>
+                                    <GridViewColumn Header="RC" DisplayMemberBinding="{Binding RC}"></GridViewColumn>
+                                    <GridViewColumn Header="主参数1" DisplayMemberBinding="{Binding Param1}"></GridViewColumn>
+                                    <GridViewColumn Header="主参数2" DisplayMemberBinding="{Binding Param2}"></GridViewColumn>
+                                    <GridViewColumn Header="终止时间(Min)" DisplayMemberBinding="{Binding StopTime}"></GridViewColumn>
+                                    <GridViewColumn Header="终止电压(V)" DisplayMemberBinding="{Binding StopVoltage}"></GridViewColumn>
+                                    <GridViewColumn Header="终止电流(A)" DisplayMemberBinding="{Binding StopElectric}"></GridViewColumn>
+                                    <GridViewColumn Header="终止温度(°C)" DisplayMemberBinding="{Binding StopT}"></GridViewColumn>
+                                    <GridViewColumn Header="终止容量(Ah)" DisplayMemberBinding="{Binding StopCap}"></GridViewColumn>
+                                    <GridViewColumn Header="终止能量(Wh)" DisplayMemberBinding="{Binding StopEnergy}"></GridViewColumn>
+                                    <GridViewColumn Header="RSOC(%)" DisplayMemberBinding="{Binding RSOC}"></GridViewColumn>
+                                    <GridViewColumn Header="-ΔV(mV)" DisplayMemberBinding="{Binding Offset}"></GridViewColumn>
+                                    <GridViewColumn Header="NextStep" DisplayMemberBinding="{Binding NextStep}"></GridViewColumn>
+                                </GridView.Columns>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>-->
                 </Grid>
             </TabItem>
             <TabItem Header="例外限制条件" Height="40">

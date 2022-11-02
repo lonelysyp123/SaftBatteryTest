@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<StepConfig>
+	<StepList>
+		<ID Type="int"></ID>
+		<WorkMode Type="WorkMode"></WorkMode>
+		<GGS Type="string"></GGS>
+		<MTV Type="string"></MTV>
+		<RC Type="string"></RC>
+		<Param1 Type="string"></Param1>
+		<Param2 Type="string"></Param2>
+		<StopTime Type="double"></StopTime>
+		<StopVoltage Type="double"></StopVoltage>
+		<StopElectric Type="double"></StopElectric>
+		<StopT Type="double"></StopT>
+		<StopCap Type="double"></StopCap>
+		<StopEnergy Type="double"></StopEnergy>
+		<RSOC Type="double"></RSOC>
+		<Offset Type="double"></Offset>
+		<NextStep Type="string"></NextStep>
+	</StepList>
+	<Safe>
+		<Voltage Type="double">
+			<V1></V1>
+			<V2></V2>
+		</Voltage>
+		<Electric Type="double"></Electric>
+		<Temperature Type="double">
+			<T1></T1>
+			<T2></T2>
+		</Temperature>
+	</Safe>
+	<DataRecord>
+		<Span IsEnable="0" Type="double"></Span>
+		<VolRange IsEnable="0" Type="double"></VolRange>
+		<ElcRange IsEnable="0" Type="double"></ElcRange>
+	</DataRecord>
+	<Info>
+		<Run Type="int"></Run>
+		<DataFileSavePath Type="string"></DataFileSavePath>
+		<IsBackup Type="int"></IsBackup>
+		<FilePath Type="string"></FilePath>
+		<BarCode></BarCode>
+		<FileName Type="string"></FileName>
+		<Remake Type="string"></Remake>
+		<Order Type="string"></Order>
+		<Model Type="string"></Model>
+		<PQC Type="string"></PQC>
+		<LX Type="string"></LX>
+		<LC Type="string"></LC>
+		<PE Type="string"></PE>
+		<Develop Type="string"></Develop>
+		<IPQC Type="string"></IPQC>
+	</Info>
+</StepConfig>

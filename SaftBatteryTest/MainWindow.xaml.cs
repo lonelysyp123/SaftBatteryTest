@@ -35,45 +35,42 @@ namespace SaftBatteryTest
 
             viewmodel = new MainViewModel();
             this.DataContext = viewmodel;
-
-            StateContent.DataContext = viewmodel.AppState;
+            StateContent.DataContext = viewmodel.AppStateVM;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void ShowDevContent(BatteryTestDev dev)
         {
-            //Channel channel1 = new Channel(viewmodel.Body);
+            Body.Children.Clear();
+            if (dev != null && dev.CommunicationState == "Connected")
+            {
+                StackPanel panel = new StackPanel();
+                panel.Orientation = Orientation.Horizontal;
 
-            //Border border1 = new Border();
-            ////border1.BorderThickness = new Thickness(3);
-            ////border1.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 255, 184, 0));
-            //border1.CornerRadius = new CornerRadius(10);
-            //border1.Height = 180;
-            //border1.Width = 200;
-            //border1.Margin = new Thickness(7, 5, 7, 5);
-            //border1.Child = channel1;
+                for (int i = 0; i < dev.Channels.Count; i++)
+                {
+                    Channel channel1 = new Channel(dev.Channels[i]);
 
-            //StackPanel panel = new StackPanel();
-            //panel.Orientation = Orientation.Horizontal;
-            //panel.Children.Add(border1);
+                    Border border1 = new Border();
+                    border1.CornerRadius = new CornerRadius(10);
+                    border1.Height = 180;
+                    border1.Width = 200;
+                    border1.Margin = new Thickness(7, 5, 7, 5);
+                    border1.Child = channel1;
 
-            //Border border = new Border();
-            //border.BorderThickness = new Thickness(3);
-            //border.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 218, 250, 240));
-            //border.CornerRadius = new CornerRadius(10);
-            //border.Height = 200;
-            //border.VerticalAlignment = VerticalAlignment.Top;
-            //border.Margin = new Thickness(7, 5, 7, 5);
-            //border.Child = panel;
+                    panel.Children.Add(border1);
+                }
 
+                Border border = new Border();
+                border.BorderThickness = new Thickness(3);
+                border.BorderBrush = new SolidColorBrush(Color.FromArgb(255, 218, 250, 240));
+                border.CornerRadius = new CornerRadius(10);
+                border.Height = 200;
+                border.VerticalAlignment = VerticalAlignment.Top;
+                border.Margin = new Thickness(7, 5, 7, 5);
+                border.Child = panel;
 
-            ////Channel channel = new Channel(new ChannelModel());
-            ////Grid.SetRow(channel, 1);
-            ////Grid.SetColumn(channel, 1);
-
-            //Body.Children.Add(border);
-
-            //PathSettingView view = new PathSettingView();
-            //view.Show();
+                Body.Children.Add(border);
+            }
         }
 
         private void ListBox_Selected(object sender, RoutedEventArgs e)
@@ -141,6 +138,35 @@ namespace SaftBatteryTest
                             ip = (cld as TextBlock).Text;
                         }
                     }
+                }
+            }
+        }
+
+        private void DevList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ShowDevContent((e.Source as ListBox).SelectedItem as BatteryTestDev);
+        }
+
+        private void Connect_Click(object sender, RoutedEventArgs e)
+        {
+            var objs = viewmodel.DevList.Where(dev => dev.Address == ip).ToList();
+            if (objs.Count == 1)
+            {
+                if (objs[0].Connect())
+                {
+                    ShowDevContent(objs[0]);
+                }
+            }
+        }
+
+        private void DisConnect_Click(object sender, RoutedEventArgs e)
+        {
+            var objs = viewmodel.DevList.Where(dev => dev.Address == ip).ToList();
+            if (objs.Count == 1)
+            {
+                if (objs[0].DisConnect())
+                {
+                    ShowDevContent(objs[0]);
                 }
             }
         }

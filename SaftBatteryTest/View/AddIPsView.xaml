@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SaftBatteryTest.View"
         xmlns:trl="clr-namespace:SaftBatteryTest.Controls"
         mc:Ignorable="d"
-        Title="AddIPsView" Height="120" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="AddIPsView" Height="120" Width="450" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal">
             <TextBlock Text="IP" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
-            <trl:IPInput x:Name="IP1" Width="150" VerticalAlignment="Center" Margin="40 0 0 0"></trl:IPInput>
+            <trl:IPInput x:Name="IP1" Width="150" VerticalAlignment="Center" Margin="50 0 0 0"></trl:IPInput>
             <TextBlock Text="->" VerticalAlignment="Center" Margin="10 0 0 0"></TextBlock>
             <trl:IPInput x:Name="IP2" Width="150" VerticalAlignment="Center" Margin="10 0 0 0"></trl:IPInput>
         </StackPanel>
