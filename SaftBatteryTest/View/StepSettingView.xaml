@@ -305,7 +305,7 @@
         </Grid>
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
             <Button Content="调入过程" Margin="20 0 20 0"></Button>
-            <Button Content="保存过程" Margin="20 0 20 0"></Button>
+            <Button Content="保存过程" Margin="20 0 20 0" Command="{Binding SaveStepCommand}"></Button>
             <Button Content="  取消  " Margin="20 0 20 0"></Button>
             <Button Content="  启动  " Margin="20 0 20 0"></Button>
             <CheckBox Content="Enable BarCode" Margin="20 0 20 0"></CheckBox>

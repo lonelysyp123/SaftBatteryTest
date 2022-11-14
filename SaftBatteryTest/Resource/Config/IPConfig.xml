@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <root>
 	<IPList>
-		<Address>127.0.0.1</Address>
+		<Address Type="string">127.0.0.1</Address>
 	</IPList>
 </root>

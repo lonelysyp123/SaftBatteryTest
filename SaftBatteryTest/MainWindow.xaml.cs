@@ -36,6 +36,9 @@ namespace SaftBatteryTest
             viewmodel = new MainViewModel();
             this.DataContext = viewmodel;
             StateContent.DataContext = viewmodel.AppStateVM;
+
+            StateMenu.IsChecked = true;
+            ShortcutMenu.IsChecked = true;
         }
 
         private void ShowDevContent(BatteryTestDev dev)
@@ -168,6 +171,31 @@ namespace SaftBatteryTest
                 {
                     ShowDevContent(objs[0]);
                 }
+            }
+        }
+
+        private void Shortcut_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ShortcutMenu.IsChecked)
+            {
+                ShortcutView.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                ShortcutView.Visibility = Visibility.Collapsed;
+            }
+            
+        }
+
+        private void State_Checked(object sender, RoutedEventArgs e)
+        {
+            if (StateMenu.IsChecked)
+            {
+                StateContent.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                StateContent.Visibility = Visibility.Collapsed;
             }
         }
     }

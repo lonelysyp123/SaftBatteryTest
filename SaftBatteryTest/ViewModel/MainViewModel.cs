@@ -52,7 +52,7 @@ namespace SaftBatteryTest.ViewModel
 
         public AppStateViewModel AppStateVM { get; set; }
         public StepSettingViewModel StepSettingVM { get; set; }
-
+        private IPXmlHelper helper = new IPXmlHelper();
         private const string IPConfigFilePath = "./Resource/Config/IPConfig.xml";
 
         public MainViewModel()
@@ -71,6 +71,8 @@ namespace SaftBatteryTest.ViewModel
 
             //! 初始化界面
             InitContent();
+            //! 初始化文件资源
+            Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "/Data");
         }
 
         #region Command
@@ -80,14 +82,14 @@ namespace SaftBatteryTest.ViewModel
             for (int i = 0; i < objs.Count; i++)
             {
                 DeleteIPByView(objs[i]);
-                XmlHelper.DeleteIP(IPConfigFilePath, ip);
+                helper.DeleteIP(IPConfigFilePath, ip);
             }
         }
 
         public void DeleteAllIP()
         {
             DeleteAllIPByView();
-            XmlHelper.DeleteAllIP(IPConfigFilePath);
+            helper.DeleteAllIP(IPConfigFilePath);
         }
 
         AddIPsView IPsview;
@@ -109,7 +111,7 @@ namespace SaftBatteryTest.ViewModel
                         //! 界面上新增IP
                         AddIPInView(ip);
                         //! TODO 配置文件中新增IP
-                        XmlHelper.InsertIP(IPConfigFilePath, ip);
+                        helper.InsertIP(IPConfigFilePath, ip);
                     }
                 }
             }
@@ -129,7 +131,7 @@ namespace SaftBatteryTest.ViewModel
                     //! 界面上新增IP
                     AddIPInView(ip);
                     //! TODO 配置文件中新增IP
-                    XmlHelper.InsertIP(IPConfigFilePath, ip);
+                    helper.InsertIP(IPConfigFilePath, ip);
                 }
             }
         }
@@ -219,10 +221,10 @@ namespace SaftBatteryTest.ViewModel
         /// <param name="path">IP相关文件地址</param>
         private void InitIP(string path)
         {
-            string[] IPList = XmlHelper.ReadIPList(path);
-            for (int i = 0; i < IPList.Length; i++)
+            var IPs = helper.ReadIPList(path);
+            for (int i = 0; i < IPs.Length; i++)
             {
-                AddIPInView(IPList[i]);
+                AddIPInView(IPs[i].Value);
             }
         }
 

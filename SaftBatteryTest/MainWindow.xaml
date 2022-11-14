@@ -48,8 +48,8 @@
             <MenuItem Header="视图" FontSize="12" VerticalAlignment="Center">
                 <MenuItem Name="CDSMenu" Header="显示CDS" IsCheckable="True" Checked="CDS_Checked"></MenuItem>
                 <MenuItem Name="MTVMenu" Header="显示MTV" IsCheckable="True" Checked="MTV_Checked"></MenuItem>
-                <MenuItem Header="快捷栏" IsCheckable="True"></MenuItem>
-                <MenuItem Header="状态栏" IsCheckable="True"></MenuItem>
+                <MenuItem Name="ShortcutMenu" Header="快捷栏" IsCheckable="True" Checked="Shortcut_Checked" Unchecked="Shortcut_Checked"></MenuItem>
+                <MenuItem Name="StateMenu" Header="状态栏" IsCheckable="True" Checked="State_Checked" Unchecked="State_Checked"></MenuItem>
             </MenuItem>
             <MenuItem Header="选项"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="优化自动联机" Command="{Binding SetAutoOnlineCommand}"></MenuItem>
@@ -216,7 +216,7 @@
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" Grid.Column="0" Width="90" Background="#FFC0DAE2" BorderThickness="1" BorderBrush="#FF5B6C72">
+        <Border Name="ShortcutView" Grid.Row="1" Grid.Column="0" Width="90" Background="#FFC0DAE2" BorderThickness="1" BorderBrush="#FF5B6C72">
 
         </Border>
     </Grid>
