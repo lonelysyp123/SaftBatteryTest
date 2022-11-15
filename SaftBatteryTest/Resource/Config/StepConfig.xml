@@ -22,13 +22,13 @@
 	</StepList>
 	<Safe>
 		<Voltage>
-			<V1 Type="double"></V1>
-			<V2 Type="double"></V2>
+			<VMin Type="double"></VMin>
+			<VMax Type="double"></VMax>
 		</Voltage>
 		<Electric Type="double"></Electric>
 		<Temperature>
-			<T1 Type="double"></T1>
-			<T2 Type="double"></T2>
+			<TMin Type="double"></TMin>
+			<TMax Type="double"></TMax>
 		</Temperature>
 	</Safe>
 	<DataRecord>
@@ -37,9 +37,9 @@
 		<ElcRange IsEnable="0" Type="double"></ElcRange>
 	</DataRecord>
 	<Info>
-		<Run Type="int"></Run>
+		<RunIndex Type="int"></RunIndex>
 		<DataFileSavePath Type="string"></DataFileSavePath>
-		<IsBackup Type="int"></IsBackup>
+		<IsBackup Type="bool"></IsBackup>
 		<FilePath Type="string"></FilePath>
 		<BarCode>
 			<Length Type="int"></Length>
