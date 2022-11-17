@@ -103,12 +103,13 @@
     <Compile Include="Helper\SystemXmlHelper.cs" />
     <Compile Include="Helper\XmlBase.cs" />
     <Compile Include="Helper\IPXmlHelper.cs" />
-    <Compile Include="Model\DataRecordModel.cs" />
+    <Compile Include="Model\StepBarCodeModel.cs" />
+    <Compile Include="Model\StepDataRecordModel.cs" />
     <Compile Include="Model\NodeBase.cs" />
+    <Compile Include="Model\StepOrderModel.cs" />
     <Compile Include="Model\RecordConditionModel.cs" />
-    <Compile Include="Model\SafeModel.cs" />
-    <Compile Include="Model\StepInfoModel.cs" />
     <Compile Include="Model\StepModel.cs" />
+    <Compile Include="Model\StepNoteModel.cs" />
     <Compile Include="Model\StepSafeModel.cs" />
     <Compile Include="ViewModel\AppStateViewModel.cs" />
     <Compile Include="Model\BatteryTestDev.cs" />

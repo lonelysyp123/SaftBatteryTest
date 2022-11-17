@@ -116,21 +116,21 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Text="电压从"></TextBlock>
                     <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="70" Text="{Binding VMin}"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="70" Text="{Binding VoltageMin}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="V到"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="70" Text="{Binding VMax}"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="70" Text="{Binding VoltageMax}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="V"></TextBlock>
                     </StackPanel>
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Text="电流范围±"></TextBlock>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Text="{Binding Electric}"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Text="{Binding ElcRange}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="A"></TextBlock>
                     </StackPanel>
                     <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Text="温度范围"></TextBlock>
                     <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="60" Text="{Binding TMin}"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="60" Text="{Binding TemperatureMin}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Margin="16 0 16 0" Text="-"></TextBlock>
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="60" Text="{Binding TMax}"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="60" Text="{Binding TemperatureMax}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="V"></TextBlock>
                     </StackPanel>
                 </Grid>
@@ -212,7 +212,7 @@
                             <TextBox Grid.Column="1" BorderThickness="1" VerticalAlignment="Center" Margin="10 0 10 0" Text="{Binding FilePath}"></TextBox>
                             <Button Grid.Column="2" VerticalAlignment="Center" Margin="1 2" Content=">>>" Command="{Binding SetFilePathCommand}"></Button>
                         </Grid>
-                        <GroupBox Grid.Row="2" Style="{x:Null}" Header="BarCode规则" HorizontalAlignment="Left" Margin="10 1 0 5" Width="600" DataContext="{Binding StepInfo}">
+                        <GroupBox Grid.Row="2" Style="{x:Null}" Header="BarCode规则" HorizontalAlignment="Left" Margin="10 1 0 5" Width="600" DataContext="{Binding BarCode}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -221,24 +221,24 @@
                                 </Grid.ColumnDefinitions>
                                 <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                                     <TextBlock VerticalAlignment="Center" Margin="3" Text="1.长度"></TextBlock>
-                                    <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0" Text="{Binding BarCode_Length}"></TextBox>
+                                    <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0" Text="{Binding Length}"></TextBox>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                                     <TextBlock VerticalAlignment="Center" Margin="3" Text="2.固定字符起始位置"></TextBlock>
-                                    <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0" Text="{Binding BarCode_Index}"></TextBox>
+                                    <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0" Text="{Binding Index}"></TextBox>
                                 </StackPanel>
                                 
                                 <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left">
                                     <TextBlock VerticalAlignment="Center" Margin="3" Text="3.固定字符"></TextBlock>
-                                    <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0" Text="{Binding BarCode_AddStr}"></TextBox>
+                                    <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Margin="10 0 0 0" Text="{Binding AddStr}"></TextBox>
                                 </StackPanel>
                             </Grid>
                         </GroupBox>
                     </Grid>
                 </Border>
 
-                <GroupBox Grid.Row="3" Style="{x:Null}" Header="备注信息" DataContext="{Binding StepInfo}">
+                <GroupBox Grid.Row="3" Style="{x:Null}" Header="备注信息" DataContext="{Binding StepNote}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -255,7 +255,7 @@
                         </StackPanel>
                     </Grid>
                 </GroupBox>
-                <Grid Grid.Row="4" DataContext="{Binding StepInfo}">
+                <Grid Grid.Row="4" DataContext="{Binding StepOrder}">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>

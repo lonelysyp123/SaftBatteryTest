@@ -36,8 +36,8 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
-        private DataRecordModel _dataRecord;
-        public DataRecordModel DataRecord
+        private StepDataRecordModel _dataRecord;
+        public StepDataRecordModel DataRecord
         {
             get => _dataRecord;
             set
@@ -46,13 +46,33 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
-        private StepInfoModel _stepInfo;
-        public StepInfoModel StepInfo
+        private StepBarCodeModel _barCode;
+        public StepBarCodeModel BarCode
         {
-            get => _stepInfo;
+            get => _barCode;
             set
             {
-                SetProperty(ref _stepInfo, value);
+                SetProperty(ref _barCode, value);
+            }
+        }
+
+        private StepNoteModel _stepNote;
+        public StepNoteModel StepNote
+        {
+            get => _stepNote;
+            set
+            {
+                SetProperty(ref _stepNote, value);
+            }
+        }
+
+        private StepOrderModel _stepOrder;
+        public StepOrderModel StepOrder
+        {
+            get => _stepOrder;
+            set
+            {
+                SetProperty(ref _stepOrder, value);
             }
         }
 
@@ -119,8 +139,10 @@ namespace SaftBatteryTest.ViewModel
             // 初始化DataGrid
             StepList = new ObservableCollection<StepModel>();
             StepSafe = new StepSafeModel();
-            DataRecord = new DataRecordModel();
-            StepInfo = new StepInfoModel();
+            DataRecord = new StepDataRecordModel();
+            BarCode = new StepBarCodeModel();
+            StepNote = new StepNoteModel();
+            StepOrder = new StepOrderModel();
 
             // 初始化文件资源
             Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "/Data/Step");
@@ -161,6 +183,19 @@ namespace SaftBatteryTest.ViewModel
                 {
                     helper.StepSaveAs(StepConfigFilePath, dialog.FileName, StepList.ToArray());
                 }
+                // 更新 safemodel datarecord info note barcode order
+                helper.ModifyModel(dialog.FileName, 1, StepSafe);
+
+                // 因为 datarecord 和 info有和其他节点不同的地方所以单独处理
+                helper.ModifyDataRecordModel(dialog.FileName, 2, DataRecord);
+                helper.ModifyInfoModel(dialog.FileName, 3, "RunIndex", RunIndex.ToString());
+                helper.ModifyInfoModel(dialog.FileName, 3, "DataFileSavePath", DataFileSavePath);
+                helper.ModifyInfoModel(dialog.FileName, 3, "IsBackup", IsBackup.ToString());
+                helper.ModifyInfoModel(dialog.FileName, 3, "FilePath", FilePath);
+
+                helper.ModifyModel(dialog.FileName, 4, StepNote);
+                helper.ModifyModel(dialog.FileName, 5, BarCode);
+                helper.ModifyModel(dialog.FileName, 6, StepOrder);
             }
         }
 

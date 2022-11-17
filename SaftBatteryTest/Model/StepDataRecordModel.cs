@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaftBatteryTest.Model
 {
-    public class DataRecordModel
+    public class StepDataRecordModel
     {
         public bool IsEnableOfSpan { get; set; }
         public double Span { get; set; }

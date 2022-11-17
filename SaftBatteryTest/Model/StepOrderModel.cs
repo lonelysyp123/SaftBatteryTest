@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace SaftBatteryTest.Model
 {
-    public class StepInfoModel
+    public class StepOrderModel
     {
-        public int BarCode_Length { get; set; }
-        public int BarCode_Index { get; set; }
-        public string BarCode_AddStr { get; set; }
-        public string FileName { get; set; }
-        public string Remake { get; set; }
         public string Order { get; set; }
         public string Model { get; set; }
         public string PQC { get; set; }

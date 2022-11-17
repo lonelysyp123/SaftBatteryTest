@@ -21,33 +21,33 @@
 		</Step>
 	</StepList>
 	<Safe>
-		<Voltage>
-			<VMin Type="double"></VMin>
-			<VMax Type="double"></VMax>
-		</Voltage>
+		<VoltageMin Type="double"></VoltageMin>
+		<VoltageMax Type="double"></VoltageMax>
 		<Electric Type="double"></Electric>
-		<Temperature>
-			<TMin Type="double"></TMin>
-			<TMax Type="double"></TMax>
-		</Temperature>
+		<TemperatureMin Type="double"></TemperatureMin>
+		<TemperatureMax Type="double"></TemperatureMax>
 	</Safe>
 	<DataRecord>
-		<Span IsEnable="0" Type="double"></Span>
-		<VolRange IsEnable="0" Type="double"></VolRange>
-		<ElcRange IsEnable="0" Type="double"></ElcRange>
+		<Span IsEnable="false" Type="double"></Span>
+		<VolRange IsEnable="false" Type="double"></VolRange>
+		<ElcRange IsEnable="false" Type="double"></ElcRange>
 	</DataRecord>
 	<Info>
 		<RunIndex Type="int"></RunIndex>
 		<DataFileSavePath Type="string"></DataFileSavePath>
 		<IsBackup Type="bool"></IsBackup>
 		<FilePath Type="string"></FilePath>
-		<BarCode>
-			<Length Type="int"></Length>
-			<Index Type="int"></Index>
-			<AddStr Type="string"></AddStr>
-		</BarCode>
+	</Info>
+	<Note>
 		<FileName Type="string"></FileName>
 		<Remake Type="string"></Remake>
+	</Note>
+	<BarCode>
+		<Length Type="int"></Length>
+		<Index Type="int"></Index>
+		<AddStr Type="string"></AddStr>
+	</BarCode>
+	<OrferInfo>
 		<Order Type="string"></Order>
 		<Model Type="string"></Model>
 		<PQC Type="string"></PQC>
@@ -56,5 +56,5 @@
 		<PE Type="string"></PE>
 		<Develop Type="string"></Develop>
 		<IPQC Type="string"></IPQC>
-	</Info>
+	</OrferInfo>
 </StepConfig>
