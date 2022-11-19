@@ -1,24 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <StepConfig>
 	<StepList>
-		<Step>
-			<ID Type="int"></ID>
-			<WorkMode Type="WorkMode"></WorkMode>
-			<GGS Type="string"></GGS>
-			<MTV Type="string"></MTV>
-			<RC Type="string"></RC>
-			<Param1 Type="string"></Param1>
-			<Param2 Type="string"></Param2>
-			<StopTime Type="double"></StopTime>
-			<StopVoltage Type="double"></StopVoltage>
-			<StopElectric Type="double"></StopElectric>
-			<StopT Type="double"></StopT>
-			<StopCap Type="double"></StopCap>
-			<StopEnergy Type="double"></StopEnergy>
-			<RSOC Type="double"></RSOC>
-			<Offset Type="double"></Offset>
-			<NextStep Type="string"></NextStep>
-		</Step>
 	</StepList>
 	<Safe>
 		<VoltageMin Type="double"></VoltageMin>

@@ -10,7 +10,7 @@ namespace SaftBatteryTest.Model
     {
         public double VoltageMin { get; set; }
         public double VoltageMax { get; set; }
-        public double ElcRange { get; set; }
+        public double Electric { get; set; }
         public double TemperatureMax { get; set; }
         public double TemperatureMin { get; set; }
     }

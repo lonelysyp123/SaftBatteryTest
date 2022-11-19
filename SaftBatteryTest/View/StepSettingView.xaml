@@ -123,7 +123,7 @@
                     </StackPanel>
                     <TextBlock Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Text="电流范围±"></TextBlock>
                     <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Text="{Binding ElcRange}"></TextBox>
+                        <TextBox VerticalAlignment="Center" BorderThickness="1" Width="100" Text="{Binding Electric}"></TextBox> 
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="A"></TextBlock>
                     </StackPanel>
                     <TextBlock Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10" Text="温度范围"></TextBlock>
@@ -131,7 +131,7 @@
                         <TextBox VerticalAlignment="Center" BorderThickness="1" Width="60" Text="{Binding TemperatureMin}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Margin="16 0 16 0" Text="-"></TextBlock>
                         <TextBox VerticalAlignment="Center" BorderThickness="1" Width="60" Text="{Binding TemperatureMax}"></TextBox>
-                        <TextBlock VerticalAlignment="Center" Margin="3" Text="V"></TextBlock>
+                        <TextBlock VerticalAlignment="Center" Margin="3" Text="℃"></TextBlock>
                     </StackPanel>
                 </Grid>
             </GroupBox>

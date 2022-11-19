@@ -77,6 +77,18 @@ namespace SaftBatteryTest.Helper
         }
 
         /// <summary>
+        /// 复制模板到新的地址
+        /// </summary>
+        /// <param name="path">模板地址</param>
+        /// <param name="newPath">存储位置</param>
+        public void StepSaveAs(string path, string newPath)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(path);
+            xmlDocument.Save(newPath);
+        }
+
+        /// <summary>
         /// 在xml文件里添加工步信息
         /// </summary>
         /// <param name="xmlDocument">xml文件对象(用来创建节点)</param>
@@ -175,7 +187,7 @@ namespace SaftBatteryTest.Helper
             {
                 foreach (System.Reflection.PropertyInfo info in model.GetType().GetProperties())
                 {
-                    if (xmlNodeList1[i].Name.Contains(info.Name))
+                    if (info.Name.Contains(xmlNodeList1[i].Name))
                     {
                         if (model.GetType().GetProperty(info.Name).PropertyType == typeof(bool))
                         {
@@ -184,6 +196,39 @@ namespace SaftBatteryTest.Helper
                         else
                         {
                             xmlNodeList1[i].InnerText = model.GetType().GetProperty(info.Name).GetValue(model, null).ToString();
+                        }
+                    }
+                }
+            }
+            xmlDocument.Save(path);
+        }
+
+        public void ModifyDataRecordModelToView(string path, int index, ref StepDataRecordModel model)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(path);
+            XmlElement xmlElement = xmlDocument.DocumentElement;
+            XmlNodeList xmlNodeList1 = xmlElement.ChildNodes[index].ChildNodes;
+            for (int i = 0; i < xmlNodeList1.Count; i++)
+            {
+                foreach (System.Reflection.PropertyInfo info in model.GetType().GetProperties())
+                {
+                    if (info.Name.Contains(xmlNodeList1[i].Name))
+                    {
+                        if (model.GetType().GetProperty(info.Name).PropertyType == typeof(bool))
+                        {
+                            model.GetType().GetProperty(info.Name).SetValue(model, bool.Parse(((XmlElement)xmlNodeList1[i]).GetAttribute("IsEnable")));
+                        }
+                        else
+                        {
+                            if (xmlNodeList1[i].InnerText != null)
+                            {
+                                model.GetType().GetProperty(info.Name).SetValue(model, double.Parse(xmlNodeList1[i].InnerText));
+                            }
+                            else
+                            {
+                                model.GetType().GetProperty(info.Name).SetValue(model, 0);
+                            }
                         }
                     }
                 }
@@ -230,11 +275,62 @@ namespace SaftBatteryTest.Helper
                 {
                     if (info.Name == xmlNodeList1[i].Name)
                     {
-                        xmlNodeList1[i].InnerText = model.GetType().GetProperty(info.Name).GetValue(model, null).ToString();
+                        if (model.GetType().GetProperty(info.Name).GetValue(model, null) != null)
+                        {
+                            xmlNodeList1[i].InnerText = model.GetType().GetProperty(info.Name).GetValue(model, null).ToString();
+                        }
                     }
                 }
             }
             xmlDocument.Save(path);
+        }
+
+        /// <summary>
+        /// 通用工步设置内容修改
+        /// </summary>
+        /// <typeparam name="TEntity">模块类型</typeparam>
+        /// <param name="path">xml文件地址</param>
+        /// <param name="index">节点序号</param>
+        /// <param name="model">模块</param>
+        public void ModifyModelToView<TEntity>(string path, int index,ref TEntity model)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(path);
+            XmlElement xmlElement = xmlDocument.DocumentElement;
+            var nodes = ReadChildrenNode((XmlElement)xmlElement.ChildNodes[index]);
+            for (int p = 0; p < nodes.Length; p++)
+            {
+                if (nodes[p].Type == "double")
+                {
+                    if (nodes[p].Value == "")
+                    {
+                        model.GetType().GetProperty(nodes[p].Name).SetValue(model, 0);
+                    }
+                    else
+                    {
+                        model.GetType().GetProperty(nodes[p].Name).SetValue(model, double.Parse(nodes[p].Value));
+                    }
+                }
+                else if (nodes[p].Type == "int")
+                {
+                    if (nodes[p].Value == "")
+                    {
+                        model.GetType().GetProperty(nodes[p].Name).SetValue(model, 0);
+                    }
+                    else
+                    {
+                        model.GetType().GetProperty(nodes[p].Name).SetValue(model, int.Parse(nodes[p].Value));
+                    }
+                }
+                else if (nodes[p].Type == "bool")
+                {
+                    model.GetType().GetProperty(nodes[p].Name).SetValue(model, bool.Parse(nodes[p].Value));
+                }
+                else
+                {
+                    model.GetType().GetProperty(nodes[p].Name).SetValue(model, nodes[p].Value);
+                }
+            }
         }
 
         /// <summary>
@@ -258,6 +354,50 @@ namespace SaftBatteryTest.Helper
                 }
             }
             xmlDocument.Save(path);
+        }
+
+        /// <summary>
+        /// 从xml文件中读取工程步骤
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public StepModel[] ReadStepFromXml(string path)
+        {
+            List<StepModel> steps = new List<StepModel>();
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(path);
+            XmlElement xmlElement = xmlDocument.DocumentElement;
+            for (int l = 0; l < xmlElement.ChildNodes[0].ChildNodes.Count; l++)
+            {
+                StepModel step = new StepModel();
+                var nodes = ReadChildrenNode((XmlElement)xmlElement.ChildNodes[0].ChildNodes[l]);
+                for (int p = 0; p < nodes.Length; p++)
+                {
+                    if (nodes[p].Type == "double")
+                    {
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, double.Parse(nodes[p].Value));
+                    }
+                    else if (nodes[p].Type == "int")
+                    {
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, int.Parse(nodes[p].Value));
+                    }
+                    else if (nodes[p].Type == "bool")
+                    {
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, bool.Parse(nodes[p].Value));
+                    }
+                    else if (nodes[p].Type == "workmode")
+                    {
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, (WorkMode)Enum.Parse(typeof(WorkMode), nodes[p].Value));
+                    }
+                    else
+                    {
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, nodes[p].Value);
+                    }
+                }
+                steps.Add(step);
+            }
+
+            return steps.ToArray();
         }
     }
 }

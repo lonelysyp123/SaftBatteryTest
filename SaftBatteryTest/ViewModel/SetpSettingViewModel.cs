@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace SaftBatteryTest.ViewModel
 {
@@ -168,20 +169,66 @@ namespace SaftBatteryTest.ViewModel
 
         private void LoadStep()
         {
-            Console.WriteLine("Loading Step");
+            OpenFileDialog file = new OpenFileDialog();
+            file.Filter = "工步文件|*.xml";
+            file.ShowDialog();
+            if (file.FileName != null && file.FileName != "")
+            {
+                // 工程步骤更新
+                var steps = helper.ReadStepFromXml(file.FileName);
+                for (int i = 0; i < steps.Length; i++)
+                {
+                    StepList.Add(steps[i]);
+                }
+                // 更新 safemodel datarecord info note barcode order
+                StepSafeModel safemodel = new StepSafeModel();
+                helper.ModifyModelToView(file.FileName, 1, ref safemodel);
+                StepSafe = safemodel;
+
+                // 因为 datarecord 和 info有和其他节点不同的地方所以单独处理
+                StepDataRecordModel datarecordmodel = new StepDataRecordModel();
+                helper.ModifyDataRecordModelToView(file.FileName, 2, ref datarecordmodel);
+                DataRecord = datarecordmodel;
+                if (helper.ReadSpecifyInfo(file.FileName, 3, "RunIndex") != "")
+                {
+                    RunIndex = int.Parse(helper.ReadSpecifyInfo(file.FileName, 3, "RunIndex"));
+                }
+                DataFileSavePath = helper.ReadSpecifyInfo(file.FileName, 3, "DataFileSavePath");
+                if (helper.ReadSpecifyInfo(file.FileName, 3, "IsBackup") != "")
+                {
+                    IsBackup = bool.Parse(helper.ReadSpecifyInfo(file.FileName, 3, "IsBackup"));
+                }
+                FilePath = helper.ReadSpecifyInfo(file.FileName, 3, "FilePath");
+
+                StepNoteModel notemodel = new StepNoteModel();
+                helper.ModifyModelToView(file.FileName, 4, ref notemodel);
+                StepNote = notemodel;
+
+                StepBarCodeModel barcodemodel = new StepBarCodeModel();
+                helper.ModifyModelToView(file.FileName, 5, ref barcodemodel);
+                BarCode = barcodemodel;
+
+                StepOrderModel ordermodel = new StepOrderModel();
+                helper.ModifyModelToView(file.FileName, 6, ref ordermodel);
+                StepOrder = ordermodel;
+            }
         }
 
         private void SaveStep()
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + "Data\\Step\\";
-            dialog.Filter = "数据文件|*.xml";
-            dialog.DefaultExt = "数据文件|*.xml";
+            dialog.Filter = "工步文件|*.xml";
+            dialog.DefaultExt = "工步文件|*.xml";
             if (dialog.ShowDialog() == true)
             {
                 if (StepList.Count > 0)
                 {
                     helper.StepSaveAs(StepConfigFilePath, dialog.FileName, StepList.ToArray());
+                }
+                else
+                {
+                    helper.StepSaveAs(StepConfigFilePath, dialog.FileName);
                 }
                 // 更新 safemodel datarecord info note barcode order
                 helper.ModifyModel(dialog.FileName, 1, StepSafe);

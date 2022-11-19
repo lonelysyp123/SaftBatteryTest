@@ -30,12 +30,24 @@ namespace SaftBatteryTest.Helper
             parentNode.AppendChild(element);
         }
 
+        /// <summary>
+        /// 增加子节点
+        /// </summary>
+        /// <param name="xmlDoc">Xml文档</param>
+        /// <param name="parentNode">父节点</param>
+        /// <param name="name">子节点名称</param>
+        /// <param name="type">子节点类型</param>
+        /// <param name="value">子节点值</param>
         protected void AddChildNode(XmlDocument xmlDoc, XmlElement parentNode, string name, string type = null, string value = null)
         {
             XmlElement element = xmlDoc.CreateElement(name);
             if (type != null)
             {
-                element.SetAttribute("Type", type);
+                if(type.Contains("Int"))
+                {
+                    type = "Int";
+                }
+                element.SetAttribute("Type", type.ToLower());
             }
             if (value != null)
             {
@@ -61,6 +73,12 @@ namespace SaftBatteryTest.Helper
             }
         }
 
+        /// <summary>
+        /// 删除指定节点
+        /// </summary>
+        /// <param name="parentNode">父节点</param>
+        /// <param name="name">指定节点名称</param>
+        /// <param name="value">指定节点值</param>
         protected void DeleteNode(XmlElement parentNode, string name, string value)
         {
             XmlNodeList NodeList = parentNode.ChildNodes;
@@ -119,6 +137,29 @@ namespace SaftBatteryTest.Helper
                 nodes.Add(new NodeBase() { Name=Node.Name, Value=Node.InnerText, Type=Node.GetAttribute("Type")});
             }
             return nodes.ToArray();
+        }
+
+        /// <summary>
+        /// 读取指定节点信息
+        /// </summary>
+        /// <param name="path">xml文件地址</param>
+        /// <param name="index">节点序号</param>
+        /// <param name="nodeName">节点名称</param>
+        /// <returns>节点内容</returns>
+        public string ReadSpecifyInfo(string path, int index, string nodeName)
+        {
+            XmlDocument xmlDocument = new XmlDocument();
+            xmlDocument.Load(path);
+            XmlElement xmlElement = xmlDocument.DocumentElement;
+            XmlNodeList xmlNodeList1 = xmlElement.ChildNodes[index].ChildNodes;
+            for (int i = 0; i < xmlNodeList1.Count; i++)
+            {
+                if (xmlNodeList1[i].Name == nodeName)
+                {
+                    return xmlNodeList1[i].InnerText;
+                }
+            }
+            return "";
         }
     }
 }
