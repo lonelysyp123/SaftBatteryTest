@@ -182,7 +182,7 @@
                         <TextBox VerticalAlignment="Center" BorderThickness="1" Width="40" Text="{Binding RunIndex}"></TextBox>
                         <TextBlock VerticalAlignment="Center" Margin="3" Text="步"></TextBlock>
                     </StackPanel>
-                    <Button Grid.Column="1" HorizontalAlignment="Left" Margin="10 2 10 2" VerticalAlignment="Center" Content="加载数据项"></Button>
+                    <Button Grid.Column="1" HorizontalAlignment="Left" Margin="10 2 10 2" VerticalAlignment="Center" Content="加载数据项" Command="{Binding LoadDataCommand}"></Button>
                 </Grid>
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -306,10 +306,10 @@
         <StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Right">
             <Button Content="调入过程" Margin="20 0 20 0" Command="{Binding LoadStepCommand}"></Button>
             <Button Content="保存过程" Margin="20 0 20 0" Command="{Binding SaveStepCommand}"></Button>
-            <Button Content="  取消  " Margin="20 0 20 0"></Button>
+            <Button Content="  取消  " Margin="20 0 20 0" Click="Cancel_Click"></Button>
             <Button Content="  启动  " Margin="20 0 20 0"></Button>
-            <CheckBox Content="Enable BarCode" Margin="20 0 20 0"></CheckBox>
-            <CheckBox Content="Enable BarCode + Load Process" Margin="20 0 20 0"></CheckBox>
+            <CheckBox Content="Enable BarCode" Margin="20 0 20 0" IsChecked="{Binding IsBarCode}" Command="{Binding BarCodeCommand}"></CheckBox>
+            <CheckBox Content="Enable BarCode + Load Process" Margin="20 0 20 0" IsChecked="{Binding IsBarCodeProcess}" Command="{Binding BarCodeProcessCommand}"></CheckBox>
         </StackPanel>
     </Grid>
 </Window>

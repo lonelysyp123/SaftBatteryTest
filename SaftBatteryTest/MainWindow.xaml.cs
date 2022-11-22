@@ -41,6 +41,10 @@ namespace SaftBatteryTest
             ShortcutMenu.IsChecked = true;
         }
 
+        /// <summary>
+        /// 根据设备的状态显示界面
+        /// </summary>
+        /// <param name="dev">设备对象</param>
         private void ShowDevContent(BatteryTestDev dev)
         {
             Body.Children.Clear();
@@ -157,6 +161,7 @@ namespace SaftBatteryTest
             {
                 if (objs[0].Connect())
                 {
+                    objs[0].InitChannel();
                     ShowDevContent(objs[0]);
                 }
             }

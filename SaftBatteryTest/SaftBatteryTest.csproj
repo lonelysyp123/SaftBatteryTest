@@ -99,10 +99,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\Log4Net.cs" />
+    <Compile Include="Helper\ModbusHelper.cs" />
     <Compile Include="Helper\StepXmlHelper.cs" />
     <Compile Include="Helper\SystemXmlHelper.cs" />
+    <Compile Include="Model\IBatteryTestDev.cs" />
     <Compile Include="Helper\XmlBase.cs" />
     <Compile Include="Helper\IPXmlHelper.cs" />
+    <Compile Include="Model\ModbusTcpClient.cs" />
     <Compile Include="Model\StepBarCodeModel.cs" />
     <Compile Include="Model\StepDataRecordModel.cs" />
     <Compile Include="Model\NodeBase.cs" />
@@ -111,6 +114,7 @@
     <Compile Include="Model\StepModel.cs" />
     <Compile Include="Model\StepNoteModel.cs" />
     <Compile Include="Model\StepSafeModel.cs" />
+    <Compile Include="Model\TcpClientBase.cs" />
     <Compile Include="ViewModel\AppStateViewModel.cs" />
     <Compile Include="Model\BatteryTestDev.cs" />
     <Compile Include="Model\ChannelModel.cs" />
