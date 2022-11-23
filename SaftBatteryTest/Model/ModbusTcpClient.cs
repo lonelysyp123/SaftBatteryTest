@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,53 +10,96 @@ namespace SaftBatteryTest.Model
 {
     public class ModbusTcpClient : TcpClientBase
     {
-        // MBAP 头描述 {|传输标志(2byte)|协议标志(2byte)|长度(2byte)|单元号标志(1byte)|}
-        byte[] IntSwVersion =   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0xe8, 0x03, 0x02, 0x00 };
-        byte[] ChNums =         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0xf5, 0x03, 0x01, 0x00 };
-
         public ModbusTcpClient()
         {
 
         }
 
         /// <summary>
-        /// 获取软件版本号
+        /// 通用读取函数
         /// </summary>
-        /// <returns>版本号</returns>
-        public string ReadIntSwVersion()
+        /// <param name="msg">读取字节</param>
+        /// <param name="type">数据类型</param>
+        /// <returns></returns>
+        public object ReadFunc(byte[] msg, string type)
         {
-            string Version = "";
-            byte[] bytes = Request(IntSwVersion);
-            byte[] result = new byte[bytes.Length-8];
-            if (bytes.Length > 10)
+            object obj = null;
+            byte[] bytes = Request(msg);
+            if (bytes != null && bytes.Length > 8)
             {
-                if (Compare(bytes, IntSwVersion, 8))
+                int count = (short)bytes[8];
+                byte[] result = new byte[count];
+                if (Compare(bytes, msg, 8))
                 {
-                    bytes.CopyTo(result, 8);
-                    Version = ReadByteToString(result);
+                    Buffer.BlockCopy(bytes, 9, result, 0, count);
+                    if ("UInt16" == type)
+                    {
+                        obj = ReadByteToInt16(result);
+                    }
+                    else if ("UInt32" == type)
+                    {
+                        obj = ReadByteToInt32(result);
+                    }
+                    else if ("String" == type)
+                    {
+                        obj = ReadByteToString(result);
+                    }
                 }
             }
-            return Version;
+            return obj;
         }
 
         /// <summary>
-        /// 获取通道数量
+        /// 通用指定通道读取函数
         /// </summary>
-        /// <returns>通道数量</returns>
-        public int ReadChNums()
+        /// <param name="index">通道序号</param>
+        /// <param name="msg">读取字节</param>
+        /// <param name="type">数据类型</param>
+        /// <returns></returns>
+        public object ReadFunc(int index, byte[] msg, string type)
         {
-            int Nums = 0;
-            byte[] bytes = Request(ChNums);
-            byte[] result = new byte[bytes.Length - 8];
-            if (bytes.Length > 10)
+            // TODO 根据这个index改变寄存器地址字节
+            object obj = null;
+            byte[] bytes = Request(msg);
+            if (bytes != null && bytes.Length > 8)
             {
-                if (Compare(bytes, IntSwVersion, 8))
+                int count = (short)bytes[8];
+                byte[] result = new byte[count];
+                if (Compare(bytes, msg, 8))
                 {
-                    bytes.CopyTo(result, 8);
-                    Nums = ReadByteToInt(result);
+                    Buffer.BlockCopy(bytes, 9, result, 0, count);
+                    if ("UInt16" == type)
+                    {
+                        obj = ReadByteToInt16(result);
+                    }
+                    else if ("UInt32" == type)
+                    {
+                        obj = ReadByteToInt32(result);
+                    }
+                    else if ("String" == type)
+                    {
+                        obj = ReadByteToString(result);
+                    }
                 }
             }
-            return Nums;
+            return obj;
+        }
+
+        /// <summary>
+        /// 通用指定通道写入函数
+        /// </summary>
+        /// <param name="index">通道序号</param>
+        /// <param name="msg">写入字节</param>
+        /// <param name="value">写入内容</param>
+        public void WriteFunc(int index, int stepNum, int value)
+        {
+            // TODO 根据index改变寄存器地址字节, 根据value改变数据内容
+            byte[] msg = { };
+            byte[] bytes = Request(msg);
+            if (bytes != null && bytes.Length > 8)
+            {
+                // 验证响应是否正确
+            }
         }
 
         /// <summary>
@@ -74,19 +119,35 @@ namespace SaftBatteryTest.Model
         }
 
         /// <summary>
-        /// 将读取到的Byte转成String
+        /// 将读取到的Byte转成ushort
         /// </summary>
         /// <param name="bytes">字节流</param>
         /// <returns>整数</returns>
-        private int ReadByteToInt(byte[] bytes)
+        private int ReadByteToInt16(byte[] bytes)
         {
-            byte[] lengh = { bytes[1], bytes[0] };
-            int count = BitConverter.ToInt32(lengh, 0);
-            if (count > 0)
+            bool bigEndian = true;
+            short count = BitConverter.ToInt16(bytes, 0);
+            if (bigEndian)
             {
-                return (int)bytes[0];
+                count = IPAddress.NetworkToHostOrder(count);
             }
-            return 0;
+            return count;
+        }
+
+        /// <summary>
+        /// 将读取到的Byte转成uint
+        /// </summary>
+        /// <param name="bytes">字节流</param>
+        /// <returns>整数</returns>
+        private int ReadByteToInt32(byte[] bytes)
+        {
+            bool bigEndian = true;
+            int count = BitConverter.ToInt32(bytes, 0);
+            if (bigEndian)
+            {
+                count = IPAddress.NetworkToHostOrder(count);
+            }
+            return count;
         }
 
         /// <summary>
@@ -105,7 +166,11 @@ namespace SaftBatteryTest.Model
                 {
                     if (newb[i] == oldb[i])
                     {
-                        IsEqual &= IsEqual;
+                        IsEqual &= true;
+                    }
+                    else
+                    {
+                        IsEqual &= false;
                     }
                 }
             }

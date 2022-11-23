@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,22 +11,32 @@ using System.Windows;
 
 namespace SaftBatteryTest.Model
 {
-    public class TcpClientBase
+    public class TcpClientBase : ObservableObject
     {
+        private string _communicationState;
+        public string CommunicationState
+        {
+            get => _communicationState;
+            set
+            {
+                SetProperty(ref _communicationState, value);
+            }
+        }
         protected Socket Client;
+        protected ushort index = 0;
         public TcpClientBase()
         {
-
+            CommunicationState = "Disconnected";
         }
 
         public bool Connect(string ip, int port)
         {
-            //! 这里默认连接成功
             IPEndPoint point = new IPEndPoint(IPAddress.Parse(ip), port);
             Client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             try
             {
                 Client.Connect(point);
+                CommunicationState = "Connected";
             }
             catch (Exception ex)
             {
@@ -43,6 +54,8 @@ namespace SaftBatteryTest.Model
                 {
                     Client.Disconnect(false);
                     Client.Close();
+                    Client = null;
+                    CommunicationState = "DisConnected";
                 }
             }
             catch (Exception ex)
@@ -53,11 +66,15 @@ namespace SaftBatteryTest.Model
             return true;
         }
 
-        public void SendMsg(byte[] bytes)
+        private void SendMsg(byte[] bytes)
         {
             if (Client.Connected)
             {
+                byte[] numberBytes = BitConverter.GetBytes(index);
+                bytes[0] = numberBytes[0];
+                bytes[1] = numberBytes[1];
                 Client.Send(bytes);
+                index++;
             }
         }
 
@@ -65,7 +82,7 @@ namespace SaftBatteryTest.Model
         {
             if(Client.Connected)
             {
-                byte[] buffer = new byte[Client.ReceiveBufferSize];
+                byte[] buffer = new byte[128];
                 int count = Client.Receive(buffer);
                 return buffer;
             }
@@ -74,14 +91,8 @@ namespace SaftBatteryTest.Model
 
         public byte[] Request(byte[] bytes)
         {
-            if (Client.Connected)
-            {
-                Client.Send(bytes);
-                byte[] buffer = new byte[Client.ReceiveBufferSize];
-                int count = Client.Receive(buffer);
-                return buffer;
-            }
-            return null;
+            SendMsg(bytes);
+            return ReceiveMsg();
         }
 
         public void KeepAlive()

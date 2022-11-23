@@ -41,6 +41,15 @@ namespace SaftBatteryTest.ViewModel
                 DevChange();
             }
         }
+        private bool _isEnableStartBtn;
+        public bool IsEnableStartBtn
+        {
+            get => _isEnableStartBtn;
+            set
+            {
+                SetProperty(ref _isEnableStartBtn, value);
+            }
+        }
 
         public RelayCommand SetAutoOnlineCommand { get; set; }
         public RelayCommand OpenFileCommand { get; set; }
@@ -49,6 +58,8 @@ namespace SaftBatteryTest.ViewModel
         public RelayCommand AddIPCommand { get; set; }
         public RelayCommand AddIPsCommand { get; set; }
         public RelayCommand DeleteAllIPCommand { get; set; }
+        public RelayCommand StartDevCommand { get; set; }
+        public RelayCommand StopDevCommand { get; set; }
 
         public AppStateViewModel AppStateVM { get; set; }
         public StepSettingViewModel StepSettingVM { get; set; }
@@ -64,18 +75,30 @@ namespace SaftBatteryTest.ViewModel
             AddIPCommand = new RelayCommand(AddIP);
             AddIPsCommand = new RelayCommand(AddIPs);
             DeleteAllIPCommand = new RelayCommand(DeleteAllIP);
+            StartDevCommand = new RelayCommand(StartDev);
+            StopDevCommand = new RelayCommand(StopDev);
 
             DevList = new ObservableCollection<BatteryTestDev>();
             AppStateVM = new AppStateViewModel();
             StepSettingVM = new StepSettingViewModel();
 
-            //! 初始化界面
+            // 初始化界面
             InitContent();
-            //! 初始化文件资源
+            // 初始化文件资源
             Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "/Data");
         }
 
         #region Command
+        private void StopDev()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void StartDev()
+        {
+            throw new NotImplementedException();
+        }
+
         public void DeleteIP(string ip)
         {
             var objs = DevList.Where(dev => dev.Address == ip).ToList();
@@ -213,6 +236,7 @@ namespace SaftBatteryTest.ViewModel
         {
             //! 根据"./Resource/Config/IPConfig.xml"文件中的IPList来初始化IP部分
             InitIP(IPConfigFilePath);
+            IsEnableStartBtn = false;
         }
 
         /// <summary>

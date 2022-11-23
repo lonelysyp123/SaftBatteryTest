@@ -12,23 +12,22 @@ using System.Windows.Media.Imaging;
 
 namespace SaftBatteryTest.Model
 {
-    public class BatteryTestDev : ObservableObject, IBatteryTestDev
+    public class BatteryTestDev : ModbusTcpClient, IBatteryTestDev
     {
+        // MBAP 头描述 {|传输标志(2byte)|协议标志(2byte)|长度(2byte)|单元号标志(1byte)|}
+        // 设备信息
+        protected byte[] IntSwVersion = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xe8, 0x00, 0x02 };
+        protected byte[] ExtSwVersion = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xea, 0x00, 0x01 };
+        protected byte[] ChNums = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xf5, 0x00, 0x01 };
+
+        // 实时数据
+        protected byte[] CurrVol = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
+        protected byte[] CurrElc = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd2, 0x00, 0x02 };
+
         public List<ChannelModel> Channels { get; set; }
         public BitmapSource Image { get; set; }
         public string Address { get; set; }
         public int DefaultPort { get; set; }
-        private ModbusTcpClient client;
-
-        private string _communicationState;
-        public string CommunicationState 
-        { 
-            get => _communicationState; 
-            set
-            {
-                SetProperty(ref _communicationState, value);
-            }
-        }
 
         public BatteryTestDev(string address)
         {
@@ -41,10 +40,6 @@ namespace SaftBatteryTest.Model
             Image = bi;
             Address = address;
             DefaultPort = 502;
-            CommunicationState = "Disconnected";
-
-            // 初始化连接
-            
         }
 
         /// <summary>
@@ -52,11 +47,11 @@ namespace SaftBatteryTest.Model
         /// </summary>
         public void InitChannel()
         {
-            int count = client.ReadChNums();
+            int count = ReadChNums();
             Channels = new List<ChannelModel>();
             for (int i = 0; i < count; i++)
             {
-                Channels.Add(new ChannelModel());
+                Channels.Add(new ChannelModel() { ChannelBoxN = i+1 });
             }
         }
 
@@ -79,56 +74,102 @@ namespace SaftBatteryTest.Model
         /// 设备断开连接
         /// </summary>
         /// <returns>true:成功; false:失败</returns>
-        public bool DisConnect()
+        public bool DevOffline()
         {
-            bool IsDisConnected = false;
-            //! 这里默认断开成功
-            IsDisConnected = true;
-            CommunicationState = "DisConnected";
-            Channels.Clear();
-            return IsDisConnected;
+            if (DisConnect())
+            {
+                Channels.Clear();
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("断开连接失败");
+                return false;
+            }
         }
 
         /// <summary>
         /// 设备连接
         /// </summary>
         /// <returns>true:连接成功; false:连接失败</returns>
-        public bool Connect()
+        public bool DevOnline()
         {
-            bool IsConnected = false;
-            client = new ModbusTcpClient();
-            if (client.Connect(Address, DefaultPort))
+            if (Connect(Address, DefaultPort))
             {
-                IsConnected = true;
-                CommunicationState = "Connected";
+                return true;
             }
             else
             {
                 Console.WriteLine("连接失败");
                 return false;
             }
-            InitChannel();
-            return IsConnected;
         }
 
         /// <summary>
-        /// 接受信息
+        /// 获取软件版本号
         /// </summary>
-        /// <returns>接收到的信息</returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public byte[] ReceiveMsg()
+        /// <returns>版本号</returns>
+        public string ReadIntSwVersion()
         {
-            throw new NotImplementedException();
+            string Version = (string)ReadFunc(IntSwVersion, "String");
+            return Version;
         }
 
         /// <summary>
-        /// 心跳机制
+        /// 获取通道数量
         /// </summary>
-        /// <returns>返回false代表连接断开</returns>
-        /// <exception cref="NotImplementedException"></exception>
-        public bool KeepAlive()
+        /// <returns>通道数量</returns>
+        public int ReadChNums()
         {
-            throw new NotImplementedException();
+            int Nums = (int)ReadFunc(ChNums, "UInt16");
+            return Nums;
+        }
+
+        /// <summary>
+        /// 获取实时电压
+        /// </summary>
+        /// <returns>电压值(0.001V)</returns>
+        public double ReadCurrVol(int ChIndex)
+        {
+            int Vol = (int)ReadFunc(ChIndex, CurrVol, "UInt32");
+            return Vol * 0.001;
+        }
+
+        /// <summary>
+        /// 获取实时电流
+        /// </summary>
+        /// <returns>电流值(0.001A)</returns>
+        public double ReadCurrElc(int ChIndex)
+        {
+            int Elc = (int)ReadFunc(ChIndex, CurrElc, "UInt32");
+            return Elc * 0.001;
+        }
+
+        /// <summary>
+        /// 写入指定通道，指定工步的工作模式
+        /// </summary>
+        /// <param name="ChIndex">指定通道</param>
+        /// <param name="ID">指定工步</param>
+        /// <param name="Mode">工作模式</param>
+        public void WriteWorkMode(int ChIndex, int ID, WorkMode Mode)
+        {
+            WriteFunc(ChIndex, ID, (int)Mode);
+        }
+
+        /// <summary>
+        /// 写入指定通道，指定工步的下一步号
+        /// </summary>
+        /// <param name="ChIndex">指定通道</param>
+        /// <param name="ID">指定工步</param>
+        /// <param name="NextS">下一步号</param>
+        public void WriteNextStep(int ChIndex, int ID, int NextS)
+        {
+            WriteFunc(ChIndex, ID, NextS);
+        }
+
+        public void SelectChannel(int index)
+        {
+
         }
     }
 }

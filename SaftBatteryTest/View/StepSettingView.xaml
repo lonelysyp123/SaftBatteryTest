@@ -23,7 +23,7 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TabControl Margin="10">
-            <TabItem Header="正常判断条件" Height="40">
+            <TabItem Header="正常判断条件(To Next Step)" Height="40">
                 <Grid>
                     <DataGrid Name="DG" materialDesign:DataGridAssist.CellPadding="4 2 2 2" materialDesign:DataGridAssist.ColumnHeaderPadding="4 2 2 2" CanUserSortColumns="False" ItemsSource="{Binding StepList}" GridLinesVisibility="All" BorderThickness="1" BorderBrush="Black" AutoGenerateColumns="False" CanUserAddRows="False">
                         <DataGrid.ContextMenu>
@@ -90,7 +90,7 @@
                     </ListView>-->
                 </Grid>
             </TabItem>
-            <TabItem Header="例外限制条件" Height="40">
+            <TabItem Header="例外限制条件(Stop(NG))" Height="40">
                 
             </TabItem>
         </TabControl>

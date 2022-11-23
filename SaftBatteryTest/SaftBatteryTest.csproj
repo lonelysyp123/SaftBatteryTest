@@ -141,9 +141,6 @@
     <Compile Include="Controls\IPInput.xaml.cs">
       <DependentUpon>IPInput.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\MyGrid.xaml.cs">
-      <DependentUpon>MyGrid.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\PathSettingView.xaml.cs">
       <DependentUpon>PathSettingView.xaml</DependentUpon>
     </Compile>
@@ -190,10 +187,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\IPInput.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\MyGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

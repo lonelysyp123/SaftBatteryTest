@@ -20,8 +20,8 @@ namespace SaftBatteryTest.Model
             }
         }
 
-        private string _channelBoxN = "0-0";
-        public string ChannelBoxN
+        private int _channelBoxN;
+        public int ChannelBoxN
         {
             get => _channelBoxN;
             set
@@ -37,6 +37,16 @@ namespace SaftBatteryTest.Model
             set
             {
                 SetProperty(ref _numColor, value);
+            }
+        }
+
+        public SolidColorBrush _chColor = new SolidColorBrush(Colors.Transparent);
+        public SolidColorBrush ChColor
+        {
+            get => _chColor;
+            set
+            {
+                SetProperty(ref _chColor, value);
             }
         }
 

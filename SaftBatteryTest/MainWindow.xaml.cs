@@ -159,10 +159,24 @@ namespace SaftBatteryTest
             var objs = viewmodel.DevList.Where(dev => dev.Address == ip).ToList();
             if (objs.Count == 1)
             {
-                if (objs[0].Connect())
+                if (objs[0].CommunicationState == "Connected")
                 {
-                    objs[0].InitChannel();
-                    ShowDevContent(objs[0]);
+                    if (objs[0].DevOffline())
+                    {
+                        if (objs[0].DevOnline())
+                        {
+                            objs[0].InitChannel();
+                            ShowDevContent(objs[0]);
+                        }
+                    }
+                }
+                else
+                {
+                    if (objs[0].DevOnline())
+                    {
+                        objs[0].InitChannel();
+                        ShowDevContent(objs[0]);
+                    }
                 }
             }
         }
@@ -201,6 +215,16 @@ namespace SaftBatteryTest
             else
             {
                 StateContent.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void Body_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            viewmodel.DevList[viewmodel.DevIndex].SelectChannel(0);
+            Channel channel = e.Source as Channel;
+            if (channel != null)
+            {
+                channel.border.BorderBrush = new SolidColorBrush(Colors.LightGreen);
             }
         }
     }
