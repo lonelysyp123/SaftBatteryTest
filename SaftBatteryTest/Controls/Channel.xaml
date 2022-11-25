@@ -16,8 +16,8 @@
             </Grid.RowDefinitions>
             <Grid.ContextMenu>
                 <ContextMenu>
-                    <MenuItem Header="启动" IsEnabled="{Binding StartIsEnabled}" Command="{Binding StartDevCommand}"></MenuItem>
-                    <MenuItem Header="停止" IsEnabled="{Binding StopIsEnabled}" Command="{Binding StopDevCommand}"></MenuItem>
+                    <MenuItem Header="启动" IsEnabled="{Binding StartIsEnabled}" Command="{Binding StartChannelCommand}"></MenuItem>
+                    <MenuItem Header="停止" IsEnabled="{Binding StopIsEnabled}" Command="{Binding StopChannelCommand}"></MenuItem>
                     <MenuItem Header="过程修改" IsEnabled="{Binding StepSetIsEnabled}" Command="{Binding StepSetCommand}"></MenuItem>
                     <Separator></Separator>
                     <MenuItem Header="打开数据"></MenuItem>
@@ -116,7 +116,7 @@
                 <TextBlock Text="{Binding ChannelBoxN}" FontSize="22" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="{Binding NumColor}"></TextBlock>
             </Border>
 
-            <Border Name="Screen" Background="#B29A9A9A" Grid.Row="0" Grid.RowSpan="3" CornerRadius="5" Visibility="Collapsed"></Border>
+            <Border Name="Screen" Background="#B29A9A9A" Grid.Row="0" Grid.RowSpan="3" CornerRadius="5" Visibility="{Binding IsShowGrayScreen}"></Border>
         </Grid>
     </Border>
 </UserControl>

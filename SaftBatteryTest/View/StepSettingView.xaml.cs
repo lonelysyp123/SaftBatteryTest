@@ -43,6 +43,13 @@ namespace SaftBatteryTest.View
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
+            this.DialogResult = false;
+            this.Close();
+        }
+
+        private void Start_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
             this.Close();
         }
     }

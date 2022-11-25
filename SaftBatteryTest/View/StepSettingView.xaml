@@ -307,7 +307,7 @@
             <Button Content="调入过程" Margin="20 0 20 0" Command="{Binding LoadStepCommand}"></Button>
             <Button Content="保存过程" Margin="20 0 20 0" Command="{Binding SaveStepCommand}"></Button>
             <Button Content="  取消  " Margin="20 0 20 0" Click="Cancel_Click"></Button>
-            <Button Content="  启动  " Margin="20 0 20 0"></Button>
+            <Button Content="  启动  " Margin="20 0 20 0" Click="Start_Click"></Button>
             <CheckBox Content="Enable BarCode" Margin="20 0 20 0" IsChecked="{Binding IsBarCode}" Command="{Binding BarCodeCommand}"></CheckBox>
             <CheckBox Content="Enable BarCode + Load Process" Margin="20 0 20 0" IsChecked="{Binding IsBarCodeProcess}" Command="{Binding BarCodeProcessCommand}"></CheckBox>
         </StackPanel>

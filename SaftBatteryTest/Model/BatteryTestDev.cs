@@ -9,6 +9,8 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Windows.Media;
+using System.Windows;
 
 namespace SaftBatteryTest.Model
 {
@@ -16,18 +18,19 @@ namespace SaftBatteryTest.Model
     {
         // MBAP 头描述 {|传输标志(2byte)|协议标志(2byte)|长度(2byte)|单元号标志(1byte)|}
         // 设备信息
-        protected byte[] IntSwVersion = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xe8, 0x00, 0x02 };
-        protected byte[] ExtSwVersion = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xea, 0x00, 0x01 };
-        protected byte[] ChNums = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xf5, 0x00, 0x01 };
+        private byte[] IntSwVersion =   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xe8, 0x00, 0x02 };
+        private byte[] ExtSwVersion =   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xea, 0x00, 0x01 };
+        private byte[] ChNums =         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xf5, 0x00, 0x01 };
 
         // 实时数据
-        protected byte[] CurrVol = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
-        protected byte[] CurrElc = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd2, 0x00, 0x02 };
+        private byte[] CurrVol =        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
+        private byte[] CurrElc =        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd2, 0x00, 0x02 };
 
         public List<ChannelModel> Channels { get; set; }
         public BitmapSource Image { get; set; }
         public string Address { get; set; }
         public int DefaultPort { get; set; }
+        private int Index = -1;
 
         public BatteryTestDev(string address)
         {
@@ -169,7 +172,30 @@ namespace SaftBatteryTest.Model
 
         public void SelectChannel(int index)
         {
+            Index = index;
+            for (int i = 0; i < Channels.Count; i++)
+            {
+                if (Channels[i].ChannelBoxN == index)
+                {
+                    Channels[i].ChColor = new SolidColorBrush(Colors.LightGreen);
+                }
+                else
+                {
+                    Channels[i].ChColor = new SolidColorBrush(Colors.Transparent);
+                }
+            }
+        }
 
+        public void OpenChannelSetView()
+        {
+            if (Index != -1)
+            {
+                //Channels[Index].StartDev();
+            }
+            else
+            {
+                MessageBox.Show("未选中任何通道!");
+            }
         }
     }
 }

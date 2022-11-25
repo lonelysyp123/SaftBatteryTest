@@ -218,13 +218,12 @@ namespace SaftBatteryTest
             }
         }
 
-        private void Body_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Body_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            viewmodel.DevList[viewmodel.DevIndex].SelectChannel(0);
             Channel channel = e.Source as Channel;
             if (channel != null)
             {
-                channel.border.BorderBrush = new SolidColorBrush(Colors.LightGreen);
+                viewmodel.DevList[viewmodel.DevIndex].SelectChannel(((ChannelModel)channel.DataContext).ChannelBoxN);
             }
         }
     }

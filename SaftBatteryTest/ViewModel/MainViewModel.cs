@@ -41,15 +41,6 @@ namespace SaftBatteryTest.ViewModel
                 DevChange();
             }
         }
-        private bool _isEnableStartBtn;
-        public bool IsEnableStartBtn
-        {
-            get => _isEnableStartBtn;
-            set
-            {
-                SetProperty(ref _isEnableStartBtn, value);
-            }
-        }
 
         public RelayCommand SetAutoOnlineCommand { get; set; }
         public RelayCommand OpenFileCommand { get; set; }
@@ -96,7 +87,7 @@ namespace SaftBatteryTest.ViewModel
 
         private void StartDev()
         {
-            throw new NotImplementedException();
+            DevList[DevIndex].OpenChannelSetView();
         }
 
         public void DeleteIP(string ip)
@@ -236,7 +227,6 @@ namespace SaftBatteryTest.ViewModel
         {
             //! 根据"./Resource/Config/IPConfig.xml"文件中的IPList来初始化IP部分
             InitIP(IPConfigFilePath);
-            IsEnableStartBtn = false;
         }
 
         /// <summary>

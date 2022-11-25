@@ -36,8 +36,8 @@
                 <MenuItem Header="管理退出"></MenuItem>
             </MenuItem>
             <MenuItem Header="通道"  FontSize="12" VerticalAlignment="Center">
-                <MenuItem Header="启动" Command="{Binding StartDevCommand}" IsEnabled="{Binding IsEnableStartBtn}"></MenuItem>
-                <MenuItem Header="停止" Command="{Binding StopDevCommand}" IsEnabled="{Binding IsEnableStopBtn}"></MenuItem>
+                <MenuItem Header="启动" Command="{Binding StartDevCommand}"></MenuItem>
+                <MenuItem Header="停止" Command="{Binding StopDevCommand}"></MenuItem>
                 <MenuItem Header="过程修改" Command="{Binding StepModifyCommand}"></MenuItem>
                 <Separator></Separator>
                 <MenuItem Header="MES信息" IsEnabled="False"></MenuItem>
@@ -97,7 +97,7 @@
                     <TextBlock Grid.Row="1" Text="Box(0-255)" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="10"></TextBlock>
                 </Grid>
             </Border>
-            <Grid Grid.Row="1" Name="Body" Background="#FF313131" MouseLeftButtonUp="Body_MouseLeftButtonUp">
+            <Grid Grid.Row="1" Name="Body" Background="#FF313131" MouseUp="Body_MouseUp">
 
             </Grid>
         </Grid>
