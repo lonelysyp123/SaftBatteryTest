@@ -13,22 +13,19 @@ namespace SaftBatteryTest.Model
 {
     public class TcpClientBase : ObservableObject
     {
-        private string _communicationState;
-        public string CommunicationState
-        {
-            get => _communicationState;
-            set
-            {
-                SetProperty(ref _communicationState, value);
-            }
-        }
         protected Socket Client;
         protected ushort index = 0;
         public TcpClientBase()
         {
-            CommunicationState = "Disconnected";
+            
         }
 
+        /// <summary>
+        /// TCP连接
+        /// </summary>
+        /// <param name="ip">IP地址</param>
+        /// <param name="port">端口号</param>
+        /// <returns>true:连接成功；false:连接失败</returns>
         public bool Connect(string ip, int port)
         {
             IPEndPoint point = new IPEndPoint(IPAddress.Parse(ip), port);
@@ -36,7 +33,6 @@ namespace SaftBatteryTest.Model
             try
             {
                 Client.Connect(point);
-                CommunicationState = "Connected";
             }
             catch (Exception ex)
             {
@@ -46,6 +42,10 @@ namespace SaftBatteryTest.Model
             return true;
         }
 
+        /// <summary>
+        /// 断开连接
+        /// </summary>
+        /// <returns>true:断开成功；false:断开失败</returns>
         public bool DisConnect()
         {
             try
@@ -55,7 +55,6 @@ namespace SaftBatteryTest.Model
                     Client.Disconnect(false);
                     Client.Close();
                     Client = null;
-                    CommunicationState = "DisConnected";
                 }
             }
             catch (Exception ex)
@@ -66,6 +65,10 @@ namespace SaftBatteryTest.Model
             return true;
         }
 
+        /// <summary>
+        /// 发送信息
+        /// </summary>
+        /// <param name="bytes">信息内容</param>
         private void SendMsg(byte[] bytes)
         {
             if (Client.Connected)
@@ -78,6 +81,10 @@ namespace SaftBatteryTest.Model
             }
         }
 
+        /// <summary>
+        /// 接受信息
+        /// </summary>
+        /// <returns>信息内容</returns>
         public byte[] ReceiveMsg()
         {
             if(Client.Connected)
@@ -89,12 +96,20 @@ namespace SaftBatteryTest.Model
             return null;
         }
 
+        /// <summary>
+        /// 请求响应
+        /// </summary>
+        /// <param name="bytes">请求内容</param>
+        /// <returns>响应内容</returns>
         public byte[] Request(byte[] bytes)
         {
             SendMsg(bytes);
             return ReceiveMsg();
         }
 
+        /// <summary>
+        /// 保活机制
+        /// </summary>
         public void KeepAlive()
         {
 

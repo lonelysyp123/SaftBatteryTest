@@ -11,20 +11,17 @@ using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Windows;
+using System.Threading;
 
 namespace SaftBatteryTest.Model
 {
-    public class BatteryTestDev : ModbusTcpClient, IBatteryTestDev
+    public class BatteryTestDev : DevBase, IBatteryTestDev
     {
         // MBAP 头描述 {|传输标志(2byte)|协议标志(2byte)|长度(2byte)|单元号标志(1byte)|}
         // 设备信息
         private byte[] IntSwVersion =   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xe8, 0x00, 0x02 };
         private byte[] ExtSwVersion =   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xea, 0x00, 0x01 };
         private byte[] ChNums =         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xf5, 0x00, 0x01 };
-
-        // 实时数据
-        private byte[] CurrVol =        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
-        private byte[] CurrElc =        { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd2, 0x00, 0x02 };
 
         public List<ChannelModel> Channels { get; set; }
         public BitmapSource Image { get; set; }
@@ -50,6 +47,7 @@ namespace SaftBatteryTest.Model
         /// </summary>
         public void InitChannel()
         {
+            Index = -1;
             int count = ReadChNums();
             Channels = new List<ChannelModel>();
             for (int i = 0; i < count; i++)
@@ -79,9 +77,10 @@ namespace SaftBatteryTest.Model
         /// <returns>true:成功; false:失败</returns>
         public bool DevOffline()
         {
-            if (DisConnect())
+            if (ModbusTcpClient.Instance.DisConnect())
             {
                 Channels.Clear();
+                CommunicationState = "DisConnected";
                 return true;
             }
             else
@@ -97,8 +96,9 @@ namespace SaftBatteryTest.Model
         /// <returns>true:连接成功; false:连接失败</returns>
         public bool DevOnline()
         {
-            if (Connect(Address, DefaultPort))
+            if (ModbusTcpClient.Instance.Connect(Address, DefaultPort))
             {
+                CommunicationState = "Connected";
                 return true;
             }
             else
@@ -114,7 +114,7 @@ namespace SaftBatteryTest.Model
         /// <returns>版本号</returns>
         public string ReadIntSwVersion()
         {
-            string Version = (string)ReadFunc(IntSwVersion, "String");
+            string Version = (string)ModbusTcpClient.Instance.ReadFunc(IntSwVersion, "String");
             return Version;
         }
 
@@ -124,28 +124,8 @@ namespace SaftBatteryTest.Model
         /// <returns>通道数量</returns>
         public int ReadChNums()
         {
-            int Nums = (int)ReadFunc(ChNums, "UInt16");
+            int Nums = (int)ModbusTcpClient.Instance.ReadFunc(ChNums, "UInt16");
             return Nums;
-        }
-
-        /// <summary>
-        /// 获取实时电压
-        /// </summary>
-        /// <returns>电压值(0.001V)</returns>
-        public double ReadCurrVol(int ChIndex)
-        {
-            int Vol = (int)ReadFunc(ChIndex, CurrVol, "UInt32");
-            return Vol * 0.001;
-        }
-
-        /// <summary>
-        /// 获取实时电流
-        /// </summary>
-        /// <returns>电流值(0.001A)</returns>
-        public double ReadCurrElc(int ChIndex)
-        {
-            int Elc = (int)ReadFunc(ChIndex, CurrElc, "UInt32");
-            return Elc * 0.001;
         }
 
         /// <summary>
@@ -156,7 +136,7 @@ namespace SaftBatteryTest.Model
         /// <param name="Mode">工作模式</param>
         public void WriteWorkMode(int ChIndex, int ID, WorkMode Mode)
         {
-            WriteFunc(ChIndex, ID, (int)Mode);
+            ModbusTcpClient.Instance.WriteFunc(ChIndex, ID, (int)Mode);
         }
 
         /// <summary>
@@ -167,9 +147,13 @@ namespace SaftBatteryTest.Model
         /// <param name="NextS">下一步号</param>
         public void WriteNextStep(int ChIndex, int ID, int NextS)
         {
-            WriteFunc(ChIndex, ID, NextS);
+            ModbusTcpClient.Instance.WriteFunc(ChIndex, ID, NextS);
         }
 
+        /// <summary>
+        /// 选择通道
+        /// </summary>
+        /// <param name="index">通道号</param>
         public void SelectChannel(int index)
         {
             Index = index;
@@ -186,11 +170,29 @@ namespace SaftBatteryTest.Model
             }
         }
 
-        public void OpenChannelSetView()
+        /// <summary>
+        /// 开始采集数据
+        /// </summary>
+        public void StartDaq()
         {
             if (Index != -1)
             {
-                //Channels[Index].StartDev();
+                Channels[Index - 1].StartChannel();
+            }
+            else
+            {
+                MessageBox.Show("未选中任何通道!");
+            }
+        }
+
+        /// <summary>
+        /// 停止采集
+        /// </summary>
+        public void StopDaq()
+        {
+            if (Index != -1)
+            {
+                Channels[Index - 1].StopChannel();
             }
             else
             {

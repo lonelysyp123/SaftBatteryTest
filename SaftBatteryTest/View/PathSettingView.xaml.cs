@@ -26,7 +26,31 @@ namespace SaftBatteryTest.View
 
         private void OpenFile_Click(object sender, RoutedEventArgs e)
         {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                PathTxt.Text = dialog.SelectedPath;
+            }
+        }
 
+        private void Cancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = false;
+            this.Close();
+        }
+
+        private void Sure_Click(object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
+            this.Close();
+        }
+
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        private void Find_Click(object sender, RoutedEventArgs e)
+        {
         }
     }
 }

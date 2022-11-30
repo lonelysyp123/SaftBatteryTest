@@ -102,6 +102,7 @@
     <Compile Include="Helper\ModbusHelper.cs" />
     <Compile Include="Helper\StepXmlHelper.cs" />
     <Compile Include="Helper\SystemXmlHelper.cs" />
+    <Compile Include="Model\DevBase.cs" />
     <Compile Include="Model\IBatteryTestDev.cs" />
     <Compile Include="Helper\XmlBase.cs" />
     <Compile Include="Helper\IPXmlHelper.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Resource\Config\StepConfig.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resource\Config\SystemConfig.xml" />
     <Content Include="Resource\Image\PC.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

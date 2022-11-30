@@ -22,13 +22,13 @@
                 <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
             <Border Grid.Column="0" VerticalAlignment="Center" Margin="10 0 5 0" BorderBrush="#FFBBB9B9" BorderThickness="1">
-                <TextBlock Text="......"></TextBlock>
+                <TextBlock Name="PathTxt" Text="......"></TextBlock>
             </Border>
             <Button Grid.Column="1" Content=">>>" VerticalAlignment="Center" HorizontalAlignment="Center" Height="25" Width="50" Click="OpenFile_Click" Style="{x:Null}"></Button>
         </Grid>
-        <Button Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="打开文件存放目录" Margin="10 0 10 0" Height="25" Style="{x:Null}"></Button>
-        <Button Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="搜索文件存放目录" Margin="10 0 10 0" Height="25" Style="{x:Null}"></Button>
-        <Button Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="确定" Width="60" HorizontalAlignment="Center" Height="25" Style="{x:Null}"></Button>
-        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Content="取消" Width="60" HorizontalAlignment="Center" Height="25" Style="{x:Null}"></Button>
+        <Button Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Content="打开文件存放目录" Margin="10 0 10 0" Height="25" Style="{x:Null}" Click="Open_Click"></Button>
+        <Button Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Content="搜索文件存放目录" Margin="10 0 10 0" Height="25" Style="{x:Null}" Click="Find_Click"></Button>
+        <Button Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Content="确定" Width="60" HorizontalAlignment="Center" Height="25" Style="{x:Null}" Click="Sure_Click"></Button>
+        <Button Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Content="取消" Width="60" HorizontalAlignment="Center" Height="25" Style="{x:Null}" Click="Cancel_Click"></Button>
     </Grid>
 </Window>

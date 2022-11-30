@@ -5,11 +5,14 @@ using SaftBatteryTest.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Media;
+using System.Xml.Serialization;
 
 namespace SaftBatteryTest.Model
 {
@@ -95,12 +98,36 @@ namespace SaftBatteryTest.Model
             }
         }
 
+        private double _vol;
+        public double Vol
+        {
+            get => _vol;
+            set
+            {
+                SetProperty(ref _vol, value);
+            }
+        }
+
+        private double _elc;
+        public double Elc
+        {
+            get => _elc;
+            set
+            {
+                SetProperty(ref _elc, value);
+            }
+        }
+
         public RelayCommand StartChannelCommand { get; set; }
         public RelayCommand StopChannelCommand { get; set; }
         public RelayCommand StepSetCommand { get; set; }
 
         private StepSettingViewModel viewModel;
         public bool IsSelected = false;
+
+        // 实时数据
+        private byte[] CurrVol = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
+        private byte[] CurrElc = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd2, 0x00, 0x02 };
 
         public ChannelModel()
         {
@@ -131,6 +158,20 @@ namespace SaftBatteryTest.Model
 
         public void StartChannel()
         {
+            if (StartChannelView())
+            {
+                Thread daqth = new Thread(DaqTh);
+                daqth.IsBackground = true;
+                daqth.Start();
+            }
+        }
+
+        /// <summary>
+        /// 界面内容更新
+        /// </summary>
+        /// <returns>true:启动；false:取消</returns>
+        public bool StartChannelView()
+        {
             // TODO 1.打开启动配置界面 2.启动读取实时数据线程
             if (ShowSetView())
             {
@@ -138,9 +179,28 @@ namespace SaftBatteryTest.Model
                 StartIsEnabled = false;
                 StopIsEnabled = true;
                 StepSetIsEnabled = true;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 采集子线程
+        /// </summary>
+        private void DaqTh()
+        {
+            while (StartIsEnabled == false)
+            {
+                Thread.Sleep(1000);
+                Vol = ReadCurrVol(ChannelBoxN - 1);
+                Elc = ReadCurrElc(ChannelBoxN - 1);
             }
         }
 
+        /// <summary>
+        /// 显示设置界面
+        /// </summary>
+        /// <returns>true:启动；false:取消</returns>
         public bool ShowSetView()
         {
             StepSettingView view = new StepSettingView(viewModel);
@@ -153,6 +213,40 @@ namespace SaftBatteryTest.Model
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// 获取实时电压
+        /// </summary>
+        /// <returns>电压值(0.001V)</returns>
+        private double ReadCurrVol(int ChIndex)
+        {
+            short i = (short)(2000 + ChIndex * 100);
+            var bytes = BitConverter.GetBytes(i);
+            if (bytes.Length >= 2)
+            {
+                CurrVol[8] = bytes[1];
+                CurrVol[9] = bytes[0];
+            }
+            int vol = (int)ModbusTcpClient.Instance.ReadFunc(CurrVol, "UInt32");
+            return vol * 0.001;
+        }
+
+        /// <summary>
+        /// 获取实时电流
+        /// </summary>
+        /// <returns>电流值(0.001A)</returns>
+        private double ReadCurrElc(int ChIndex)
+        {
+            short i = (short)(2002 + ChIndex * 100);
+            var bytes = BitConverter.GetBytes(i);
+            if (bytes.Length >= 2)
+            {
+                CurrElc[8] = bytes[1];
+                CurrElc[9] = bytes[0];
+            }
+            int elc = (int)ModbusTcpClient.Instance.ReadFunc(CurrElc, "UInt32");
+            return elc * 0.001;
         }
     }
 }

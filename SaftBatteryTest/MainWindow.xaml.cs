@@ -186,7 +186,7 @@ namespace SaftBatteryTest
             var objs = viewmodel.DevList.Where(dev => dev.Address == ip).ToList();
             if (objs.Count == 1)
             {
-                if (objs[0].DisConnect())
+                if (objs[0].DevOffline())
                 {
                     ShowDevContent(objs[0]);
                 }

@@ -10,10 +10,30 @@ namespace SaftBatteryTest.Model
 {
     public class ModbusTcpClient : TcpClientBase
     {
-        public ModbusTcpClient()
+        private static readonly object obj = new object();
+
+        // 单例
+        private static ModbusTcpClient instance = null;
+        public static ModbusTcpClient Instance
+        {
+            get
+            {
+                lock (obj)
+                {
+                    if (instance == null)
+                    {
+                        instance = new ModbusTcpClient();
+                    }
+                    return instance;
+                }
+            }
+        }
+
+        private ModbusTcpClient()
         {
 
         }
+
 
         /// <summary>
         /// 通用读取函数
@@ -58,7 +78,6 @@ namespace SaftBatteryTest.Model
         /// <returns></returns>
         public object ReadFunc(int index, byte[] msg, string type)
         {
-            // TODO 根据这个index改变寄存器地址字节
             object obj = null;
             byte[] bytes = Request(msg);
             if (bytes != null && bytes.Length > 8)

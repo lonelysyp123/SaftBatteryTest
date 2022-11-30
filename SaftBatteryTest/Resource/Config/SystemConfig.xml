@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<SystemConfig>
+	<Part1>
+		<T1 IsEnable="false" Type="int"></T1>
+		<T2 IsEnable="false" Type="int"></T2>
+		<T3 IsEnable="false" Type="int"></T3>
+		<T4 IsEnable="false" Type="int"></T4>
+		<B1 Type="bool"></B1>
+		<B2 Type="bool"></B2>
+		<B3 Type="bool"></B3>
+		<B4 Type="bool"></B4>
+		<B5 Type="bool"></B5>
+		<B6 Type="bool"></B6>
+		<B7 Type="bool"></B7>
+		<B8 Type="bool"></B8>
+		<B9 Type="bool"></B9>
+		<B10 Type="bool"></B10>
+		<B11 Type="bool"></B11>
+		<B12 Type="bool"></B12>
+		<B13 Type="bool"></B13>
+		<T5 Type="int"></T5>
+	</Part1>
+	<Part2>
+	</Part2>
+	<Part3>
+		<IsBackUpFile Type="bool"></IsBackUpFile>
+		<BackUpSpan Type="double"></BackUpSpan>
+		<BackUpPath Type="string"></BackUpPath>
+		<IsSynFile Type="bool"></IsSynFile>
+		<SynSpan Type="double"></SynSpan>
+		<SynPath Type="string"></SynPath>
+	</Part3>
+	<Part4>
+		
+	</Part4>
+	<Part5>
+		
+	</Part5>
+</SystemConfig>
+
+<!-- 
+字段标注 
+Part1
+T1		脉冲充电电流终止时间
+T2		步骤开始电压延迟判定时间
+T3		步骤开始电流延迟判定时间
+T4		步骤开始安全电压延迟判定时间
+B1		MTV通信错误停止测试
+B2		不同版本可并联
+B3		电压趋势异常停止
+B4		PLC通信错误停止测试
+B5		系统重启提示测试接续
+B6		回馈专用
+B7		侦测到零电压电流停止(E133)
+B8		默认开启BarCode扫描
+B9		默认勾选备份自动完成数据
+B10		忽略创建日期
+B11		侦测到电流异常停止
+B12		电池反接异常停止
+B13		电压异常停止
+T5		终止电流，电压判定次数
+Part2
+
+-->

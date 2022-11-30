@@ -55,7 +55,7 @@
                     <ColumnDefinition/>
                     <ColumnDefinition Width="1.2*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="0.0000V" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Vol, StringFormat={}{0:F3}V}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15"></TextBlock>
                 <Separator Grid.Row="1" Grid.Column="0" Margin="10 0 0 0">
                     <Separator.Background>
                         <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">
@@ -64,7 +64,7 @@
                         </LinearGradientBrush>
                     </Separator.Background>
                 </Separator>
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="0.000A" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Elc, StringFormat={}{0:F3}A}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="15"></TextBlock>
                 <Separator Grid.Row="3" Grid.Column="0" Margin="10 0 0 0">
                     <Separator.Background>
                         <LinearGradientBrush EndPoint="0,0.5" StartPoint="1,0.5">

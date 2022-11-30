@@ -14,6 +14,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
 namespace SaftBatteryTest.ViewModel
@@ -49,13 +50,14 @@ namespace SaftBatteryTest.ViewModel
         public RelayCommand AddIPCommand { get; set; }
         public RelayCommand AddIPsCommand { get; set; }
         public RelayCommand DeleteAllIPCommand { get; set; }
-        public RelayCommand StartDevCommand { get; set; }
-        public RelayCommand StopDevCommand { get; set; }
+        public RelayCommand StartChannelCommand { get; set; }
+        public RelayCommand StopChannelCommand { get; set; }
 
         public AppStateViewModel AppStateVM { get; set; }
         public StepSettingViewModel StepSettingVM { get; set; }
         private IPXmlHelper helper = new IPXmlHelper();
         private const string IPConfigFilePath = "./Resource/Config/IPConfig.xml";
+        private string DataPath = "";
 
         public MainViewModel()
         {
@@ -66,8 +68,8 @@ namespace SaftBatteryTest.ViewModel
             AddIPCommand = new RelayCommand(AddIP);
             AddIPsCommand = new RelayCommand(AddIPs);
             DeleteAllIPCommand = new RelayCommand(DeleteAllIP);
-            StartDevCommand = new RelayCommand(StartDev);
-            StopDevCommand = new RelayCommand(StopDev);
+            StartChannelCommand = new RelayCommand(StartChannel);
+            StopChannelCommand = new RelayCommand(StopChannel);
 
             DevList = new ObservableCollection<BatteryTestDev>();
             AppStateVM = new AppStateViewModel();
@@ -80,14 +82,24 @@ namespace SaftBatteryTest.ViewModel
         }
 
         #region Command
-        private void StopDev()
+        private void StopChannel()
         {
-            throw new NotImplementedException();
+            if (DevList[DevIndex].CommunicationState == "Connected")
+            {
+                DevList[DevIndex].StopDaq();
+            }
         }
 
-        private void StartDev()
+        private void StartChannel()
         {
-            DevList[DevIndex].OpenChannelSetView();
+            if (DevList[DevIndex].CommunicationState == "Connected")
+            {
+                DevList[DevIndex].StartDaq();
+            }
+            else
+            {
+                MessageBox.Show("未连接设备");
+            }
         }
 
         public void DeleteIP(string ip)
@@ -171,12 +183,20 @@ namespace SaftBatteryTest.ViewModel
             if (view.ShowDialog() == true)
             {
                 //! TODO 保存这个地址到本地的配置文件
+                DataPath = view.PathTxt.Text;
+                using (FileStream fs = new FileStream("./Resource/Config/DataPath.txt", FileMode.Create))
+                {
+                    using (StreamWriter sw = new StreamWriter(fs, Encoding.Default))
+                    {
+                        sw.Write(DataPath);
+                    }
+                }
             }
         }
 
         private void OpenFile()
         {
-            OpenFileDialog file = new OpenFileDialog();
+            Microsoft.Win32.OpenFileDialog file = new Microsoft.Win32.OpenFileDialog();
             file.Filter = "数据文件|*.cds";
             file.ShowDialog();
             if (file.FileName != null && file.FileName != "")
