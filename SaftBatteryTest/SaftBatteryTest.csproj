@@ -142,6 +142,9 @@
     <Compile Include="Controls\IPInput.xaml.cs">
       <DependentUpon>IPInput.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\DataAnalysisView.xaml.cs">
+      <DependentUpon>DataAnalysisView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\PathSettingView.xaml.cs">
       <DependentUpon>PathSettingView.xaml</DependentUpon>
     </Compile>
@@ -188,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\IPInput.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DataAnalysisView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

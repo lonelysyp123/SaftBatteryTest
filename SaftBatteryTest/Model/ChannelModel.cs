@@ -121,9 +121,11 @@ namespace SaftBatteryTest.Model
         public RelayCommand StartChannelCommand { get; set; }
         public RelayCommand StopChannelCommand { get; set; }
         public RelayCommand StepSetCommand { get; set; }
+        public RelayCommand OpenDataCommand { get; set; }
 
         private StepSettingViewModel viewModel;
         public bool IsSelected = false;
+        
 
         // 实时数据
         private byte[] CurrVol = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
@@ -134,8 +136,14 @@ namespace SaftBatteryTest.Model
             StartChannelCommand = new RelayCommand(StartChannel);
             StopChannelCommand = new RelayCommand(StopChannel);
             StepSetCommand = new RelayCommand(StepSet);
+            OpenDataCommand = new RelayCommand(OpenData);
 
             viewModel = new StepSettingViewModel();
+        }
+
+        private void OpenData()
+        {
+            throw new NotImplementedException();
         }
 
         private void StepSet()

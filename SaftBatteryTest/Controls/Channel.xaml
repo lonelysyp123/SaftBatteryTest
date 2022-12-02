@@ -20,7 +20,7 @@
                     <MenuItem Header="停止" IsEnabled="{Binding StopIsEnabled}" Command="{Binding StopChannelCommand}"></MenuItem>
                     <MenuItem Header="过程修改" IsEnabled="{Binding StepSetIsEnabled}" Command="{Binding StepSetCommand}"></MenuItem>
                     <Separator></Separator>
-                    <MenuItem Header="打开数据"></MenuItem>
+                    <MenuItem Header="打开数据" Command="{Binding OpenDataCommand}"></MenuItem>
                     <MenuItem Header="循环导出数据"></MenuItem>
                     <Separator></Separator>
                     <MenuItem Header="通道状态查询/跳转"></MenuItem>
