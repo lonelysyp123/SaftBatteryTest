@@ -217,7 +217,29 @@
         </Border>
 
         <Border Name="ShortcutView" Grid.Row="1" Grid.Column="0" Width="90" Background="#FFC0DAE2" BorderThickness="1" BorderBrush="#FF5B6C72">
-
+            <StackPanel Orientation="Vertical">
+                <Button Margin="4" Width="80" Height="60" Command="{Binding OpenDataFileCommand}" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="./Resource/Image/Open.png" Width="50" Stretch="Fill"></Image>
+                </Button>
+                <Button Margin="4" Width="80" Height="60" Command="{Binding SetSavePathCommand}" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="./Resource/Image/Edit.png" Width="50" Stretch="Fill"></Image>
+                </Button>
+                <Button Margin="4" Width="80" Height="60" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="./Resource/Image/Find.png" Width="50" Stretch="Fill"></Image>
+                </Button>
+                <Button Margin="4" Width="80" Height="60" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="./Resource/Image/Warn.png" Width="50" Stretch="Fill"></Image>
+                </Button>
+                <Button Margin="4" Width="80" Height="60" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="./Resource/Image/Display.png" Width="50" Stretch="Fill"></Image>
+                </Button>
+                <Button Margin="4" Width="80" Height="60" Command="{Binding StartChannelCommand}" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="./Resource/Image/Start.png" Width="50" Stretch="Fill"></Image>
+                </Button>
+                <Button Margin="4" Width="80" Height="60" Command="{Binding StopChannelCommand}" Background="{x:Null}" BorderBrush="{x:Null}">
+                    <Image Source="./Resource/Image/Stop.png" Width="50" Stretch="Fill"></Image>
+                </Button>
+            </StackPanel>
         </Border>
     </Grid>
 </Window>

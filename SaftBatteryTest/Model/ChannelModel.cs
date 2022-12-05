@@ -125,7 +125,7 @@ namespace SaftBatteryTest.Model
 
         private StepSettingViewModel viewModel;
         public bool IsSelected = false;
-        
+        private StoreModel store;
 
         // 实时数据
         private byte[] CurrVol = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
@@ -139,11 +139,12 @@ namespace SaftBatteryTest.Model
             OpenDataCommand = new RelayCommand(OpenData);
 
             viewModel = new StepSettingViewModel();
+            store = new StoreModel();
         }
 
         private void OpenData()
         {
-            throw new NotImplementedException();
+            
         }
 
         private void StepSet()
@@ -200,8 +201,14 @@ namespace SaftBatteryTest.Model
             while (StartIsEnabled == false)
             {
                 Thread.Sleep(1000);
-                Vol = ReadCurrVol(ChannelBoxN - 1);
-                Elc = ReadCurrElc(ChannelBoxN - 1);
+
+                double tmp1 = ReadCurrVol(ChannelBoxN - 1);
+                Vol = tmp1;
+                store.VolCollect.Add(tmp1);
+
+                double tmp2 = ReadCurrElc(ChannelBoxN - 1);
+                Elc = tmp2;
+                store.ElcCollect.Add(tmp2);
             }
         }
 

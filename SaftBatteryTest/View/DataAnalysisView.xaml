@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaftBatteryTest.View"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="DataAnalysisView" Height="450" Width="800">
+        Title="DataAnalysisView" Height="500" Width="800">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+
+        <toolkit:WindowContainer Grid.Row="2" Background="Gray">
+            <toolkit:ChildWindow Background="AliceBlue" Caption="子窗体" Width="200" Height="200" WindowBackground="LightGreen" IsModal="False" WindowState="Open">
+                <TextBlock Text="123321"></TextBlock>
+            </toolkit:ChildWindow>
+        </toolkit:WindowContainer>
     </Grid>
 </Window>

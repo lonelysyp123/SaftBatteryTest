@@ -168,6 +168,10 @@ namespace SaftBatteryTest
                             objs[0].InitChannel();
                             ShowDevContent(objs[0]);
                         }
+                        else
+                        {
+                            MessageBox.Show("设备连接失败！");
+                        }
                     }
                 }
                 else
@@ -176,6 +180,10 @@ namespace SaftBatteryTest
                     {
                         objs[0].InitChannel();
                         ShowDevContent(objs[0]);
+                    }
+                    else
+                    {
+                        MessageBox.Show("设备连接失败！");
                     }
                 }
             }
