@@ -1,5 +1,4 @@
-﻿using SaftBatteryTest.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,15 +15,13 @@ using System.Windows.Shapes;
 namespace SaftBatteryTest.View
 {
     /// <summary>
-    /// SystemSetView.xaml 的交互逻辑
+    /// ChannelInfomationView.xaml 的交互逻辑
     /// </summary>
-    public partial class SystemSetView : Window
+    public partial class ChannelInfomationView : Window
     {
-        public SystemSetView(SystemSetViewModel viewmodel)
+        public ChannelInfomationView()
         {
             InitializeComponent();
-
-            this.DataContext = viewmodel;
         }
     }
 }

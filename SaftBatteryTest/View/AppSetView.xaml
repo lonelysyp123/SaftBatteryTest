@@ -144,8 +144,8 @@
             <CheckBox Content="DPU  MTV透传" Margin="10 0 0 0"></CheckBox>
         </StackPanel>
         <StackPanel Grid.Row="19" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Button Content="确认" Margin="0 0 50 0" Width="80"></Button>
-            <Button Content="取消" Margin="50 0 0 0" Width="80"></Button>
+            <Button Content="确认" Margin="0 0 50 0" Width="80" Height="32" Style="{x:Null}"></Button>
+            <Button Content="取消" Margin="50 0 0 0" Width="80" Height="32" Style="{x:Null}"></Button>
         </StackPanel>
     </Grid>
 </Window>

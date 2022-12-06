@@ -33,54 +33,54 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <CheckBox Content="脉冲充电电流终止时间" Grid.Row="0" Grid.Column="0"></CheckBox>
+                <CheckBox Content="脉冲充电电流终止时间" Grid.Row="0" Grid.Column="0" IsChecked="{Binding model.IsT1}"></CheckBox>
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0" BorderThickness="1"></TextBox>
+                    <TextBox Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0" BorderThickness="1" Text="{Binding model.T1}"></TextBox>
                     <TextBlock Text="Sec" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2 0 10 0"></TextBlock>
                 </StackPanel>
-                <CheckBox Content="系统重启提示测试接续" Grid.Row="0" Grid.Column="2"></CheckBox>
+                <CheckBox Content="系统重启提示测试接续" Grid.Row="0" Grid.Column="2" IsChecked="{Binding model.IsB5}"></CheckBox>
 
-                <CheckBox Content="步骤开始电压延迟判定时间" Grid.Row="1" Grid.Column="0"></CheckBox>
+                <CheckBox Content="步骤开始电压延迟判定时间" Grid.Row="1" Grid.Column="0" IsChecked="{Binding model.IsT2}"></CheckBox>
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0" BorderThickness="1"></TextBox>
+                    <TextBox Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0" BorderThickness="1" Text="{Binding model.T2}"></TextBox>
                     <TextBlock Text="Sec" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2 0 10 0"></TextBlock>
                 </StackPanel>
-                <CheckBox Content="回馈专用" Grid.Row="1" Grid.Column="2"></CheckBox>
+                <CheckBox Content="回馈专用" Grid.Row="1" Grid.Column="2" IsChecked="{Binding model.IsB6}"></CheckBox>
 
-                <CheckBox Content="步骤开始电流延迟判定时间" Grid.Row="2" Grid.Column="0"></CheckBox>
+                <CheckBox Content="步骤开始电流延迟判定时间" Grid.Row="2" Grid.Column="0" IsChecked="{Binding model.IsT3}"></CheckBox>
                 <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0" BorderThickness="1"></TextBox>
+                    <TextBox Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0" BorderThickness="1" Text="{Binding model.T3}"></TextBox>
                     <TextBlock Text="Sec" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2 0 10 0"></TextBlock>
                 </StackPanel>
-                <CheckBox Content="侦测到零电压电流停止(E133)" Grid.Row="2" Grid.Column="2"></CheckBox>
+                <CheckBox Content="侦测到零电压电流停止(E133)" Grid.Row="2" Grid.Column="2" IsChecked="{Binding model.IsB7}"></CheckBox>
 
-                <CheckBox Content="步骤开始安全电压延迟判定时间" Grid.Row="3" Grid.Column="0"></CheckBox>
+                <CheckBox Content="步骤开始安全电压延迟判定时间" Grid.Row="3" Grid.Column="0" IsChecked="{Binding model.IsT4}"></CheckBox>
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
-                    <TextBox Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0" BorderThickness="1"></TextBox>
+                    <TextBox Width="50" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10 0 0 0" BorderThickness="1" Text="{Binding model.T4}"></TextBox>
                     <TextBlock Text="Sec" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="2 0 10 0"></TextBlock>
                 </StackPanel>
-                <CheckBox Content="默认开启BarCode扫描" Grid.Row="3" Grid.Column="2"></CheckBox>
+                <CheckBox Content="默认开启BarCode扫描" Grid.Row="3" Grid.Column="2" IsChecked="{Binding model.IsB8}"></CheckBox>
 
-                <CheckBox Content="MTV通信错误停止测试" Grid.Row="4" Grid.Column="0"></CheckBox>
-                <CheckBox Content="默认勾选备份自动完成数据" Grid.Row="4" Grid.Column="2"></CheckBox>
-                <CheckBox Content="不同版本可并联" Grid.Row="5" Grid.Column="0"></CheckBox>
-                <CheckBox Content="忽略创建日期" Grid.Row="5" Grid.Column="2"></CheckBox>
-                <CheckBox Content="电压趋势异常停止" Grid.Row="6" Grid.Column="0"></CheckBox>
-                <CheckBox Content="侦测到电流异常停止" Grid.Row="6" Grid.Column="2"></CheckBox>
-                <CheckBox Content="PLC通信错误停止测试" Grid.Row="7" Grid.Column="0"></CheckBox>
-                <CheckBox Content="电池反接异常停止" Grid.Row="7" Grid.Column="2"></CheckBox>
+                <CheckBox Content="MTV通信错误停止测试" Grid.Row="4" Grid.Column="0" IsChecked="{Binding model.IsB1}"></CheckBox>
+                <CheckBox Content="默认勾选备份自动完成数据" Grid.Row="4" Grid.Column="2" IsChecked="{Binding model.IsB9}"></CheckBox>
+                <CheckBox Content="不同版本可并联" Grid.Row="5" Grid.Column="0" IsChecked="{Binding model.IsB2}"></CheckBox>
+                <CheckBox Content="忽略创建日期" Grid.Row="5" Grid.Column="2" IsChecked="{Binding model.IsB10}"></CheckBox>
+                <CheckBox Content="电压趋势异常停止" Grid.Row="6" Grid.Column="0" IsChecked="{Binding model.IsB3}"></CheckBox>
+                <CheckBox Content="侦测到电流异常停止" Grid.Row="6" Grid.Column="2" IsChecked="{Binding model.IsB11}"></CheckBox>
+                <CheckBox Content="PLC通信错误停止测试" Grid.Row="7" Grid.Column="0" IsChecked="{Binding model.IsB4}"></CheckBox>
+                <CheckBox Content="电池反接异常停止" Grid.Row="7" Grid.Column="2" IsChecked="{Binding model.IsB12}"></CheckBox>
                 <StackPanel Grid.Row="8" Grid.Column="0" Orientation="Horizontal">
                     <TextBlock Text="终止电流，电压判定次数" VerticalAlignment="Center" Margin="10"></TextBlock>
-                    <ComboBox Style="{x:Null}" VerticalAlignment="Center">
+                    <ComboBox Style="{x:Null}" VerticalAlignment="Center" SelectedItem="{Binding model.T5}">
                         <ComboBoxItem Content="1" IsSelected="True"/>
                         <ComboBoxItem Content="3"/>
                     </ComboBox>
                 </StackPanel>
-                <CheckBox Content="电压异常停止" Grid.Row="8" Grid.Column="2"></CheckBox>
+                <CheckBox Content="电压异常停止" Grid.Row="8" Grid.Column="2" IsChecked="{Binding model.IsB13}"></CheckBox>
             </Grid>
         </Border>
 
-        <Border Grid.Row="1" BorderThickness="1" BorderBrush="#FFD5DFE5" CornerRadius="5" Margin="5">
+        <Border Grid.Row="1" BorderThickness="1" BorderBrush="#FFD5DFE5" CornerRadius="5" Margin="5" IsEnabled="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -100,7 +100,7 @@
                 </Grid>
                 <CheckBox Grid.Row="1" Grid.Column="0" Content="通道号-箱号 对调"></CheckBox>
                 <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
-                    <TextBlock Text="每行排列通道个数" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="每行排列通道个数" VerticalAlignment="Center" Margin="0 0 10 0"></TextBlock>
                     <ComboBox Style="{x:Null}" VerticalAlignment="Center">
                         <ComboBoxItem Content="4" IsSelected="True"/>
                         <ComboBoxItem Content="5"/>
@@ -149,7 +149,7 @@
                     <ColumnDefinition Width="5*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-            <Border Grid.Column="0" BorderThickness="1" BorderBrush="#FFD5DFE5" CornerRadius="5" Margin="5">
+            <Border Grid.Column="0" BorderThickness="1" BorderBrush="#FFD5DFE5" CornerRadius="5" Margin="5" IsEnabled="False">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -184,7 +184,7 @@
                 </Grid>
             </Border>
 
-            <Border Grid.Column="1" BorderThickness="1" BorderBrush="#FFD5DFE5" CornerRadius="5" Margin="5">
+            <Border Grid.Column="1" BorderThickness="1" BorderBrush="#FFD5DFE5" CornerRadius="5" Margin="5" IsEnabled="False">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
@@ -196,7 +196,7 @@
             </Border>
         </Grid>
 
-        <Border Grid.Row="4" BorderThickness="1" BorderBrush="#FFD5DFE5" CornerRadius="5" Margin="5">
+        <Border Grid.Row="4" BorderThickness="1" BorderBrush="#FFD5DFE5" CornerRadius="5" Margin="5" IsEnabled="False">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>

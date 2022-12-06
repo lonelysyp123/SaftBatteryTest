@@ -1,0 +1,33 @@
+﻿<Window x:Class="SaftBatteryTest.View.ChannelInfomationView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SaftBatteryTest.View"
+        mc:Ignorable="d"
+        Title="通道信息" Height="400" Width="700" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="7*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" BorderThickness="1" BorderBrush="Black" GridLinesVisibility="All" FontSize="10" Margin="5">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="channel" Width="1.1*"></DataGridTextColumn>
+                <DataGridTextColumn Header="ver" Width="0.8*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Ir" Width="0.8*"></DataGridTextColumn>
+                <DataGridTextColumn Header="Vr" Width="0.8*"></DataGridTextColumn>
+                <DataGridTextColumn Header="POW-ON" Width="1.2*"></DataGridTextColumn>
+                <DataGridTextColumn Header="R-TIMES" Width="1.2*"></DataGridTextColumn>
+                <DataGridTextColumn Header="RTL" Width="0.8*"></DataGridTextColumn>
+                <DataGridTextColumn Header="TH" Width="0.8*"></DataGridTextColumn>
+                <DataGridTextColumn Header="TL" Width="0.8*"></DataGridTextColumn>
+                <DataGridTextColumn Header="CUS" Width="0.8*"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="导出文件" Margin="0 0 50 0" Width="80" Height="30" Style="{x:Null}"></Button>
+            <Button Content="取消" Margin="50 0 0 0" Width="80" Style="{x:Null}"></Button>
+        </StackPanel>
+    </Grid>
+</Window>

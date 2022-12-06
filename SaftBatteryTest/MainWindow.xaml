@@ -42,8 +42,8 @@
                 <Separator></Separator>
                 <MenuItem Header="MES信息" IsEnabled="False"></MenuItem>
                 <MenuItem Header="自动联机"></MenuItem>
-                <MenuItem Header="联机状况"></MenuItem>
-                <MenuItem Header="详细信息"></MenuItem>
+                <MenuItem Header="联机状况" Command="{Binding QueryStatusCommand}"></MenuItem>
+                <MenuItem Header="详细信息" Command="{Binding ShowInfomationCommand}"></MenuItem>
             </MenuItem>
             <MenuItem Header="视图" FontSize="12" VerticalAlignment="Center">
                 <MenuItem Name="CDSMenu" Header="显示CDS" IsCheckable="True" Checked="CDS_Checked"></MenuItem>
@@ -53,8 +53,8 @@
             </MenuItem>
             <MenuItem Header="选项"  FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="优化自动联机" Command="{Binding SetAutoOnlineCommand}"></MenuItem>
-                <MenuItem Header="CDS-MTV设置"></MenuItem>
-                <MenuItem Header="系统设置"></MenuItem>
+                <MenuItem Header="CDS-MTV设置" IsEnabled="False"></MenuItem>
+                <MenuItem Header="系统设置" Command="{Binding SystemSetCommand}"></MenuItem>
                 <MenuItem Header="报警设置"></MenuItem>
                 <MenuItem Header="工位校验"></MenuItem>
                 <Separator></Separator>

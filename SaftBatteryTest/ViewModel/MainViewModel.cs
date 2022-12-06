@@ -52,11 +52,16 @@ namespace SaftBatteryTest.ViewModel
         public RelayCommand DeleteAllIPCommand { get; set; }
         public RelayCommand StartChannelCommand { get; set; }
         public RelayCommand StopChannelCommand { get; set; }
+        public RelayCommand QueryStatusCommand { get; set; }
+        public RelayCommand ShowInfomationCommand { get; set; }
+        public RelayCommand SystemSetCommand { get; set; }
 
-        public AppStateViewModel AppStateVM { get; set; }
-        public StepSettingViewModel StepSettingVM { get; set; }
+        public AppStateViewModel AppStateVM;
+        private SystemSetViewModel SysVM;
         private IPXmlHelper helper = new IPXmlHelper();
+
         private const string IPConfigFilePath = "./Resource/Config/IPConfig.xml";
+        private const string SysConfigFilePath = "./Resource/Config/SystemConfig.xml";
         private string DataPath = "";
 
         public MainViewModel()
@@ -70,10 +75,13 @@ namespace SaftBatteryTest.ViewModel
             DeleteAllIPCommand = new RelayCommand(DeleteAllIP);
             StartChannelCommand = new RelayCommand(StartChannel);
             StopChannelCommand = new RelayCommand(StopChannel);
+            QueryStatusCommand = new RelayCommand(QueryStatus);
+            ShowInfomationCommand = new RelayCommand(ShowInfomation);
+            SystemSetCommand = new RelayCommand(SystemSet);
 
             DevList = new ObservableCollection<BatteryTestDev>();
             AppStateVM = new AppStateViewModel();
-            StepSettingVM = new StepSettingViewModel();
+            SysVM = new SystemSetViewModel(SysConfigFilePath);
 
             // 初始化界面
             InitContent();
@@ -81,7 +89,35 @@ namespace SaftBatteryTest.ViewModel
             Directory.CreateDirectory(AppDomain.CurrentDomain.BaseDirectory + "/Data");
         }
 
+
         #region Command
+        private void SystemSet()
+        {
+            SystemSetView view = new SystemSetView(SysVM);
+            view.ShowDialog();
+        }
+
+        private void ShowInfomation()
+        {
+            ChannelInfomationView view = new ChannelInfomationView();
+            view.ShowDialog();
+        }
+
+        private void QueryStatus()
+        {
+            string msg = "未检测到设备!";
+            // 判断是否有设备连接
+            foreach (var item in DevList)
+            {
+                if (item.CommunicationState == "Connected")
+                {
+                    msg = "";
+                    msg = msg + "IP:" + item.Address + "(" + item.Channels.Count + ")\n";
+                }
+            }
+            MessageBox.Show(msg);
+        }
+
         private void StopChannel()
         {
             if (DevList[DevIndex].CommunicationState == "Connected")
@@ -165,16 +201,7 @@ namespace SaftBatteryTest.ViewModel
         
         private void StepModify()
         {
-            StepSettingView stepsettingview = new StepSettingView(StepSettingVM);
-            if (stepsettingview.ShowDialog() == true)
-            {
-                Console.WriteLine("123");
-            }
-            else
-            {
-                Console.WriteLine("321");
-            }
-            
+            DevList[DevIndex].StartDaq();
         }
 
         private void SetSavePath()
