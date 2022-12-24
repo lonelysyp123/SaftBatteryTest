@@ -23,7 +23,7 @@ namespace SaftBatteryTest.ViewModel
             if (path != null && path != "")
             {
                 // 工程步骤更新
-                model = helper.ReadSysParamFromXml(path);
+                //model = helper.ReadSysParamFromXml(path);
             }
         }
     }
