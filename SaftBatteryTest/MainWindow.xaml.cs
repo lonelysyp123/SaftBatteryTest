@@ -231,7 +231,7 @@ namespace SaftBatteryTest
             Channel channel = e.Source as Channel;
             if (channel != null)
             {
-                viewmodel.DevList[viewmodel.DevIndex].SelectChannel(((ChannelModel)channel.DataContext).ChannelBoxN);
+                viewmodel.DevList[viewmodel.DevIndex].SelectChannel(((ChannelViewModel)channel.DataContext).ChannelBoxN);
             }
         }
     }

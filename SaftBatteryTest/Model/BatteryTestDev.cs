@@ -23,7 +23,7 @@ namespace SaftBatteryTest.Model
         private byte[] ExtSwVersion =   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xea, 0x00, 0x01 };
         private byte[] ChNums =         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xf5, 0x00, 0x01 };
 
-        public List<ChannelModel> Channels { get; set; }
+        public List<ChannelViewModel> Channels { get; set; }
         public BitmapSource Image { get; set; }
         public string Address { get; set; }
         public int DefaultPort { get; set; }
@@ -49,10 +49,10 @@ namespace SaftBatteryTest.Model
         {
             Index = -1;
             int count = ReadChNums();
-            Channels = new List<ChannelModel>();
+            Channels = new List<ChannelViewModel>();
             for (int i = 0; i < count; i++)
             {
-                Channels.Add(new ChannelModel() { ChannelBoxN = i+1 });
+                Channels.Add(new ChannelViewModel() { ChannelBoxN = i+1 });
             }
         }
 
@@ -63,10 +63,10 @@ namespace SaftBatteryTest.Model
         public void InitChannel(int count)
         {
             // 这里默认创建4个
-            Channels = new List<ChannelModel>();
+            Channels = new List<ChannelViewModel>();
             for (int i = 0; i < count; i++)
             {
-                Channels.Add(new ChannelModel());
+                Channels.Add(new ChannelViewModel());
             }
             Channels[0].Title += Address;
         }

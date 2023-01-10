@@ -43,5 +43,10 @@ namespace SaftBatteryTest.Helper
             }
             return model;
         }
+
+        public SystemSetModel ReadSysParamFromXml(string path)
+        {
+            return null;
+        }
     }
 }

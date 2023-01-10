@@ -26,7 +26,7 @@
                     <GradientStop Color="White" Offset="0"/>
                 </LinearGradientBrush>
             </Menu.Background>
-            <MenuItem Header="文件"  FontSize="12" VerticalAlignment="Center">
+            <MenuItem Header="文件" FontSize="12" VerticalAlignment="Center">
                 <MenuItem Header="打开" Command="{Binding OpenFileCommand}"></MenuItem>
                 <MenuItem Header="设置文件保存路径" Command="{Binding SetSavePathCommand}"></MenuItem>
                 <MenuItem Header="退出" Click="Close_Click"></MenuItem>

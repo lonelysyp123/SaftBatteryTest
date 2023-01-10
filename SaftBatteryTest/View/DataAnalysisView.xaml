@@ -10,14 +10,32 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
-            <RowDefinition/>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
+        <Menu Grid.Row="0" BorderThickness="1" BorderBrush="#FF4D4D4D" Height="25">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFB4B4B4" Offset="1"/>
+                    <GradientStop Color="White" Offset="0"/>
+                </LinearGradientBrush>
+            </Menu.Background>
+            <MenuItem Header="文件" FontSize="12" VerticalAlignment="Center">
+                <MenuItem Header="Demo"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="关于" FontSize="12" VerticalAlignment="Center">
+                <MenuItem Header="Demo"></MenuItem>
+            </MenuItem>
+            <MenuItem Header="语言" FontSize="12" VerticalAlignment="Center">
+                <MenuItem Header="Demo"></MenuItem>
+            </MenuItem>
+        </Menu>
 
-        <toolkit:WindowContainer Grid.Row="2" Background="Gray">
-            <toolkit:ChildWindow Background="AliceBlue" Caption="子窗体" Width="200" Height="200" WindowBackground="LightGreen" IsModal="False" WindowState="Open">
-                <TextBlock Text="123321"></TextBlock>
-            </toolkit:ChildWindow>
-        </toolkit:WindowContainer>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10 2 0 2">
+            <Image Source="../Resource/Image/Open.png" Width="35" Height="35" MouseLeftButtonDown="Image_MouseLeftButtonDown"></Image>
+        </StackPanel>
+        
+        <TabControl Grid.Row="2" Style="{x:Null}" Name="DataTab">
+        </TabControl>
     </Grid>
 </Window>

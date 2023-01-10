@@ -16,7 +16,7 @@ using System.Xml.Serialization;
 
 namespace SaftBatteryTest.Model
 {
-    public class ChannelModel : ObservableObject
+    public class ChannelViewModel : ObservableObject
     {
         private string _title = "code:";
         public string Title
@@ -131,7 +131,7 @@ namespace SaftBatteryTest.Model
         private byte[] CurrVol = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
         private byte[] CurrElc = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd2, 0x00, 0x02 };
 
-        public ChannelModel()
+        public ChannelViewModel()
         {
             StartChannelCommand = new RelayCommand(StartChannel);
             StopChannelCommand = new RelayCommand(StopChannel);
@@ -144,7 +144,8 @@ namespace SaftBatteryTest.Model
 
         private void OpenData()
         {
-            
+            DataAnalysisView view = new DataAnalysisView("123");
+            view.Show();
         }
 
         private void StepSet()
@@ -209,6 +210,8 @@ namespace SaftBatteryTest.Model
                 double tmp2 = ReadCurrElc(ChannelBoxN - 1);
                 Elc = tmp2;
                 store.ElcCollect.Add(tmp2);
+
+
             }
         }
 

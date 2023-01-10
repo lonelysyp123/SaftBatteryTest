@@ -23,7 +23,7 @@ namespace SaftBatteryTest.Controls
     /// </summary>
     public partial class Channel : UserControl
     {
-        public Channel(ChannelModel model)
+        public Channel(ChannelViewModel model)
         {
             InitializeComponent();
 
