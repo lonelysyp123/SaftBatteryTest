@@ -5,6 +5,7 @@ using SaftBatteryTest.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -123,13 +124,9 @@ namespace SaftBatteryTest.Model
         public RelayCommand StepSetCommand { get; set; }
         public RelayCommand OpenDataCommand { get; set; }
 
-        private StepSettingViewModel viewModel;
+        private StepSettingViewModel Stepviewmodel;
         public bool IsSelected = false;
         private StoreModel store;
-
-        // 实时数据
-        private byte[] CurrVol = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd0, 0x00, 0x02 };
-        private byte[] CurrElc = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x07, 0xd2, 0x00, 0x02 };
 
         public ChannelViewModel()
         {
@@ -138,13 +135,13 @@ namespace SaftBatteryTest.Model
             StepSetCommand = new RelayCommand(StepSet);
             OpenDataCommand = new RelayCommand(OpenData);
 
-            viewModel = new StepSettingViewModel();
+            Stepviewmodel = new StepSettingViewModel();
             store = new StoreModel();
         }
 
         private void OpenData()
         {
-            DataAnalysisView view = new DataAnalysisView("123");
+            DataAnalysisView view = new DataAnalysisView(store, Stepviewmodel);
             view.Show();
         }
 
@@ -170,6 +167,12 @@ namespace SaftBatteryTest.Model
         {
             if (StartChannelView())
             {
+                // TODO 将Step中的信息写入设备
+                for (int i = 0; i < Stepviewmodel.StepList.Count; i++)
+                {
+                    ModbusTcpClient.GetInstance().WriteStep(ChannelBoxN, i, Stepviewmodel.StepList[i]);
+                }
+
                 Thread daqth = new Thread(DaqTh);
                 daqth.IsBackground = true;
                 daqth.Start();
@@ -210,8 +213,6 @@ namespace SaftBatteryTest.Model
                 double tmp2 = ReadCurrElc(ChannelBoxN - 1);
                 Elc = tmp2;
                 store.ElcCollect.Add(tmp2);
-
-
             }
         }
 
@@ -221,10 +222,9 @@ namespace SaftBatteryTest.Model
         /// <returns>true:启动；false:取消</returns>
         public bool ShowSetView()
         {
-            StepSettingView view = new StepSettingView(viewModel);
+            StepSettingView view = new StepSettingView(Stepviewmodel);
             if (view.ShowDialog() == true)
             {
-                // TODO 启动线程，持续采集数据
                 return true;
             }
             else
@@ -239,14 +239,8 @@ namespace SaftBatteryTest.Model
         /// <returns>电压值(0.001V)</returns>
         private double ReadCurrVol(int ChIndex)
         {
-            short i = (short)(2000 + ChIndex * 100);
-            var bytes = BitConverter.GetBytes(i);
-            if (bytes.Length >= 2)
-            {
-                CurrVol[8] = bytes[1];
-                CurrVol[9] = bytes[0];
-            }
-            int vol = (int)ModbusTcpClient.Instance.ReadFunc(CurrVol, "UInt32");
+            int address = 2000 + ChIndex * 100 + 0;
+            int vol = BitConverter.ToInt32(ModbusTcpClient.GetInstance().ReadFunc((ushort)address, 2), 0);
             return vol * 0.001;
         }
 
@@ -256,14 +250,8 @@ namespace SaftBatteryTest.Model
         /// <returns>电流值(0.001A)</returns>
         private double ReadCurrElc(int ChIndex)
         {
-            short i = (short)(2002 + ChIndex * 100);
-            var bytes = BitConverter.GetBytes(i);
-            if (bytes.Length >= 2)
-            {
-                CurrElc[8] = bytes[1];
-                CurrElc[9] = bytes[0];
-            }
-            int elc = (int)ModbusTcpClient.Instance.ReadFunc(CurrElc, "UInt32");
+            int address = 2000 + ChIndex * 100 + 2;
+            int elc = BitConverter.ToInt32(ModbusTcpClient.GetInstance().ReadFunc((ushort)address, 2), 0);
             return elc * 0.001;
         }
     }

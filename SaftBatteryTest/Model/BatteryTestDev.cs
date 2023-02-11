@@ -17,17 +17,12 @@ namespace SaftBatteryTest.Model
 {
     public class BatteryTestDev : DevBase, IBatteryTestDev
     {
-        // MBAP 头描述 {|传输标志(2byte)|协议标志(2byte)|长度(2byte)|单元号标志(1byte)|}
-        // 设备信息
-        private byte[] IntSwVersion =   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xe8, 0x00, 0x02 };
-        private byte[] ExtSwVersion =   { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xea, 0x00, 0x01 };
-        private byte[] ChNums =         { 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x01, 0x03, 0x03, 0xf5, 0x00, 0x01 };
-
         public List<ChannelViewModel> Channels { get; set; }
         public BitmapSource Image { get; set; }
         public string Address { get; set; }
         public int DefaultPort { get; set; }
         private int Index = -1;
+        private ModbusTcpClient client;
 
         public BatteryTestDev(string address)
         {
@@ -77,15 +72,22 @@ namespace SaftBatteryTest.Model
         /// <returns>true:成功; false:失败</returns>
         public bool DevOffline()
         {
-            if (ModbusTcpClient.Instance.DisConnect())
+            if (client != null)
             {
-                Channels.Clear();
-                CommunicationState = "DisConnected";
-                return true;
+                if (client.Disconnect())
+                {
+                    Channels.Clear();
+                    CommunicationState = "DisConnected";
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine("断开连接失败");
+                    return false;
+                }
             }
             else
             {
-                Console.WriteLine("断开连接失败");
                 return false;
             }
         }
@@ -96,7 +98,10 @@ namespace SaftBatteryTest.Model
         /// <returns>true:连接成功; false:连接失败</returns>
         public bool DevOnline()
         {
-            if (ModbusTcpClient.Instance.Connect(Address, DefaultPort))
+            client = ModbusTcpClient.GetInstance();
+            client.IP = Address;
+            client.Port = DefaultPort;
+            if (client.Connect())
             {
                 CommunicationState = "Connected";
                 return true;
@@ -114,7 +119,7 @@ namespace SaftBatteryTest.Model
         /// <returns>版本号</returns>
         public string ReadIntSwVersion()
         {
-            string Version = (string)ModbusTcpClient.Instance.ReadFunc(IntSwVersion, "String");
+            string Version = BitConverter.ToString(client.ReadFunc(1000,1));
             return Version;
         }
 
@@ -124,30 +129,8 @@ namespace SaftBatteryTest.Model
         /// <returns>通道数量</returns>
         public int ReadChNums()
         {
-            int Nums = (int)ModbusTcpClient.Instance.ReadFunc(ChNums, "UInt16");
+            int Nums = BitConverter.ToUInt16(client.ReadFunc(1013,1),0);
             return Nums;
-        }
-
-        /// <summary>
-        /// 写入指定通道，指定工步的工作模式
-        /// </summary>
-        /// <param name="ChIndex">指定通道</param>
-        /// <param name="ID">指定工步</param>
-        /// <param name="Mode">工作模式</param>
-        public void WriteWorkMode(int ChIndex, int ID, WorkMode Mode)
-        {
-            ModbusTcpClient.Instance.WriteFunc(ChIndex, ID, (int)Mode);
-        }
-
-        /// <summary>
-        /// 写入指定通道，指定工步的下一步号
-        /// </summary>
-        /// <param name="ChIndex">指定通道</param>
-        /// <param name="ID">指定工步</param>
-        /// <param name="NextS">下一步号</param>
-        public void WriteNextStep(int ChIndex, int ID, int NextS)
-        {
-            ModbusTcpClient.Instance.WriteFunc(ChIndex, ID, NextS);
         }
 
         /// <summary>

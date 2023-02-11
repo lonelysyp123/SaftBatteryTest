@@ -15,7 +15,7 @@ namespace SaftBatteryTest.Helper
         string ReadIntSwVersion();                                  // 读取软件版本号
         int ReadChNums();                                           // 读取通道数
 
-        void WriteWorkMode(int ChIndex, int ID, WorkMode Mode);     // 写入工作模式
-        void WriteNextStep(int ChIndex, int ID, int NextS);         // 写入下一工步号
+        //void WriteWorkMode(int ChIndex, int ID, WorkMode Mode);     // 写入工作模式
+        //void WriteNextStep(int ChIndex, int ID, ushort NextS);         // 写入下一工步号
     }
 }

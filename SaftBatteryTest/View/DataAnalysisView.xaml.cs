@@ -1,4 +1,6 @@
 ﻿using SaftBatteryTest.Controls;
+using SaftBatteryTest.Model;
+using SaftBatteryTest.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,16 +22,27 @@ namespace SaftBatteryTest.View
     /// </summary>
     public partial class DataAnalysisView : Window
     {
-        public DataAnalysisView(string obj)
+        private DataAnalysisViewModel viewmodel;
+        private StoreModel storeModel;
+        private StepSettingViewModel stepSettingViewModel;
+
+        public DataAnalysisView(StoreModel storeModel, StepSettingViewModel stepSettingViewModel)
         {
             InitializeComponent();
 
-            AddData();
+            viewmodel = new DataAnalysisViewModel();
+            this.DataContext = viewmodel;
+            this.storeModel = storeModel;
+            this.stepSettingViewModel = stepSettingViewModel;
+
+            AddDataPage();
         }
 
-        private void AddData()
+        private void AddDataPage()
         {
             DataControl data = new DataControl();
+            data.InitStore(storeModel);
+            data.InitStep(stepSettingViewModel);
 
             TabItem item = new TabItem();
             item.Header = "123123.cds";

@@ -23,7 +23,7 @@ namespace SaftBatteryTest.Model
         public double StopEnergy { get; set; }
         public double RSOC { get; set; }
         public double Offset { get; set; }
-        public string NextStep { get; set; }
+        public int NextStep { get; set; }
 
         public StepModel()
         {

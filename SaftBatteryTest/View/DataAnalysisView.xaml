@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SaftBatteryTest.View"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="DataAnalysisView" Height="500" Width="800">
+        Title="DataAnalysisView" Height="600" Width="1000">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -36,6 +36,7 @@
         </StackPanel>
         
         <TabControl Grid.Row="2" Style="{x:Null}" Name="DataTab">
+            
         </TabControl>
     </Grid>
 </Window>
