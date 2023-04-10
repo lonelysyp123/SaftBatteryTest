@@ -33,13 +33,21 @@ namespace BatterySimulator.Model
             Mode = (WorkMode)ushorts[0];
             Param1 = ushorts[1].ToString();
             Param2 = ushorts[2].ToString();
-            StopTime = DateTime.Parse(ushorts[3].ToString());
+            StopTime = ushort2DateTime(ushorts[3]);
             StopVoltage = ushorts[4];
             StopElectric = ushorts[5];
             StopTemperature = ushorts[6];
             StopCap = ushorts[7];
             StopEnergy = ushorts[8];
             NextStep = ushorts[9];
+        }
+
+        private DateTime ushort2DateTime(ushort mins)
+        {
+            int h = mins / 60;
+            int m = mins % 60;
+            DateTime endTime = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, h, m, 0);
+            return endTime;
         }
     }
 

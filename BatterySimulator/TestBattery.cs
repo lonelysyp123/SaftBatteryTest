@@ -1,5 +1,6 @@
 ﻿using BatterySimulator.Base;
 using BatterySimulator.Interface;
+using BatterySimulator.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,23 +12,32 @@ namespace BatterySimulator
 {
     public class TestBattery : BatteryBase
     {
-        public bool IsQuit = false;
         public TestBattery(double vol, double elc, double capacity)
             :base(vol, elc, capacity) 
         {
             
         }
 
-        // 电池充电50s
-        public override void Charge(DateTime EndTime)
+        public override string ToString()
+        {
+            return "模拟电池，电压：" + Vol.ToString() + " 电流：" + Elc.ToString() + " 容量：" + Capacity.ToString();
+        }
+
+        // 电池充电
+        public override void Charge(MyToken token, DateTime EndTime)
         {
             Console.WriteLine("TestBattery Charge");
             DateTime startTime = DateTime.Now;
             while(DateTime.Now < EndTime)
             {
-                if(IsQuit)
+                if(token.IsCancel)
                 {
                     break;
+                }
+
+                while(token.IsPause)
+                {
+                    Thread.Sleep(200);
                 }
                 
                 if(CurrVol < Vol) 
@@ -39,15 +49,20 @@ namespace BatterySimulator
             }
         }
 
-        public override void Discharge(DateTime EndTime)
+        public override void Discharge(MyToken token, DateTime EndTime)
         {
             Console.WriteLine("TestBattery Discharge");
             DateTime startTime = DateTime.Now;
             while (DateTime.Now < EndTime)
             {
-                if (IsQuit)
+                if (token.IsCancel)
                 {
                     break;
+                }
+
+                while (token.IsPause)
+                {
+                    Thread.Sleep(200);
                 }
 
                 if (CurrVol > 9.0)
@@ -59,15 +74,16 @@ namespace BatterySimulator
             }
         }
 
-        public override void Standing(DateTime EndTime)
+        public override void Standing(MyToken token, DateTime EndTime)
         {
             Console.WriteLine("TestBattery Standing");
             while (DateTime.Now < EndTime)
             {
-                if (IsQuit)
+                if (token.IsCancel)
                 {
                     break;
                 }
+
                 Thread.Sleep(1000);
             }
         }

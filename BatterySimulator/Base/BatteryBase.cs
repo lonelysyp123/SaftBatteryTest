@@ -1,4 +1,5 @@
 ﻿using BatterySimulator.Interface;
+using BatterySimulator.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,17 +28,17 @@ namespace BatterySimulator.Base
             CurrCapacity = Capacity;
         }
 
-        public virtual void Charge(DateTime EndTime)
+        public virtual void Charge(MyToken token, DateTime EndTime)
         {
             Console.WriteLine("BatteryBase Charge");
         }
 
-        public virtual void Discharge(DateTime EndTime)
+        public virtual void Discharge(MyToken token, DateTime EndTime)
         {
             Console.WriteLine("BatteryBase Discharge");
         }
 
-        public virtual void Standing(DateTime EndTime)
+        public virtual void Standing(MyToken token, DateTime EndTime)
         {
             Console.WriteLine("BatteryBase Standing");
         }

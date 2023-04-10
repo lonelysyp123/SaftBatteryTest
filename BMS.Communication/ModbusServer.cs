@@ -129,11 +129,8 @@ namespace BMS.Communication
             {
                 byte[] valueBuf = BitConverter.GetBytes(values[i]);
                 ushort lowOrderValue = BitConverter.ToUInt16(valueBuf, 0);
-                ushort highOrderValue = BitConverter.ToUInt16(valueBuf, 2);
-
                 ModbusDataCollection<ushort> objs = getRegisterGroup(groupindex);
                 objs[offset + 1] = lowOrderValue;
-                objs[offset + 2] = highOrderValue;
             }
         }
 

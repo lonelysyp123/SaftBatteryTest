@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BatterySimulator.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,16 +12,16 @@ namespace BatterySimulator.Interface
         /// <summary>
         /// 充电
         /// </summary>
-        void Charge(DateTime EndTime);
+        void Charge(MyToken token, DateTime EndTime);
 
         /// <summary>
         /// 放电
         /// </summary>
-        void Discharge(DateTime EndTime);
+        void Discharge(MyToken token, DateTime EndTime);
 
         /// <summary>
         /// 静置
         /// </summary>
-        void Standing(DateTime EndTime);
+        void Standing(MyToken token, DateTime EndTime);
     }
 }

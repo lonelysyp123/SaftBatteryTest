@@ -52,6 +52,7 @@
     <Compile Include="Interface\IBattery.cs" />
     <Compile Include="Interface\IDev.cs" />
     <Compile Include="MainDev.cs" />
+    <Compile Include="Model\MyToken.cs" />
     <Compile Include="Model\Step.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

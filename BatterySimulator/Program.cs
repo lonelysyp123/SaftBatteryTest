@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -26,7 +27,11 @@ namespace BatterySimulator
             string Er = "";
             if (mainDev.InBattery(ref Er, 1, battery))
             {
-
+                Console.WriteLine("1通道内放入电池：" + battery.ToString());
+            }
+            else
+            {
+                Console.WriteLine(Er);
             }
             Console.ReadKey();
         }

@@ -83,11 +83,36 @@ namespace BatterySimulator
         private void Modbus_tcp_server_WriteComplete(object sender, ModbusSlaveRequestEventArgs e)
         {
             Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:ss:fff") + ":" + e.Message.ToString());
+
+            // 监听系统控制寄存器
+            for (int i = 0; i < 4; i++)
+            {
+                ushort value = server.GetValue(3, 8000 + i);
+                switch (value)
+                {
+                    case 0:
+                        Console.WriteLine("无动作");
+                        break;
+                    case 1:
+                        RunChannels(i + 1);
+                        break;
+                    case 2:
+                        RunChannels(i + 2);
+                        break;
+                    case 3:
+                        RunChannels(i + 3);
+                        break;
+                    default:
+                        break;
+                }
+            }
         }
 
+        // 请求监听
         private void Modbus_tcp_server_RequestReceived(object sender, ModbusSlaveRequestEventArgs e)
         {
             Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:ss:fff") + ":" + e.Message.ToString());
+
         }
 
         private void InitDev()
@@ -137,6 +162,11 @@ namespace BatterySimulator
                     server.SetValue(3, 1046 + i, PCBA_BarCode[i]);
                 }
             }
+
+            // 系统配置
+            server.SetValue(3, 7000, "127.0.0.1".ToArray());
+            // 同时创建线程，监听系统控制部分寄存器
+
         }
 
         public override bool StopDev()
@@ -150,12 +180,29 @@ namespace BatterySimulator
             ThreadPool.QueueUserWorkItem(new WaitCallback(RunChannels), ChannelIndex);
         }
 
+        private void StopChannels(object index)
+        {
+            tokens[(int)index - 1].Cancel();
+        }
+
+        private void PauseChannels(object index)
+        {
+            tokens[(int)index - 1].Pause();
+        }
+
+        private void Continue(object index)
+        {
+            tokens[(int)index - 1].Continue();
+        }
+
         DateTime startTime;
         DateTime PhTime;
+        MyToken[] tokens = new MyToken[4];
         private void RunChannels(object index)
         {
             startTime = DateTime.Now;
             RunStep((int)index, 1);
+            tokens[(int)index-1] = new MyToken();
         }
 
         private void RunStep(int ChannelIndex, int StepIndex)
@@ -178,7 +225,7 @@ namespace BatterySimulator
                     CancellationTokenSource cts = new CancellationTokenSource();
                     ThreadPool.QueueUserWorkItem(t=>ListenBattery(cts.Token, Batteries[ChannelIndex - 1]));
                     PhTime = DateTime.Now;
-                    TestBattery(step, ChannelIndex);
+                    TestStep(step, ChannelIndex);
                     cts.Cancel();
                 }
 
@@ -193,19 +240,19 @@ namespace BatterySimulator
             return new Step(StepIndex, res);
         }
 
-        private void TestBattery(Step step, int ChannelIndex)
+        private void TestStep(Step step, int ChannelIndex)
         {
             if (step.Mode == WorkMode.Stand)
             {
-                Batteries[ChannelIndex-1].Standing(step.StopTime);
+                Batteries[ChannelIndex-1].Standing(token, step.StopTime);
             }
             else if (step.Mode == WorkMode.Charge_CC)
             {
-                Batteries[ChannelIndex - 1].Charge(step.StopTime);
+                Batteries[ChannelIndex - 1].Charge(token, step.StopTime);
             }
             else if (step.Mode == WorkMode.Discharge_CD)
             {
-                Batteries[ChannelIndex - 1].Discharge(step.StopTime);
+                Batteries[ChannelIndex - 1].Discharge(token, step.StopTime);
             }
             else
             {
