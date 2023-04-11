@@ -91,16 +91,18 @@ namespace BatterySimulator
                 switch (value)
                 {
                     case 0:
-                        Console.WriteLine("无动作");
                         break;
                     case 1:
-                        RunChannels(i + 1);
+                        RunChannel(i + 1);
                         break;
                     case 2:
-                        RunChannels(i + 2);
+                        PauseChannel(i + 1);
                         break;
                     case 3:
-                        RunChannels(i + 3);
+                        ContinueChannel(i + 1);
+                        break;
+                    case 4:
+                        StopChannel(i + 1);
                         break;
                     default:
                         break;
@@ -177,20 +179,20 @@ namespace BatterySimulator
         public void Run(int ChannelIndex)
         {
             // 根据通道号来解析第一条任务
-            ThreadPool.QueueUserWorkItem(new WaitCallback(RunChannels), ChannelIndex);
+            ThreadPool.QueueUserWorkItem(new WaitCallback(RunChannel), ChannelIndex);
         }
 
-        private void StopChannels(object index)
+        private void StopChannel(object index)
         {
             tokens[(int)index - 1].Cancel();
         }
 
-        private void PauseChannels(object index)
+        private void PauseChannel(object index)
         {
             tokens[(int)index - 1].Pause();
         }
 
-        private void Continue(object index)
+        private void ContinueChannel(object index)
         {
             tokens[(int)index - 1].Continue();
         }
@@ -198,7 +200,7 @@ namespace BatterySimulator
         DateTime startTime;
         DateTime PhTime;
         MyToken[] tokens = new MyToken[4];
-        private void RunChannels(object index)
+        private void RunChannel(object index)
         {
             startTime = DateTime.Now;
             RunStep((int)index, 1);
@@ -244,15 +246,15 @@ namespace BatterySimulator
         {
             if (step.Mode == WorkMode.Stand)
             {
-                Batteries[ChannelIndex-1].Standing(token, step.StopTime);
+                Batteries[ChannelIndex - 1].Standing(tokens[ChannelIndex-1], step.StopTime);
             }
             else if (step.Mode == WorkMode.Charge_CC)
             {
-                Batteries[ChannelIndex - 1].Charge(token, step.StopTime);
+                Batteries[ChannelIndex - 1].Charge(tokens[ChannelIndex - 1], step.StopTime);
             }
             else if (step.Mode == WorkMode.Discharge_CD)
             {
-                Batteries[ChannelIndex - 1].Discharge(token, step.StopTime);
+                Batteries[ChannelIndex - 1].Discharge(tokens[ChannelIndex - 1], step.StopTime);
             }
             else
             {

@@ -75,7 +75,7 @@ namespace BMS.Communication
         /// </summary>
         /// <param name="groupindex">寄存器类型</param>
         /// <param name="offset">寄存器位置</param>
-        /// <param name="value">int值</param>
+        /// <param name="values">int值</param>
         public void SetValue(int groupindex, int offset, int[] values)
         {
             for (int i = 0; i < values.Length; i++)
