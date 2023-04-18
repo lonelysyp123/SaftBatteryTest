@@ -122,7 +122,9 @@ namespace BatterySimulator
             Console.WriteLine("基础信息维护");
             server.SetValue(3, 1000, IntSwVersion[0]);
             server.SetValue(3, 1001, IntSwVersion[1]);
+            Console.WriteLine("内部版本号为1010");
             server.SetValue(3, 1002, ExtSwVersion);
+            Console.WriteLine("外部版本号为1");
             for (int i = 0; i < 6; i++)
             {
                 if (i < ProjectCode.Length)
@@ -130,11 +132,15 @@ namespace BatterySimulator
                     server.SetValue(3, 1003 + i, ProjectCode[i]);
                 }
             }
+            Console.WriteLine("项目编号为Test01");
             server.SetValue(3, 1009, Year);
             server.SetValue(3, 1010, Month * 100 + Day);
+            Console.WriteLine("创建时间为年：" + Year + "月：" + Month + "日：" + Day);
             server.SetValue(3, 1011, Sort[0]);
             server.SetValue(3, 1012, Sort[1]);
+            Console.WriteLine("序列号为01");
             server.SetValue(3, 1013, ChannelNums);
+            Console.WriteLine("通带数量为"+ ChannelNums);
             for (int i = 0; i < 6; i++)
             {
                 if (i < Model.Length)
@@ -142,6 +148,7 @@ namespace BatterySimulator
                     server.SetValue(3, 1014 + i, Model[i]);
                 }
             }
+            Console.WriteLine("型号为V01");
             for (int i = 0; i < 11; i++)
             {
                 if (i < ProductBarCode.Length)
@@ -149,6 +156,7 @@ namespace BatterySimulator
                     server.SetValue(3, 1020 + i, ProductBarCode[i]);
                 }
             }
+            Console.WriteLine("二维码信息为zxcvbn");
             for (int i = 0; i < 5; i++)
             {
                 if (i < ManufacturerName.Length)
@@ -156,7 +164,9 @@ namespace BatterySimulator
                     server.SetValue(3, 1040 + i, ManufacturerName[i]);
                 }
             }
+            Console.WriteLine("智造商为SYP");
             server.SetValue(3, 1045, HardWareVersion_Major * 100 + HardWareVersion_Minor);
+            Console.WriteLine("硬件编号为1020");
             for (int i = 0; i < 15; i++)
             {
                 if (i < PCBA_BarCode.Length)
@@ -164,6 +174,7 @@ namespace BatterySimulator
                     server.SetValue(3, 1046 + i, PCBA_BarCode[i]);
                 }
             }
+            Console.WriteLine("PCBA编号为MCU");
 
             // 系统配置
             server.SetValue(3, 7000, "127.0.0.1".ToArray());
@@ -184,17 +195,65 @@ namespace BatterySimulator
 
         private void StopChannel(object index)
         {
-            tokens[(int)index - 1].Cancel();
+            if ((int)index >= Batteries.Length)
+            {
+                Console.WriteLine("指定通道不存在");
+                return;
+            }
+            else
+            {
+                if (Batteries[(int)index - 1] == null)
+                {
+                    Console.WriteLine("指定通道不存在电池");
+                    return;
+                }
+                else
+                {
+                    tokens[(int)index - 1].Cancel();
+                }
+            }
         }
 
         private void PauseChannel(object index)
         {
-            tokens[(int)index - 1].Pause();
+            if ((int)index >= Batteries.Length)
+            {
+                Console.WriteLine("指定通道不存在");
+                return;
+            }
+            else
+            {
+                if (Batteries[(int)index - 1] == null)
+                {
+                    Console.WriteLine("指定通道不存在电池");
+                    return;
+                }
+                else
+                {
+                    tokens[(int)index - 1].Pause();
+                }
+            }
         }
 
         private void ContinueChannel(object index)
         {
-            tokens[(int)index - 1].Continue();
+            if ((int)index >= Batteries.Length)
+            {
+                Console.WriteLine("指定通道不存在");
+                return;
+            }
+            else
+            {
+                if (Batteries[(int)index - 1] == null)
+                {
+                    Console.WriteLine("指定通道不存在电池");
+                    return;
+                }
+                else
+                {
+                    tokens[(int)index - 1].Continue();
+                }
+            }
         }
 
         DateTime startTime;
@@ -202,9 +261,25 @@ namespace BatterySimulator
         MyToken[] tokens = new MyToken[4];
         private void RunChannel(object index)
         {
-            startTime = DateTime.Now;
-            RunStep((int)index, 1);
-            tokens[(int)index-1] = new MyToken();
+            if ((int)index >= Batteries.Length)
+            {
+                Console.WriteLine("指定通道不存在");
+                return;
+            }
+            else
+            {
+                if (Batteries[(int)index - 1] == null)
+                {
+                    Console.WriteLine("指定通道不存在电池");
+                    return;
+                }
+                else
+                {
+                    startTime = DateTime.Now;
+                    RunStep((int)index, 1);
+                    tokens[(int)index - 1] = new MyToken();
+                }
+            }
         }
 
         private void RunStep(int ChannelIndex, int StepIndex)

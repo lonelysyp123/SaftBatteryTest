@@ -21,17 +21,14 @@ namespace BatterySimulator
 
         static void Main(string[] args)
         {
-            TestBattery battery = new TestBattery(12, 3, 3);
             MainDev mainDev = new MainDev();
             mainDev.StartDev();
             string Er = "";
-            if (mainDev.InBattery(ref Er, 1, battery))
+            for (int i = 0; i < 4; i++)
             {
-                Console.WriteLine("1通道内放入电池：" + battery.ToString());
-            }
-            else
-            {
-                Console.WriteLine(Er);
+                TestBattery battery = new TestBattery(12, 3, 3);
+                mainDev.InBattery(ref Er, 1, battery);
+                Console.WriteLine((i+1)+"号通道内放入电池：" + battery.ToString());
             }
             Console.ReadKey();
         }

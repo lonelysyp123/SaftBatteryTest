@@ -214,6 +214,7 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
+        private ModbusTcpClient client;
         private void SaveStep()
         {
             SaveFileDialog dialog = new SaveFileDialog();
@@ -243,6 +244,10 @@ namespace SaftBatteryTest.ViewModel
                 helper.ModifyModel(dialog.FileName, 4, StepNote);
                 helper.ModifyModel(dialog.FileName, 5, BarCode);
                 helper.ModifyModel(dialog.FileName, 6, StepOrder);
+
+                //将保存的信息同步到设备端
+                //client = ModbusTcpClient.GetInstance();
+                //client.WriteStep
             }
         }
 

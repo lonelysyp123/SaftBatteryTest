@@ -10,7 +10,6 @@ namespace BatterySimulator.Base
     {
         
         protected BatteryBase[] Batteries;
-        protected List<string>[] TaskList;
         protected static readonly UInt16[] IntSwVersion = new UInt16[] { 10, 10 };
         protected static readonly UInt16 ExtSwVersion = 1;
         protected static readonly string ProjectCode = "Test01";           // ASSCII
@@ -29,7 +28,6 @@ namespace BatterySimulator.Base
         public DevBase() 
         {
             Batteries = new BatteryBase[ChannelNums];
-            TaskList = new List<string>[ChannelNums];
         }
 
         /// <summary>
