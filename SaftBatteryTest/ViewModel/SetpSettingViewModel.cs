@@ -244,10 +244,6 @@ namespace SaftBatteryTest.ViewModel
                 helper.ModifyModel(dialog.FileName, 4, StepNote);
                 helper.ModifyModel(dialog.FileName, 5, BarCode);
                 helper.ModifyModel(dialog.FileName, 6, StepOrder);
-
-                //将保存的信息同步到设备端
-                //client = ModbusTcpClient.GetInstance();
-                //client.WriteStep
             }
         }
 
@@ -262,6 +258,18 @@ namespace SaftBatteryTest.ViewModel
         private void AddRow()
         {
             StepList.Add(new StepModel() { ID = StepList.Count + 1 });
+        }
+
+        /// <summary>
+        /// 将工步信息写入设备
+        /// </summary>
+        public void WriteStep()
+        {
+            client = ModbusTcpClient.GetInstance();
+            if(client.Connect())
+            {
+                
+            }
         }
     }
 }

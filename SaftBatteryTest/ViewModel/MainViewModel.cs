@@ -38,8 +38,6 @@ namespace SaftBatteryTest.ViewModel
             set
             {
                 SetProperty(ref _devIndex, value);
-                // 改变选择的IP时，会改变主界面
-                DevChange();
             }
         }
 
@@ -198,7 +196,6 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
-        
         private void StepModify()
         {
             DevList[DevIndex].StartDaq();
@@ -231,7 +228,6 @@ namespace SaftBatteryTest.ViewModel
                 //! 加载文档，根据规则生成数据
             }
         }
-
 
         private void SetAutoOnline()
         {
@@ -287,11 +283,6 @@ namespace SaftBatteryTest.ViewModel
             {
                 AddIPInView(IPs[i].Value);
             }
-        }
-
-        private void DevChange()
-        {
-            
         }
     }
 }
