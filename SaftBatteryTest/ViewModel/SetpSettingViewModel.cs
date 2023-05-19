@@ -170,7 +170,7 @@ namespace SaftBatteryTest.ViewModel
         private void LoadStep()
         {
             OpenFileDialog file = new OpenFileDialog();
-            file.Filter = "工步文件|*.xml";
+            file.Filter = "Step File|*.xml";
             file.ShowDialog();
             if (file.FileName != null && file.FileName != "")
             {
@@ -219,8 +219,8 @@ namespace SaftBatteryTest.ViewModel
         {
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = AppDomain.CurrentDomain.BaseDirectory + "Data\\Step\\";
-            dialog.Filter = "工步文件|*.xml";
-            dialog.DefaultExt = "工步文件|*.xml";
+            dialog.Filter = "Step File|*.xml";
+            dialog.DefaultExt = "Step File|*.xml";
             if (dialog.ShowDialog() == true)
             {
                 if (StepList.Count > 0)
@@ -268,7 +268,7 @@ namespace SaftBatteryTest.ViewModel
             client = ModbusTcpClient.GetInstance();
             if(client.Connect())
             {
-                
+                // TODO
             }
         }
     }

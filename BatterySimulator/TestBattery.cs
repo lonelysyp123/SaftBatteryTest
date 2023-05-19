@@ -40,10 +40,10 @@ namespace BatterySimulator
                     Thread.Sleep(200);
                 }
                 
-                if(CurrVol < Vol) 
+                if(Vol < 12.0) 
                 {
-                    CurrCapacity = CurrCapacity + 0.001;
-                    CurrVol = CurrVol + 0.001;
+                    Capacity = Capacity + 0.001;
+                    Vol = Vol + 0.001;
                 }
                 Thread.Sleep(1000);
             }
@@ -65,10 +65,10 @@ namespace BatterySimulator
                     Thread.Sleep(200);
                 }
 
-                if (CurrVol > 9.0)
+                if (Vol > 9.0)
                 {
-                    CurrCapacity = CurrCapacity - 0.001;
-                    CurrVol = CurrVol - 0.001;
+                    Capacity = Capacity - 0.001;
+                    Vol = Vol - 0.001;
                 }
                 Thread.Sleep(1000);
             }

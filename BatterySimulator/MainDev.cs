@@ -82,27 +82,60 @@ namespace BatterySimulator
         // 创建一个监视器，监视寄存器的变化
         private void Modbus_tcp_server_WriteComplete(object sender, ModbusSlaveRequestEventArgs e)
         {
-            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:ss:fff") + ":" + e.Message.ToString());
+            Console.WriteLine("(WriteComplete)" + DateTime.Now.ToString("yyyy-MM-dd hh:ss:fff") + ":" + e.Message.ToString());
 
             // 监听系统控制寄存器
-            for (int i = 0; i < 4; i++)
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    ushort value = server.GetValue(3, 8000 + i);
+            //    switch (value)
+            //    {
+            //        case 0:
+            //            break;
+            //        case 1:
+            //            RunChannel(i + 1);
+            //            break;
+            //        case 2:
+            //            PauseChannel(i + 1);
+            //            break;
+            //        case 3:
+            //            ContinueChannel(i + 1);
+            //            break;
+            //        case 4:
+            //            StopChannel(i + 1);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+        }
+
+        // 请求监听
+        private void Modbus_tcp_server_RequestReceived(object sender, ModbusSlaveRequestEventArgs e)
+        {
+            Console.WriteLine("(RequestReceived)" + DateTime.Now.ToString("yyyy-MM-dd hh:ss:fff") + ":" + e.Message.ToString());
+            byte[] data = e.Message.MessageFrame;
+            byte[] byteStartAddress = new byte[] { data[3], data[2] };
+            byte[] byteNum = new byte[] { data[5], data[4] };
+            Int16 StartAddress = BitConverter.ToInt16(byteStartAddress, 0);
+            Int16 NumOfPoint = BitConverter.ToInt16(byteNum, 0);
+            if (StartAddress >= 8000 && StartAddress < 8010)
             {
-                ushort value = server.GetValue(3, 8000 + i);
-                switch (value)
+                switch (NumOfPoint)
                 {
                     case 0:
                         break;
                     case 1:
-                        RunChannel(i + 1);
+                        RunChannel(StartAddress - 8000 + 1);
                         break;
                     case 2:
-                        PauseChannel(i + 1);
+                        PauseChannel(StartAddress - 8000 + 1);
                         break;
                     case 3:
-                        ContinueChannel(i + 1);
+                        ContinueChannel(StartAddress - 8000 + 1);
                         break;
                     case 4:
-                        StopChannel(i + 1);
+                        StopChannel(StartAddress - 8000 + 1);
                         break;
                     default:
                         break;
@@ -110,15 +143,9 @@ namespace BatterySimulator
             }
         }
 
-        // 请求监听
-        private void Modbus_tcp_server_RequestReceived(object sender, ModbusSlaveRequestEventArgs e)
+            private void InitDev()
         {
-            Console.WriteLine(DateTime.Now.ToString("yyyy-MM-dd hh:ss:fff") + ":" + e.Message.ToString());
-
-        }
-
-        private void InitDev()
-        {
+            Console.WriteLine("服务器IP:127.0.0.1");
             Console.WriteLine("基础信息维护");
             server.SetValue(3, 1000, IntSwVersion[0]);
             server.SetValue(3, 1001, IntSwVersion[1]);
@@ -190,7 +217,7 @@ namespace BatterySimulator
         public void Run(int ChannelIndex)
         {
             // 根据通道号来解析第一条任务
-            ThreadPool.QueueUserWorkItem(new WaitCallback(RunChannel), ChannelIndex);
+            // ThreadPool.QueueUserWorkItem(new WaitCallback(RunChannel), ChannelIndex);
         }
 
         private void StopChannel(object index)
@@ -276,8 +303,10 @@ namespace BatterySimulator
                 else
                 {
                     startTime = DateTime.Now;
-                    RunStep((int)index, 1);
                     tokens[(int)index - 1] = new MyToken();
+                    ThreadPool.QueueUserWorkItem(t => RunStep((int)index, 1));
+
+                    //RunStep((int)index, 1);
                 }
             }
         }
@@ -300,10 +329,13 @@ namespace BatterySimulator
                 {
                     // 测试电池的同时监控电池的参数
                     CancellationTokenSource cts = new CancellationTokenSource();
-                    ThreadPool.QueueUserWorkItem(t=>ListenBattery(cts.Token, Batteries[ChannelIndex - 1]));
+                    ThreadPool.QueueUserWorkItem(t=>ListenBattery(cts.Token, ChannelIndex));
                     PhTime = DateTime.Now;
-                    TestStep(step, ChannelIndex);
-                    cts.Cancel();
+                    if(!TestStep(step, ChannelIndex))
+                    {
+                        cts.Cancel();
+                        return;
+                    }
                 }
 
                 RunStep(ChannelIndex, step.NextStep);
@@ -317,7 +349,7 @@ namespace BatterySimulator
             return new Step(StepIndex, res);
         }
 
-        private void TestStep(Step step, int ChannelIndex)
+        private bool TestStep(Step step, int ChannelIndex)
         {
             if (step.Mode == WorkMode.Stand)
             {
@@ -334,6 +366,15 @@ namespace BatterySimulator
             else
             {
                 Console.WriteLine("nothing happened");
+            }
+
+            if (tokens[ChannelIndex - 1].IsCancel)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
 

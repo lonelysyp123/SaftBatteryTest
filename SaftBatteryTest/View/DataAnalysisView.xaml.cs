@@ -23,37 +23,14 @@ namespace SaftBatteryTest.View
     public partial class DataAnalysisView : Window
     {
         private DataAnalysisViewModel viewmodel;
-        private StoreModel storeModel;
-        private StepSettingViewModel stepSettingViewModel;
 
         public DataAnalysisView(StoreModel storeModel, StepSettingViewModel stepSettingViewModel)
         {
             InitializeComponent();
 
-            viewmodel = new DataAnalysisViewModel();
+            viewmodel = new DataAnalysisViewModel(storeModel, stepSettingViewModel);
             this.DataContext = viewmodel;
-            this.storeModel = storeModel;
-            this.stepSettingViewModel = stepSettingViewModel;
 
-            AddDataPage();
-        }
-
-        private void AddDataPage()
-        {
-            DataControl data = new DataControl();
-            data.InitStore(storeModel);
-            data.InitStep(stepSettingViewModel);
-
-            TabItem item = new TabItem();
-            item.Header = "123123.cds";
-            item.Style = null;
-            item.Content = data;
-            DataTab.Items.Add(item);
-        }
-
-        private void Image_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("打开文件");
         }
     }
 }

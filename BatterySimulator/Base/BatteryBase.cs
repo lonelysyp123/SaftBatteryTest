@@ -11,13 +11,11 @@ namespace BatterySimulator.Base
     public class BatteryBase : IBattery
     {
         public double Vol;//V
-        public double CurrVol;
         public double Res;
         public double Elc;//A
         public double Temperature = 24;
         public double SOC;
         public double Capacity;//AH
-        public double CurrCapacity;
 
         public BatteryBase(double vol, double elc, double capacity) 
         { 
@@ -25,7 +23,6 @@ namespace BatterySimulator.Base
             Elc = elc;
             Res = Vol / Elc;
             Capacity = capacity;
-            CurrCapacity = Capacity;
         }
 
         public virtual void Charge(MyToken token, DateTime EndTime)

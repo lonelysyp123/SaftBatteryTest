@@ -170,7 +170,7 @@ namespace SaftBatteryTest.ViewModel
                     {
                         //! 界面上新增IP
                         AddIPInView(ip);
-                        //! TODO 配置文件中新增IP
+                        //! 配置文件中新增IP
                         helper.InsertIP(IPConfigFilePath, ip);
                     }
                 }
@@ -190,7 +190,7 @@ namespace SaftBatteryTest.ViewModel
                 {
                     //! 界面上新增IP
                     AddIPInView(ip);
-                    //! TODO 配置文件中新增IP
+                    //! 配置文件中新增IP
                     helper.InsertIP(IPConfigFilePath, ip);
                 }
             }
@@ -206,7 +206,7 @@ namespace SaftBatteryTest.ViewModel
             PathSettingView view = new PathSettingView();
             if (view.ShowDialog() == true)
             {
-                //! TODO 保存这个地址到本地的配置文件
+                //! 保存这个地址到本地的配置文件
                 DataPath = view.PathTxt.Text;
                 using (FileStream fs = new FileStream("./Resource/Config/DataPath.txt", FileMode.Create))
                 {

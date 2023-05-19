@@ -147,31 +147,34 @@ namespace SaftBatteryTest.Model
 
         private void StepSet()
         {
-            // TODO 启动时修改通道对应参数
+            // 启动时修改通道对应参数
             ShowSetView();
         }
 
         public void StopChannel()
         {
             Console.WriteLine("关闭通道");
-
-            // TODO 结束读取实时数据线程
-
-            IsShowGrayScreen = Visibility.Visible;
+            // 物理停止设备通道
+            ModbusTcpClient.GetInstance().WriteCtrlDev(ChannelBoxN, 4);
+            // 结束读取实时数据线程
             StartIsEnabled = true;
             StopIsEnabled = false;
             StepSetIsEnabled = false;
+            IsShowGrayScreen = Visibility.Visible;
         }
 
         public void StartChannel()
         {
             if (StartChannelView())
             {
-                // TODO 将Step中的信息写入设备
+                // 将Step中的信息写入设备
                 for (int i = 0; i < Stepviewmodel.StepList.Count; i++)
                 {
                     ModbusTcpClient.GetInstance().WriteStep(ChannelBoxN, i, Stepviewmodel.StepList[i]);
                 }
+
+                // 物理启动设备通道
+                ModbusTcpClient.GetInstance().WriteCtrlDev(ChannelBoxN, 1);
 
                 Thread daqth = new Thread(DaqTh);
                 daqth.IsBackground = true;
@@ -185,7 +188,7 @@ namespace SaftBatteryTest.Model
         /// <returns>true:启动；false:取消</returns>
         public bool StartChannelView()
         {
-            // TODO 1.打开启动配置界面 2.启动读取实时数据线程
+            // 1.打开启动配置界面 2.启动读取实时数据线程
             if (ShowSetView())
             {
                 IsShowGrayScreen = Visibility.Collapsed;

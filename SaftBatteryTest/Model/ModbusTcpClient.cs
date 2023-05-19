@@ -128,7 +128,7 @@ namespace SaftBatteryTest.Model
         /// <param name="Step">工步信息</param>
         public void WriteStep(int ChIndex, int ID, StepModel Step)
         {
-            int address = 3000 + ChIndex * 100 + ID * 10 + 0;
+            int address = 3000 + (ChIndex-1) * 100 + ID * 10 + 0;
             WriteFunc((ushort)address, (ushort)Step.Mode);
             address++;
             WriteFunc((ushort)address, ushort.Parse(Step.Param1));
@@ -160,6 +160,17 @@ namespace SaftBatteryTest.Model
         {
             int address = 3000 + ChIndex * 100 + ID * 10 + 9;
             WriteFunc((ushort)address, (ushort)NextS);
+        }
+
+        /// <summary>
+        /// 写入设备控制码
+        /// </summary>
+        /// <param name="ChIndex">指定通道</param>
+        /// <param name="CtrlCode">控制码</param>
+        public void WriteCtrlDev(int ChIndex, int CtrlCode)
+        {
+            int address = 8000 + ChIndex - 1;
+            WriteFunc((ushort)address, (ushort)CtrlCode);
         }
     }
 }

@@ -375,19 +375,27 @@ namespace SaftBatteryTest.Helper
                 {
                     if (nodes[p].Type == "double")
                     {
-                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, double.Parse(nodes[p].Value));
+                        double.TryParse(nodes[p].Value, out double value);
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, value);
                     }
                     else if (nodes[p].Type == "int")
                     {
-                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, int.Parse(nodes[p].Value));
+                        int.TryParse(nodes[p].Value, out int value);
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, value);
                     }
                     else if (nodes[p].Type == "bool")
                     {
-                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, bool.Parse(nodes[p].Value));
+                        bool.TryParse(nodes[p].Value,out bool value);
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, value);
                     }
                     else if (nodes[p].Type == "workmode")
                     {
-                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, (WorkMode)Enum.Parse(typeof(WorkMode), nodes[p].Value));
+                        Enum.TryParse(nodes[p].Value, out WorkMode value);
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, value);
+                    }
+                    else if (nodes[p].Type == "string")
+                    {
+                        step.GetType().GetProperty(nodes[p].Name).SetValue(step, nodes[p].Value.ToString());
                     }
                     else
                     {
