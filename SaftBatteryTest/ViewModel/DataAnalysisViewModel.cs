@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
@@ -23,30 +24,47 @@ namespace SaftBatteryTest.ViewModel
             }
         }
 
+        public RelayCommand DisplayVolDataCommand { get; set; }
+        public RelayCommand DisplayElcDataCommand { get; set; }
+
         private StoreModel storeModel;
         private StepSettingViewModel stepSettingViewModel;
 
         public DataAnalysisViewModel(StoreModel store, StepSettingViewModel step) 
         {
-            BatteryData = new PlotModel();
+            DisplayVolDataCommand = new RelayCommand(DisplayVolData);
+            DisplayElcDataCommand = new RelayCommand(DisplayElcData);
 
+            BatteryData = new PlotModel();
             storeModel = store;
             stepSettingViewModel = step;
 
-            InitChart();
+            InitChart("电压", "时间");
+            ChartShowNow(storeModel.VolCollect.ToArray());
+        }
+
+        // 事件绑定
+        private void DisplayElcData()
+        {
+            InitChart("电流", "时间");
+            ChartShowNow(storeModel.ElcCollect.ToArray());
+        }
+
+        private void DisplayVolData()
+        {
+            InitChart("电压", "时间");
+            ChartShowNow(storeModel.VolCollect.ToArray());
         }
 
         /// <summary>
         /// 初始化图表控件（定义X，Y轴）
         /// </summary>
-        private void InitChart()
+        private void InitChart(string LeftName, string BottomName)
         {
             //! Axes
             BatteryData.Axes.Clear();
-            BatteryData.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = "电压" });
-            BatteryData.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = "时间" });
-
-            ChartShowNow(storeModel.VolCollect.ToArray());
+            BatteryData.Axes.Add(new LinearAxis() { Position = AxisPosition.Left, Title = LeftName });
+            BatteryData.Axes.Add(new LinearAxis() { Position = AxisPosition.Bottom, Title = BottomName });
         }
 
         /// <summary>

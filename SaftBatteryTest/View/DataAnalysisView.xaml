@@ -31,11 +31,17 @@
             </MenuItem>
         </Menu>
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-            <oxy:PlotView Grid.Column="0" Model="{Binding BatteryData}"></oxy:PlotView>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <RadioButton Margin="30 10" Content="电压" Command="{Binding DisplayVolDataCommand}"></RadioButton>
+                <RadioButton Margin="30 10" Content="电流" Command="{Binding DisplayElcDataCommand}"></RadioButton>
+            </StackPanel>
+            
+            <oxy:PlotView Grid.Row="1" Model="{Binding BatteryData}"></oxy:PlotView>
         </Grid>
     </Grid>
 </Window>
