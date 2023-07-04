@@ -49,6 +49,9 @@
     <Compile Include="Base\BatteryBase.cs" />
     <Compile Include="Base\DevBase.cs" />
     <Compile Include="Battery.cs" />
+    <Compile Include="EMS\BatteryBase.cs" />
+    <Compile Include="EMS\BatterySeriesBase.cs" />
+    <Compile Include="EMS\BatteryTotalBase.cs" />
     <Compile Include="Interface\IBattery.cs" />
     <Compile Include="Interface\IDev.cs" />
     <Compile Include="MainDev.cs" />

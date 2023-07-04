@@ -1,10 +1,12 @@
 ﻿using BatterySimulator.Base;
+using BatterySimulator.EMS;
 using BatterySimulator.Interface;
 using BatterySimulator.Model;
 using BMS.Communication;
 using Modbus.Device;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -12,35 +14,52 @@ using System.Threading.Tasks;
 
 namespace BatterySimulator
 {
-    public class MainDev : DevBase, IDev
+    public class MainDev : DevBase
     {
+        public BatteryTotalBase BatteryTotal { get; set; }
+
         public MainDev()
-            :base()
+            : base()
         {
+            BatteryTotal = new BatteryTotalBase(1);
 
         }
 
-        public bool InBattery(ref string Ero, int ChannelIndex, BatteryBase Battery)
+        public void InitBattery()
         {
-            if (ChannelIndex >= Batteries.Length)
+            for (int i = 0; i < 3; i++)
             {
-                Ero = "指定通道不存在";
-                return false;
-            }
-            else
-            {
-                if (Batteries[ChannelIndex-1] != null)
+                BatterySeriesBase series = new BatterySeriesBase(i + 1);
+                for (int j = 0; j < 5; j++)
                 {
-                    Ero = "指定通道已存在电池";
-                    return false;
+                    EMS.BatteryBase battery = new EMS.BatteryBase(j + 1);
+                    series.Batteries.Add(battery);
                 }
-                else
-                {
-                    Batteries[ChannelIndex-1] = Battery;
-                    return true;
-                }
+                BatteryTotal.Series.Add(series);
             }
         }
+
+        //public bool InBattery(ref string Ero, int ChannelIndex, BatteryBase Battery)
+        //{
+        //    if (ChannelIndex >= Batteries.Length)
+        //    {
+        //        Ero = "指定通道不存在";
+        //        return false;
+        //    }
+        //    else
+        //    {
+        //        if (Batteries[ChannelIndex - 1] != null)
+        //        {
+        //            Ero = "指定通道已存在电池";
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            Batteries[ChannelIndex - 1] = Battery;
+        //            return true;
+        //        }
+        //    }
+        //}
 
         public bool OutBattery(ref string Ero, int ChannelIndex)
         {
@@ -51,14 +70,14 @@ namespace BatterySimulator
             }
             else
             {
-                if (Batteries[ChannelIndex-1] == null)
+                if (Batteries[ChannelIndex - 1] == null)
                 {
                     Ero = "指定通道不存在电池";
                     return false;
                 }
                 else
                 {
-                    Batteries[ChannelIndex-1] = null;
+                    Batteries[ChannelIndex - 1] = null;
                     return true;
                 }
             }
@@ -119,94 +138,60 @@ namespace BatterySimulator
             byte[] byteNum = new byte[] { data[5], data[4] };
             Int16 StartAddress = BitConverter.ToInt16(byteStartAddress, 0);
             Int16 NumOfPoint = BitConverter.ToInt16(byteNum, 0);
-            if (StartAddress >= 8000 && StartAddress < 8010)
+            if (StartAddress == 12002)
             {
-                switch (NumOfPoint)
+                if (NumOfPoint == 0)
                 {
-                    case 0:
-                        break;
-                    case 1:
-                        RunChannel(StartAddress - 8000 + 1);
-                        break;
-                    case 2:
-                        PauseChannel(StartAddress - 8000 + 1);
-                        break;
-                    case 3:
-                        ContinueChannel(StartAddress - 8000 + 1);
-                        break;
-                    case 4:
-                        StopChannel(StartAddress - 8000 + 1);
-                        break;
-                    default:
-                        break;
+                    Console.WriteLine("Test");
                 }
             }
+            //if (StartAddress >= 8000 && StartAddress < 8010)
+            //{
+            //    switch (NumOfPoint)
+            //    {
+            //        case 0:
+            //            break;
+            //        case 1:
+            //            RunChannel(StartAddress - 8000 + 1);
+            //            break;
+            //        case 2:
+            //            PauseChannel(StartAddress - 8000 + 1);
+            //            break;
+            //        case 3:
+            //            ContinueChannel(StartAddress - 8000 + 1);
+            //            break;
+            //        case 4:
+            //            StopChannel(StartAddress - 8000 + 1);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
         }
 
-            private void InitDev()
+        private void InitDev()
         {
-            Console.WriteLine("服务器IP:127.0.0.1");
-            Console.WriteLine("基础信息维护");
-            server.SetValue(3, 1000, IntSwVersion[0]);
-            server.SetValue(3, 1001, IntSwVersion[1]);
-            Console.WriteLine("内部版本号为1010");
-            server.SetValue(3, 1002, ExtSwVersion);
-            Console.WriteLine("外部版本号为1");
-            for (int i = 0; i < 6; i++)
+            // 10000 => ID
+            server.SetValue(3, 10000 + 0, (ushort)BatteryTotal.TotalID);
+            server.SetValue(3, 10000 + 1, (ushort)(BatteryTotal.Voltage * 1000));
+            server.SetValue(3, 10000 + 2, (ushort)(BatteryTotal.Current * 1000));
+            server.SetValue(3, 10100, (ushort)BatteryTotal.Series.Count);
+            for (int j = 0; j < BatteryTotal.Series.Count; j++)
             {
-                if (i < ProjectCode.Length)
+                server.SetValue(3, 11000 + j * 10 + 0, (ushort)BatteryTotal.Series[j].SeriesID);
+                server.SetValue(3, 11000 + j * 10 + 1, (ushort)BatteryTotal.Series[j].Voltage * 1000);
+                server.SetValue(3, 11000 + j * 10 + 2, (ushort)BatteryTotal.Series[j].Current * 1000);
+                server.SetValue(3, 10200 + j * 10, (ushort)BatteryTotal.Series[j].Batteries.Count);
+                for (int l = 0; l < BatteryTotal.Series[j].Batteries.Count; l++)
                 {
-                    server.SetValue(3, 1003 + i, ProjectCode[i]);
+                    server.SetValue(3, 12000 + l * 10 + 0, (ushort)BatteryTotal.Series[j].Batteries[l].BatteryID);
+                    server.SetValue(3, 12000 + l * 10 + 1, (ushort)BatteryTotal.Series[j].Batteries[l].Voltage * 1000);
+                    server.SetValue(3, 12000 + l * 10 + 2, (ushort)BatteryTotal.Series[j].Batteries[l].Current * 1000);
                 }
             }
-            Console.WriteLine("项目编号为Test01");
-            server.SetValue(3, 1009, Year);
-            server.SetValue(3, 1010, Month * 100 + Day);
-            Console.WriteLine("创建时间为年：" + Year + "月：" + Month + "日：" + Day);
-            server.SetValue(3, 1011, Sort[0]);
-            server.SetValue(3, 1012, Sort[1]);
-            Console.WriteLine("序列号为01");
-            server.SetValue(3, 1013, ChannelNums);
-            Console.WriteLine("通带数量为"+ ChannelNums);
-            for (int i = 0; i < 6; i++)
-            {
-                if (i < Model.Length)
-                {
-                    server.SetValue(3, 1014 + i, Model[i]);
-                }
-            }
-            Console.WriteLine("型号为V01");
-            for (int i = 0; i < 11; i++)
-            {
-                if (i < ProductBarCode.Length)
-                {
-                    server.SetValue(3, 1020 + i, ProductBarCode[i]);
-                }
-            }
-            Console.WriteLine("二维码信息为zxcvbn");
-            for (int i = 0; i < 5; i++)
-            {
-                if (i < ManufacturerName.Length)
-                {
-                    server.SetValue(3, 1040 + i, ManufacturerName[i]);
-                }
-            }
-            Console.WriteLine("智造商为SYP");
-            server.SetValue(3, 1045, HardWareVersion_Major * 100 + HardWareVersion_Minor);
-            Console.WriteLine("硬件编号为1020");
-            for (int i = 0; i < 15; i++)
-            {
-                if (i < PCBA_BarCode.Length)
-                {
-                    server.SetValue(3, 1046 + i, PCBA_BarCode[i]);
-                }
-            }
-            Console.WriteLine("PCBA编号为MCU");
-
-            // 系统配置
-            server.SetValue(3, 7000, "127.0.0.1".ToArray());
+            BatteryRun();
             // 同时创建线程，监听系统控制部分寄存器
-
+            StartListener();
         }
 
         public override bool StopDev()
@@ -325,20 +310,62 @@ namespace BatterySimulator
             else
             {
                 // 按照参数运行
-                if (Batteries[ChannelIndex-1] != null)
+                if (Batteries[ChannelIndex - 1] != null)
                 {
                     // 测试电池的同时监控电池的参数
                     CancellationTokenSource cts = new CancellationTokenSource();
-                    ThreadPool.QueueUserWorkItem(t=>ListenBattery(cts.Token, ChannelIndex));
+                    ThreadPool.QueueUserWorkItem(t => ListenBattery(cts.Token, ChannelIndex));
                     PhTime = DateTime.Now;
-                    if(!TestStep(step, ChannelIndex))
+                    if (!TestStep(step, ChannelIndex))
                     {
                         cts.Cancel();
                         return;
                     }
                 }
+            }
+        }
 
-                RunStep(ChannelIndex, step.NextStep);
+        private void BatteryRun()
+        {
+            BatteryTotal.Run();
+            for (int i = 0; i < BatteryTotal.Series.Count; i++)
+            {
+                BatteryTotal.Series[i].Run();
+                for(int j = 0; j < BatteryTotal.Series[i].Batteries.Count; j++)
+                {
+                    BatteryTotal.Series[i].Batteries[j].Run();
+                }
+            }
+        }
+
+        public void StartListener()
+        {
+            // 测试电池的同时监控电池的参数
+            CancellationTokenSource cts = new CancellationTokenSource();
+            ThreadPool.QueueUserWorkItem(t => ListenBattery(cts.Token));
+        }
+
+        private void ListenBattery(CancellationToken token)
+        {
+            while (true)
+            {
+                if (token.IsCancellationRequested)
+                {
+                    break;
+                }
+                // 将电池的实时数据写入到指定寄存器位置
+                server.SetValue(3, 10000 + 1, (ushort)(BatteryTotal.Voltage * 1000));
+                server.SetValue(3, 10000 + 2, (ushort)(BatteryTotal.Current * 1000));
+                for (int j = 0; j < BatteryTotal.Series.Count; j++)
+                {
+                    server.SetValue(3, 11000 + j * 10 + 1, (ushort)BatteryTotal.Series[j].Voltage * 1000);
+                    server.SetValue(3, 11000 + j * 10 + 2, (ushort)BatteryTotal.Series[j].Current * 1000);
+                    for (int l = 0; l < BatteryTotal.Series[j].Batteries.Count; l++)
+                    {
+                        server.SetValue(3, 12000 + l * 10 + 1, (ushort)BatteryTotal.Series[j].Batteries[l].Voltage * 1000);
+                        server.SetValue(3, 12000 + l * 10 + 2, (ushort)BatteryTotal.Series[j].Batteries[l].Current * 1000);
+                    }
+                }
             }
         }
 
@@ -353,7 +380,7 @@ namespace BatterySimulator
         {
             if (step.Mode == WorkMode.Stand)
             {
-                Batteries[ChannelIndex - 1].Standing(tokens[ChannelIndex-1], step.StopTime);
+                Batteries[ChannelIndex - 1].Standing(tokens[ChannelIndex - 1], step.StopTime);
             }
             else if (step.Mode == WorkMode.Charge_CC)
             {

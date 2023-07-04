@@ -131,27 +131,31 @@ namespace SaftBatteryTest
         string ip = "";
         private void Grid_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            var obj = sender as Grid;
-            for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
-            {
-                var child = VisualTreeHelper.GetChild(obj, i);
-                if (child is StackPanel)
-                {
-                    for (int l = 0; l <= VisualTreeHelper.GetChildrenCount(child) - 1; l++)
-                    {
-                        var cld = VisualTreeHelper.GetChild(child, l);
-                        if (cld is TextBlock)
-                        {
-                            ip = (cld as TextBlock).Text;
-                        }
-                    }
-                }
-            }
+            //var obj = sender as Grid;
+            //for (int i = 0; i <= VisualTreeHelper.GetChildrenCount(obj) - 1; i++)
+            //{
+            //    var child = VisualTreeHelper.GetChild(obj, i);
+            //    if (child is StackPanel)
+            //    {
+            //        for (int l = 0; l <= VisualTreeHelper.GetChildrenCount(child) - 1; l++)
+            //        {
+            //            var cld = VisualTreeHelper.GetChild(child, l);
+            //            if (cld is TextBlock)
+            //            {
+            //                ip = (cld as TextBlock).Text;
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         private void DevList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ShowDevContent((e.Source as ListBox).SelectedItem as BatteryTestDev);
+            if ((e.Source as ListBox).SelectedItem != null)
+            {
+                ip = ((e.Source as ListBox).SelectedItem as BatteryTestDev).Address;
+            }
         }
 
         private void Connect_Click(object sender, RoutedEventArgs e)
