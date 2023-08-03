@@ -22,9 +22,14 @@ namespace BatterySimulator
 
         static void Main(string[] args)
         {
+
             MainDev mainDev = new MainDev();
             mainDev.InitBattery();
-            mainDev.StartDev();
+            mainDev.StartDev("127.0.0.1", 502);
+
+            MainDev mainDev1 = new MainDev();
+            mainDev1.InitBattery();
+            mainDev1.StartDev("127.0.0.2", 502);
             //string Er = "";
             //for (int i = 0; i < 4; i++)
             //{

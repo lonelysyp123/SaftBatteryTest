@@ -16,8 +16,13 @@ namespace BMS.Communication
         private DataStore data;
         private ModbusSlave modbus_tcp_server;
         private ModbusBase modbus;
-        public ModbusServer() 
+
+        private string IP;
+        private int Port;
+        public ModbusServer(string ip, int port)
         {
+            IP = ip;
+            Port = port;
         }
 
         public bool Connect(EventHandler<ModbusSlaveRequestEventArgs> receiveEvent, EventHandler<ModbusSlaveRequestEventArgs> writeEvent)
@@ -25,7 +30,7 @@ namespace BMS.Communication
             try
             {
                 data = DataStoreFactory.CreateDefaultDataStore();
-                modbus_tcp_server = ModbusTcpSlave.CreateTcp(1, new TcpListener(IPAddress.Parse("127.0.0.1"), 502));
+                modbus_tcp_server = ModbusTcpSlave.CreateTcp(1, new TcpListener(IPAddress.Parse(IP), Port));
                 modbus_tcp_server.DataStore = data;
                 modbus_tcp_server.ModbusSlaveRequestReceived += receiveEvent;
                 modbus_tcp_server.WriteComplete += writeEvent;

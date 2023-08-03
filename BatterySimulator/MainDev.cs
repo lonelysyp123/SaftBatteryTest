@@ -30,7 +30,7 @@ namespace BatterySimulator
             for (int i = 0; i < 3; i++)
             {
                 BatterySeriesBase series = new BatterySeriesBase(i + 1);
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < 14; j++)
                 {
                     EMS.BatteryBase battery = new EMS.BatteryBase(j + 1);
                     series.Batteries.Add(battery);
@@ -84,9 +84,9 @@ namespace BatterySimulator
         }
 
         ModbusServer server;
-        public override bool StartDev()
+        public bool StartDev(string ip, int port)
         {
-            server = new ModbusServer();
+            server = new ModbusServer(ip, port);
             if (server.Connect(Modbus_tcp_server_RequestReceived, Modbus_tcp_server_WriteComplete))
             {
                 InitDev();
@@ -172,26 +172,49 @@ namespace BatterySimulator
         private void InitDev()
         {
             // 10000 => ID
-            server.SetValue(3, 10000 + 0, (ushort)BatteryTotal.TotalID);
-            server.SetValue(3, 10000 + 1, (ushort)(BatteryTotal.Voltage * 1000));
-            server.SetValue(3, 10000 + 2, (ushort)(BatteryTotal.Current * 1000));
-            server.SetValue(3, 10100, (ushort)BatteryTotal.Series.Count);
+            server.SetValue(3, 11000, (Int16)11111);
+            server.SetValue(3, 11001, (Int16)22222);
+            server.SetValue(3, 11002, (UInt16)100);
+            server.SetValue(3, 11003, (UInt16)100);
+            server.SetValue(3, 11004, (Int16)111);
+            server.SetValue(3, 11005, (Int16)11);
+            server.SetValue(3, 11006, (Int16)1111);
+            server.SetValue(3, 11007, (UInt16)1);
+            server.SetValue(3, 11008, (UInt16)2);
+            server.SetValue(3, 11009, (Int16)22);
+            server.SetValue(3, 11010, (Int16)2222);
+            server.SetValue(3, 11011, (UInt16)1);
+            server.SetValue(3, 11012, (UInt16)2);
+            server.SetValue(3, 11031, (UInt16)42);
+            server.SetValue(3, 11032, (UInt16)3);
+            server.SetValue(3, 11033, (UInt16)14);
             for (int j = 0; j < BatteryTotal.Series.Count; j++)
             {
-                server.SetValue(3, 11000 + j * 10 + 0, (ushort)BatteryTotal.Series[j].SeriesID);
-                server.SetValue(3, 11000 + j * 10 + 1, (ushort)BatteryTotal.Series[j].Voltage * 1000);
-                server.SetValue(3, 11000 + j * 10 + 2, (ushort)BatteryTotal.Series[j].Current * 1000);
-                server.SetValue(3, 10200 + j * 10, (ushort)BatteryTotal.Series[j].Batteries.Count);
+                server.SetValue(3, 10193 + j, (UInt16)1);
+                server.SetValue(3, 10196 + j, (UInt16)1);
+                server.SetValue(3, 10301 + j, (UInt16)1);
+                server.SetValue(3, 10304 + j, (UInt16)1);
+                server.SetValue(3, 10307 + j * 8, (Int16)11);
+                server.SetValue(3, 10308 + j * 8, (Int16)1111);
+                server.SetValue(3, 10309 + j * 8, (UInt16)1);
+                server.SetValue(3, 10310 + j * 8, (UInt16)2);
+                server.SetValue(3, 10311 + j * 8, (Int16)22);
+                server.SetValue(3, 10312 + j * 8, (Int16)2222);
+                server.SetValue(3, 10313 + j * 8, (UInt16)1);
+                server.SetValue(3, 10314 + j * 8, (UInt16)2);
                 for (int l = 0; l < BatteryTotal.Series[j].Batteries.Count; l++)
                 {
-                    server.SetValue(3, 12000 + l * 10 + 0, (ushort)BatteryTotal.Series[j].Batteries[l].BatteryID);
-                    server.SetValue(3, 12000 + l * 10 + 1, (ushort)BatteryTotal.Series[j].Batteries[l].Voltage * 1000);
-                    server.SetValue(3, 12000 + l * 10 + 2, (ushort)BatteryTotal.Series[j].Batteries[l].Current * 1000);
+                    server.SetValue(3, 10000 + l + j * 16, (Int16)11111);
+                    server.SetValue(3, 10049 + l * 2 + j * 33, (Int16)22);
+                    server.SetValue(3, 10050 + l * 2 + j * 33, (Int16)22);
+                    server.SetValue(3, 10148 + l + j * 16, (UInt16)100);
+                    server.SetValue(3, 10199 + l + j * 16, (UInt16)33);
+                    server.SetValue(3, 10250 + l + j * 16, (UInt16)111);
                 }
             }
-            BatteryRun();
+            //BatteryRun();
             // 同时创建线程，监听系统控制部分寄存器
-            StartListener();
+            //StartListener();
         }
 
         public override bool StopDev()
